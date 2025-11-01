@@ -74,17 +74,7 @@ a:hover {
   text-decoration: none;
 }
 
-body,
-td,
-th,
-tr,
-p,
-a {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-strong {
+body {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 14px;
 }
