@@ -74,10 +74,19 @@ a:hover {
   text-decoration: none;
 }
 
-body {
+body,
+td,
+th,
+tr,
+p,
+a {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 14px;
-  line-height: 1.6;
+}
+
+strong {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 14px;
 }
 
 h2 {
@@ -98,22 +107,6 @@ h2 {
   margin: 0;
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 32px;
-}
-
-/* Responsive typography for mobile */
-@media (max-width: 640px) {
-  body {
-    font-size: 15px; /* slightly larger for readability */
-  }
-  h2 {
-    font-size: 20px;
-  }
-  .name {
-    font-size: 28px;
-  }
-  .papertitle {
-    font-size: 15px;
-  }
 }
 
 .one {
