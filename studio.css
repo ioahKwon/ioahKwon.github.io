@@ -151,19 +151,17 @@ body {
 
 @media (max-width: 560px) {
   .studio-top {
-    left: 18px;
-    right: 18px;
+    left: 12px;
+    right: 12px;
     bottom: 140px;
     max-width: none;
-    width: calc(100% - 36px);
+    width: calc(100% - 24px);
   }
   .studio-title {
-    font-size: clamp(22px, 7.6vw, 34px);
+    font-size: clamp(14px, 5.2vw, 26px);
     letter-spacing: 0.015em;
-    line-height: 1.05;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: keep-all;
+    line-height: 1.1;
+    white-space: nowrap;
   }
   .studio-subtitle {
     font-size: 10px;
@@ -208,7 +206,8 @@ body {
     bottom: 128px;
   }
   .studio-title {
-    font-size: clamp(20px, 7.2vw, 28px);
+    font-size: clamp(12px, 4.8vw, 18px);
+    letter-spacing: 0.01em;
   }
   .studio-enter {
     padding: 8px 18px;

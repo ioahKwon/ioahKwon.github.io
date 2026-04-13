@@ -17,11 +17,9 @@
   diffusion toward the source, and the deposit is a Gaussian kernel.
 */
 
-(function () {
-  if (typeof THREE === 'undefined') {
-    console.warn('[studio.js] THREE not loaded'); return;
-  }
+import * as THREE from 'three';
 
+(function () {
   const canvas   = document.getElementById('studio-canvas');
   const box      = document.getElementById('gallery-box');
   const enterBtn = document.getElementById('enter-btn');
