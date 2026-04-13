@@ -151,31 +151,70 @@ body {
 
 @media (max-width: 560px) {
   .studio-top {
-    left: 20px;
-    right: 20px;
-    bottom: 150px;
+    left: 18px;
+    right: 18px;
+    bottom: 140px;
     max-width: none;
+    width: calc(100% - 36px);
   }
-  .studio-title { font-size: clamp(28px, 10vw, 48px); letter-spacing: 0.02em; }
-  .studio-subtitle { font-size: 11px; letter-spacing: 0.18em; margin-top: 12px; }
-  .studio-location { font-size: 10px; letter-spacing: 0.20em; }
+  .studio-title {
+    font-size: clamp(22px, 7.6vw, 34px);
+    letter-spacing: 0.015em;
+    line-height: 1.05;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+  .studio-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    margin-top: 10px;
+    line-height: 1.35;
+  }
+  .studio-location {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    margin-top: 6px;
+  }
 
   .studio-bottom {
-    right: 20px;
-    left: 20px;
-    bottom: 24px;
+    right: 18px;
+    left: 18px;
+    bottom: 22px;
     align-items: center;
+    gap: 10px;
   }
+  .gallery-nav { margin-bottom: 2px; }
+  .gallery-dot { width: 8px; height: 8px; }
   .studio-enter {
-    padding: 14px 32px;
-    font-size: 12px;
-    letter-spacing: 0.32em;
+    padding: 9px 22px;
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    border-width: 1px;
   }
   .studio-enter:hover {
-    padding: 12px 30px;
-    letter-spacing: 0.36em;
+    padding: 9px 22px;
+    letter-spacing: 0.28em;
   }
-  .studio-copyright { font-size: 9px; letter-spacing: 0.22em; }
+  .studio-copyright {
+    font-size: 8px;
+    letter-spacing: 0.20em;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .studio-top {
+    bottom: 128px;
+  }
+  .studio-title {
+    font-size: clamp(20px, 7.2vw, 28px);
+  }
+  .studio-enter {
+    padding: 8px 18px;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+  }
 }
 
 /* Bottom controls — overlay on the bottom-right of the artwork */

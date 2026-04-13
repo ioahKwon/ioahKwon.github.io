@@ -262,8 +262,12 @@
         flex-wrap: wrap;
         justify-content: flex-end;
       }
-      .hero-wrap { height: 58vh; min-height: 360px; margin-top: 52px; }
-      .hero-title { top: 18px; left: 18px; }
+      .hero-wrap { height: 72vh; min-height: 460px; margin-top: 52px; }
+      .hero-title { top: 14px; left: 16px; right: 16px; }
+      .hero-title h2 { font-size: 15px; letter-spacing: 0.22em; margin-bottom: 4px; }
+      .hero-title p { font-size: 9px; letter-spacing: 0.22em; }
+      .hero-label { display: none; }
+      .hero-copyright { bottom: 10px; left: 14px; font-size: 8px; letter-spacing: 0.15em; }
       .container { padding: 48px 20px; }
       .section h2 { font-size: 16px; }
       .work-card { flex-direction: column; gap: 16px; }
@@ -347,37 +351,42 @@
        simulation stays visible underneath. */
     @media (max-width: 720px){
       #physics-overlay{
-        top:auto; bottom:10px; right:10px; left:auto;
-        width: min(78vw, 320px);
-        max-width: calc(100vw - 20px);
+        top:auto; bottom:8px; right:8px; left:auto;
+        width: min(62vw, 220px);
+        max-width: calc(100vw - 16px);
         text-align:left;
-        font-size: 9.5px;
-        line-height: 1.55;
-        padding: 8px 10px;
-        background: rgba(0,0,0,0.32);
-        border-color: rgba(255,255,255,0.06);
+        font-size: 8px;
+        line-height: 1.4;
+        padding: 6px 8px;
+        background: rgba(0,0,0,0.45);
+        border-color: rgba(255,255,255,0.08);
       }
-      #physics-overlay .po-title{ font-size: 12px; margin-bottom: 4px; }
-      #physics-overlay .po-section{ font-size: 8.5px; margin-top: 3px; }
-      #physics-overlay .po-eq{ font-size: 9px; }
-      #physics-overlay .po-eq-sub{ font-size: 8.5px; }
+      #physics-overlay .po-title{ font-size: 10px; margin-bottom: 3px; letter-spacing: 0.04em; }
+      #physics-overlay .po-section{ font-size: 7.5px; margin-top: 2px; letter-spacing: 0.01em; }
+      #physics-overlay .po-eq{ font-size: 7.5px; }
+      #physics-overlay .po-eq-sub{ font-size: 7px; }
       #physics-overlay .po-live{
         justify-content:flex-start;
-        gap: 8px;
-        margin-top: 5px;
-        padding-top: 4px;
+        gap: 6px;
+        margin-top: 4px;
+        padding-top: 3px;
       }
-      #physics-overlay .po-live span{ font-size: 9px; }
-      #physics-overlay .po-wind{ justify-content:flex-start; gap: 8px; }
-      #physics-overlay .po-wind .compass{ width: 30px; height: 30px; }
+      #physics-overlay .po-live span{ font-size: 7.5px; }
+      #physics-overlay .po-wind{ justify-content:flex-start; gap: 6px; }
+      #physics-overlay .po-wind .compass{ width: 22px; height: 22px; }
     }
     @media (max-width: 440px){
       #physics-overlay{
-        width: min(82vw, 260px);
-        font-size: 8.5px;
-        padding: 6px 8px;
+        width: min(66vw, 190px);
+        font-size: 7.5px;
+        padding: 5px 7px;
       }
-      #physics-overlay .po-title{ font-size: 11px; }
+      #physics-overlay .po-title{ font-size: 9px; }
+      #physics-overlay .po-section{ font-size: 7px; }
+      #physics-overlay .po-eq{ font-size: 7px; }
+      #physics-overlay .po-eq-sub{ font-size: 6.5px; }
+      #physics-overlay .po-live span{ font-size: 7px; }
+      #physics-overlay .po-wind .compass{ width: 20px; height: 20px; }
     }
   </style>
 </head>
