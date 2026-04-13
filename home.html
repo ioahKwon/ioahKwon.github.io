@@ -189,16 +189,19 @@
     }
 
     @media (max-width: 700px) {
-      nav { padding: 12px 14px; gap: 10px; }
-      nav .nav-brand { font-size: 15px; flex-shrink: 0; white-space: nowrap; }
+      nav { padding: 16px 16px; gap: 12px; }
+      nav .nav-brand { font-size: 17px; flex-shrink: 0; white-space: nowrap; }
       nav .nav-links {
-        gap: 12px;
-        font-size: 9.5px;
-        letter-spacing: 0.10em;
+        gap: 14px;
+        font-size: 11px;
+        letter-spacing: 0.12em;
         flex-wrap: nowrap;
         justify-content: flex-end;
       }
-      .container { padding: 84px 20px 48px; }
+      nav .nav-links a {
+        padding: 8px 2px;
+      }
+      .container { padding: 96px 20px 48px; }
       .hero { flex-direction: column; text-align: center; gap: 24px; margin-bottom: 44px; }
       .hero-photo, .hero-photo img { width: 140px; height: 140px; }
       .hero-photo { flex: 0 0 auto; }
@@ -212,13 +215,14 @@
       .section h2 { font-size: 22px; }
     }
     @media (max-width: 440px) {
-      nav { padding: 10px 12px; gap: 8px; }
-      nav .nav-brand { font-size: 13px; }
-      nav .nav-links { gap: 10px; font-size: 9px; letter-spacing: 0.08em; }
+      nav { padding: 14px 12px; gap: 8px; }
+      nav .nav-brand { font-size: 14px; }
+      nav .nav-links { gap: 11px; font-size: 10px; letter-spacing: 0.08em; }
     }
     @media (max-width: 360px) {
-      nav .nav-brand { font-size: 12px; }
-      nav .nav-links { gap: 8px; font-size: 8.5px; letter-spacing: 0.06em; }
+      nav { padding: 14px 10px; }
+      nav .nav-brand { font-size: 13px; }
+      nav .nav-links { gap: 9px; font-size: 9.5px; letter-spacing: 0.06em; }
     }
 
     /* --- Sections --- */
@@ -354,11 +358,28 @@
         flex-direction: column;
         gap: 18px;
         padding: 18px 16px;
+        align-items: center;
       }
-      .pub-card .pub-thumb { width: 100%; max-width: 240px; }
+      .pub-card .pub-thumb {
+        width: 100%;
+        max-width: 260px;
+        margin: 0 auto;
+        align-self: center;
+      }
+      .pub-card .pub-info {
+        width: 100%;
+        text-align: left;
+      }
       .pub-card.featured { padding-top: 36px; }
       .pub-card.featured::before { top: 10px; right: 12px; }
       .pub-card .pub-title { font-size: 17px; }
+      .misc-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+      }
+      .misc-card img { margin: 0 auto; }
     }
 
     /* --- Miscellanea (matches index.html framed style) --- */

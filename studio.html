@@ -253,16 +253,17 @@
       padding-left: 14px;
     }
     @media (max-width: 700px) {
-      nav { padding: 12px 14px; gap: 10px; }
-      nav .nav-brand { font-size: 15px; flex-shrink: 0; white-space: nowrap; }
+      nav { padding: 16px 16px; gap: 12px; }
+      nav .nav-brand { font-size: 17px; flex-shrink: 0; white-space: nowrap; }
       nav .nav-links {
-        gap: 12px;
-        font-size: 9.5px;
-        letter-spacing: 0.10em;
+        gap: 14px;
+        font-size: 11px;
+        letter-spacing: 0.12em;
         flex-wrap: nowrap;
         justify-content: flex-end;
       }
-      .hero-wrap { height: 52vh; min-height: 340px; margin-top: 52px; }
+      nav .nav-links a { padding: 8px 2px; }
+      .hero-wrap { height: 52vh; min-height: 340px; margin-top: 62px; }
       .hero-title { top: 16px; left: 18px; right: 18px; }
       .hero-title h2 { font-size: 16px; letter-spacing: 0.24em; margin-bottom: 4px; }
       .hero-title p { font-size: 9px; letter-spacing: 0.22em; }
@@ -274,13 +275,14 @@
       .work-card .work-thumb { flex: 0 0 auto; max-width: 240px; }
     }
     @media (max-width: 440px) {
-      nav { padding: 10px 12px; gap: 8px; }
-      nav .nav-brand { font-size: 13px; }
-      nav .nav-links { gap: 10px; font-size: 9px; letter-spacing: 0.08em; }
+      nav { padding: 14px 12px; gap: 8px; }
+      nav .nav-brand { font-size: 14px; }
+      nav .nav-links { gap: 11px; font-size: 10px; letter-spacing: 0.08em; }
     }
     @media (max-width: 360px) {
-      nav .nav-brand { font-size: 12px; }
-      nav .nav-links { gap: 8px; font-size: 8.5px; letter-spacing: 0.06em; }
+      nav { padding: 14px 10px; }
+      nav .nav-brand { font-size: 13px; }
+      nav .nav-links { gap: 9px; font-size: 9.5px; letter-spacing: 0.06em; }
     }
     footer{text-align:center;padding:40px 20px;font-size:11px;color:rgba(255,255,255,0.30);letter-spacing:0.15em;border-top:1px solid rgba(255,255,255,0.06)}
 
@@ -353,6 +355,26 @@
       display: none;
     }
     @media (max-width: 720px) {
+      /* JS fallback: if relocation hasn't happened yet, shrink the overlay
+         so it doesn't cover the simulation on first paint. */
+      #physics-overlay:not(.po-detached) {
+        top: auto; bottom: 8px; right: 8px; left: auto;
+        width: min(60vw, 200px);
+        max-width: calc(100vw - 16px);
+        font-size: 8px;
+        line-height: 1.35;
+        padding: 6px 8px;
+        text-align: left;
+        background: rgba(0, 0, 0, 0.55);
+      }
+      #physics-overlay:not(.po-detached) .po-title { font-size: 9px; margin-bottom: 2px; }
+      #physics-overlay:not(.po-detached) .po-section { font-size: 7px; margin-top: 2px; }
+      #physics-overlay:not(.po-detached) .po-eq { font-size: 7px; }
+      #physics-overlay:not(.po-detached) .po-eq-sub { font-size: 6.5px; }
+      #physics-overlay:not(.po-detached) .po-live { gap: 5px; margin-top: 3px; padding-top: 2px; }
+      #physics-overlay:not(.po-detached) .po-live span { font-size: 7px; }
+      #physics-overlay:not(.po-detached) .po-wind .compass { width: 20px; height: 20px; }
+
       #physics-overlay-section {
         display: block;
         background: #050608;
@@ -1737,37 +1759,55 @@ import * as THREE from 'three';
 
 /* Mobile: relocate physics-overlay out of the hero into its own section
    below the simulation, so the equations no longer cover the artwork. */
-(function relocatePhysicsOverlay(){
-  const overlay = document.getElementById('physics-overlay');
-  const heroWrap = document.getElementById('hero-wrap');
-  if (!overlay || !heroWrap) return;
+function relocatePhysicsOverlay(){
+  try {
+    const overlay = document.getElementById('physics-overlay');
+    const heroWrap = document.getElementById('hero-wrap');
+    if (!overlay || !heroWrap) {
+      console.warn('[physics-overlay] elements not found, retrying...');
+      return false;
+    }
 
-  const originalParent = overlay.parentNode;
-  const originalNext = overlay.nextSibling;
+    const originalParent = overlay.parentNode;
+    const originalNext = overlay.nextSibling;
 
-  // Wrapper that holds the overlay when it's moved outside the hero.
-  const section = document.createElement('div');
-  section.id = 'physics-overlay-section';
-  heroWrap.parentNode.insertBefore(section, heroWrap.nextSibling);
+    let section = document.getElementById('physics-overlay-section');
+    if (!section) {
+      section = document.createElement('div');
+      section.id = 'physics-overlay-section';
+      heroWrap.parentNode.insertBefore(section, heroWrap.nextSibling);
+    }
 
-  const mq = window.matchMedia('(max-width: 720px)');
-  function apply(){
-    if (mq.matches) {
-      if (overlay.parentNode !== section) {
-        section.appendChild(overlay);
-        overlay.classList.add('po-detached');
-      }
-    } else {
-      if (overlay.parentNode !== originalParent) {
-        originalParent.insertBefore(overlay, originalNext);
-        overlay.classList.remove('po-detached');
+    const mq = window.matchMedia('(max-width: 720px)');
+    function apply(){
+      if (mq.matches) {
+        if (overlay.parentNode !== section) {
+          section.appendChild(overlay);
+          overlay.classList.add('po-detached');
+        }
+      } else {
+        if (overlay.parentNode !== originalParent) {
+          originalParent.insertBefore(overlay, originalNext);
+          overlay.classList.remove('po-detached');
+        }
       }
     }
+    apply();
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else if (mq.addListener) mq.addListener(apply);
+    console.log('[physics-overlay] relocation ready, mobile=', mq.matches);
+    return true;
+  } catch (e) {
+    console.error('[physics-overlay] relocation failed:', e);
+    return false;
   }
-  apply();
-  if (mq.addEventListener) mq.addEventListener('change', apply);
-  else if (mq.addListener) mq.addListener(apply);
-})();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', relocatePhysicsOverlay);
+} else {
+  relocatePhysicsOverlay();
+}
 </script>
 </body>
 </html>
