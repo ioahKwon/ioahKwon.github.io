@@ -1,0 +1,321 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", sans-serif;
+  color: #eaf6ff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fullscreen layout — work fills the viewport and text overlays on top */
+body {
+  position: relative;
+}
+
+.studio-home-link {
+  position: fixed;
+  top: 22px;
+  left: 28px;
+  z-index: 50;
+  font-family: 'JetBrains Mono', monospace, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(212, 196, 154, 0.55);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.studio-home-link:hover {
+  color: #ecd9a8;
+}
+
+/* Title block — overlays on the bottom-left of the artwork */
+.studio-top {
+  position: absolute;
+  left: clamp(28px, 4vw, 64px);
+  bottom: clamp(80px, 10vh, 130px);
+  z-index: 5;
+  text-align: left;
+  pointer-events: none;
+  max-width: 80vw;
+  /* Soft glow behind the text so it stays readable on busy paintings */
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.85),
+    0 0 32px rgba(0, 0, 0, 0.55);
+}
+
+.studio-title {
+  font-size: clamp(36px, 6vw, 88px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.98);
+  text-transform: uppercase;
+  margin-left: 0;
+  line-height: 1.0;
+}
+
+.studio-subtitle {
+  margin-top: 16px;
+  font-size: clamp(13px, 1.4vw, 17px);
+  font-weight: 300;
+  letter-spacing: 0.26em;
+  color: rgba(255, 255, 255, 0.78);
+  text-transform: uppercase;
+  margin-left: 0.13em;
+  line-height: 1.4;
+}
+
+.studio-location {
+  margin-top: 10px;
+  font-size: clamp(11px, 1.1vw, 14px);
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  margin-left: 0.14em;
+  line-height: 1.4;
+}
+
+/* Gallery box now fills the entire viewport — the artwork IS the page */
+.gallery-box {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: #000;
+  overflow: hidden;
+  /* Paintbrush cursor — hotspot at the bristle tip */
+  cursor: url('image/cursor-brush.png') 14 62, crosshair;
+}
+/* Subtle vignette on top of the canvas to keep edges quiet and focus the
+   viewer on the centre, the way museum walls frame a painting. */
+.gallery-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center,
+      transparent 40%,
+      rgba(0, 0, 0, 0.35) 80%,
+      rgba(0, 0, 0, 0.65) 100%);
+  z-index: 2;
+}
+
+#studio-canvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Portrait image floats on top of the wave canvas, centered inside the
+   frame. Drop shadow + subtle glow make it feel like a still subject the
+   particles swirl around. */
+.portrait-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 88%;
+  width: auto;
+  max-width: 88%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+  filter:
+    drop-shadow(0 8px 28px rgba(0, 10, 30, 0.85))
+    drop-shadow(0 0 60px rgba(120, 180, 255, 0.22));
+  user-select: none;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .studio-top {
+    left: 22px;
+    bottom: 110px;
+  }
+  .studio-title {
+    font-size: clamp(28px, 9vw, 60px);
+  }
+}
+
+@media (max-width: 560px) {
+  .studio-top {
+    left: 20px;
+    right: 20px;
+    bottom: 150px;
+    max-width: none;
+  }
+  .studio-title { font-size: clamp(28px, 10vw, 48px); letter-spacing: 0.02em; }
+  .studio-subtitle { font-size: 11px; letter-spacing: 0.18em; margin-top: 12px; }
+  .studio-location { font-size: 10px; letter-spacing: 0.20em; }
+
+  .studio-bottom {
+    right: 20px;
+    left: 20px;
+    bottom: 24px;
+    align-items: center;
+  }
+  .studio-enter {
+    padding: 14px 32px;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+  }
+  .studio-enter:hover {
+    padding: 12px 30px;
+    letter-spacing: 0.36em;
+  }
+  .studio-copyright { font-size: 9px; letter-spacing: 0.22em; }
+}
+
+/* Bottom controls — overlay on the bottom-right of the artwork */
+.studio-bottom {
+  position: absolute;
+  right: clamp(28px, 4vw, 64px);
+  bottom: clamp(36px, 5vh, 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 12px;
+  pointer-events: auto;
+  margin-bottom: 6px;
+}
+
+.gallery-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.gallery-dot.active {
+  background: rgba(255, 255, 255, 0.90);
+  border-color: rgba(255, 255, 255, 0.90);
+}
+
+.gallery-dot:hover {
+  border-color: rgba(255, 255, 255, 0.80);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* ----- Gallery prev/next arrows (overlay on the canvas frame) ----- */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(235, 246, 255, 0.85);
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-size: 36px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 4px 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: all 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  opacity: 0;
+}
+.gallery-box:hover .gallery-arrow {
+  opacity: 1;
+}
+.gallery-arrow:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
+  transform: translateY(-50%) scale(1.08);
+}
+.gallery-arrow-prev { left: 18px; }
+.gallery-arrow-next { right: 18px; }
+.gallery-arrow-prev { padding-right: 4px; }
+.gallery-arrow-next { padding-left: 4px; }
+@media (max-width: 720px) {
+  .gallery-arrow {
+    width: 42px;
+    height: 42px;
+    font-size: 28px;
+    opacity: 1;  /* always visible on touch devices */
+  }
+  .gallery-arrow-prev { left: 10px; }
+  .gallery-arrow-next { right: 10px; }
+}
+
+.studio-enter {
+  pointer-events: auto;
+  background: transparent;
+  border: 1px solid rgba(220, 240, 255, 0.55);
+  color: rgba(235, 246, 255, 0.96);
+  padding: 18px 48px;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.studio-enter:hover {
+  background: rgba(120, 200, 255, 0.12);
+  border-color: rgba(180, 230, 255, 0.9);
+  color: #fff;
+  letter-spacing: 0.5em;
+  padding: 14px 46px;
+  box-shadow: 0 0 40px rgba(80, 180, 255, 0.35);
+}
+
+.studio-enter:active {
+  transform: scale(0.98);
+}
+
+.studio-hint {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(140, 180, 210, 0.45);
+  text-transform: uppercase;
+}
+
+.studio-copyright {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: rgba(200, 220, 240, 0.55);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+body.transitioning .studio-top,
+body.transitioning .studio-bottom {
+  opacity: 0;
+  transition: opacity 0.9s ease-out;
+  pointer-events: none;
+}

@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Studio · Joonwoo Kwon</title>
+  <link rel="shortcut icon" href="image/icon.png">
+
+  <!-- Unified type system shared with Home -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    :root {
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'JetBrains Mono', "SF Mono", Menlo, monospace;
+      --bg:         #050608;
+      --fg:         #ffffff;
+      --fg-muted:   rgba(255, 255, 255, 0.68);
+      --fg-faint:   rgba(255, 255, 255, 0.42);
+      --accent:     #9bcae8;
+      --accent-hi:  #c1ddf0;
+      --accent-warm:#d8542a;
+      --link:       #9bcae8;
+      --link-hi:    #c1ddf0;
+      --line:       rgba(255, 255, 255, 0.10);
+      --line-strong:rgba(255, 255, 255, 0.20);
+    }
+
+    body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-weight:300;-webkit-font-smoothing:antialiased;line-height:1.7}
+    a{color:var(--link);text-decoration:none;transition:color 0.25s}a:hover{color:var(--link-hi)}
+
+    /* ----- Nav (matches Home exactly) ----- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: rgba(5, 6, 8, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .nav-brand {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      color: rgba(255, 255, 255, 0.94);
+      text-decoration: none;
+      text-transform: none;
+    }
+    nav .nav-links {
+      display: flex;
+      gap: 38px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+    }
+    nav .nav-links a {
+      color: rgba(255, 255, 255, 0.55);
+      transition: color 0.25s;
+      position: relative;
+    }
+    nav .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -4px;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.35s ease;
+    }
+    nav .nav-links a:hover { color: #fff; }
+    nav .nav-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    nav .nav-links a.active { color: #fff; }
+    nav .nav-links a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    .hero-wrap{width:100%;height:75vh;min-height:450px;max-height:750px;position:relative;margin-top:60px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .hero-wrap canvas{display:block;width:100%;height:100%}
+    .hero-label{position:absolute;bottom:14px;right:18px;font-size:9px;letter-spacing:0.3em;color:rgba(255,255,255,0.25);text-transform:uppercase;pointer-events:none}
+    .hero-copyright{
+      position:absolute;
+      bottom:14px;
+      left:18px;
+      font-family:var(--font-mono);
+      font-size:9px;
+      letter-spacing:0.20em;
+      color:rgba(255,255,255,0.30);
+      text-transform:uppercase;
+      pointer-events:none;
+    }
+    .hero-title{position:absolute;top:28px;left:32px;pointer-events:none}
+    .hero-title h2{font-size:clamp(16px,2.2vw,28px);font-weight:300;letter-spacing:0.35em;color:rgba(255,255,255,0.75);text-transform:uppercase;margin-bottom:6px}
+    .hero-title p{font-size:clamp(9px,0.9vw,11px);letter-spacing:0.28em;color:rgba(255,255,255,0.35);text-transform:uppercase}
+    .container{max-width:900px;margin:0 auto;padding:60px 32px}
+    .section{margin-bottom:56px}
+    .section h2{font-size:18px;font-weight:400;letter-spacing:0.20em;text-transform:uppercase;color:rgba(255,255,255,0.90);padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:24px}
+    .section p,.section li{font-size:15px;color:rgba(255,255,255,0.72);line-height:1.8}
+    .section blockquote{border-left:3px solid rgba(255,255,255,0.15);padding:16px 24px;margin:24px 0;font-style:italic;color:rgba(255,255,255,0.60);font-size:16px;line-height:1.8}
+    /* Pull quote — large serif italic, sky-blue accent, breathing room */
+    .section .pull-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(20px, 2.4vw, 28px);
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.94);
+      max-width: 720px;
+      margin: 48px auto 24px;
+      padding: 28px 32px;
+      border-top: 1px solid rgba(155, 202, 232, 0.30);
+      border-bottom: 1px solid rgba(155, 202, 232, 0.30);
+      text-align: center;
+      position: relative;
+    }
+    .section .pull-quote span {
+      color: var(--accent);
+      display: inline-block;
+      margin-top: 6px;
+    }
+    /* Inline links inside artist statement — academic blue */
+    .section p a {
+      color: var(--link);
+      border-bottom: 1px dotted rgba(155, 202, 232, 0.35);
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .section p a:hover {
+      color: var(--link-hi);
+      border-bottom-color: var(--link-hi);
+    }
+
+    /* ----- Selected Works cards ----- */
+    .work-card {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .work-card:last-child { border-bottom: none; }
+    /* Museum-frame style (matches Home pub thumbnails) */
+    .work-card .work-thumb {
+      flex: 0 0 180px;
+      align-self: flex-start;
+      padding: 4px;
+      background: linear-gradient(145deg, #2a241a, #1a1610);
+      border: 1px solid rgba(155, 202, 232, 0.18);
+      border-radius: 3px;
+      box-shadow:
+        0 6px 22px rgba(0, 0, 0, 0.55),
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+    .work-card .work-thumb-mat {
+      padding: 8px;
+      background: #ece1c2;
+      border-radius: 1px;
+      box-shadow:
+        0 0 0 1px rgba(110, 85, 35, 0.20) inset,
+        0 1px 3px rgba(0, 0, 0, 0.35) inset;
+      overflow: hidden;
+    }
+    .work-card .work-thumb img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 1px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+      transition: transform 0.6s ease;
+    }
+    .work-card:hover .work-thumb {
+      transform: translateY(-3px);
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.65),
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    }
+    .work-card:hover .work-thumb img { transform: scale(1.04); }
+    .work-card .work-info { flex: 1; min-width: 0; }
+    .work-card .work-year {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.20em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .work-card .work-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 26px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.96);
+      line-height: 1.15;
+      margin-bottom: 4px;
+    }
+    .work-card .work-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .work-card .work-desc {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.75;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .work-card .work-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .work-card .work-links a {
+      color: var(--link);
+      border-bottom: 1px dotted rgba(155, 202, 232, 0.35);
+      padding-bottom: 1px;
+    }
+    .work-card .work-links a:hover {
+      color: var(--link-hi);
+      border-bottom-color: var(--link-hi);
+    }
+    .work-card .work-venue {
+      color: rgba(255, 255, 255, 0.42);
+      padding-left: 4px;
+      border-left: 1px solid var(--line);
+      margin-left: 2px;
+      padding-left: 14px;
+    }
+    @media (max-width: 700px) {
+      .work-card { flex-direction: column; gap: 16px; }
+      .work-card .work-thumb { flex: 0 0 auto; max-width: 240px; }
+    }
+    footer{text-align:center;padding:40px 20px;font-size:11px;color:rgba(255,255,255,0.30);letter-spacing:0.15em;border-top:1px solid rgba(255,255,255,0.06)}
+
+    /* ----- Active Physics Solvers panel: responsive ----- */
+    #physics-overlay{
+      position:absolute; top:20px; right:20px;
+      width: clamp(280px, 32vw, 480px);
+      max-width: calc(100vw - 40px);
+      font-family:'JetBrains Mono',monospace;
+      font-size: clamp(10px, 0.95vw, 13px);
+      line-height:1.65;
+      color:rgba(200,225,250,0.82);
+      pointer-events:none; user-select:none;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+      text-align:right;
+      background: rgba(0,0,0,0.40);
+      padding: clamp(8px, 1vw, 12px) clamp(12px, 1.4vw, 18px);
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #physics-overlay .po-title{
+      font-family:'Playfair Display',serif; font-style:italic;
+      color:rgba(220,235,255,0.92);
+      font-size: clamp(13px, 1.25vw, 17px);
+      margin-bottom: 6px; letter-spacing:0.08em;
+    }
+    #physics-overlay .po-section{
+      color:rgba(160,195,230,0.62);
+      font-size: clamp(9px, 0.85vw, 11px);
+      margin-top: 4px; margin-bottom: 1px;
+    }
+    #physics-overlay .po-eq{
+      color:rgba(180,210,240,0.82);
+      font-size: clamp(10px, 0.95vw, 13px);
+    }
+    #physics-overlay .po-eq-sub{
+      color:rgba(180,210,240,0.55);
+      font-size: clamp(9px, 0.88vw, 12px);
+    }
+    #physics-overlay .po-live{
+      margin-top: 8px; padding-top: 6px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      display:flex; gap: clamp(8px, 1.1vw, 16px);
+      justify-content:flex-end; flex-wrap:wrap;
+      white-space:nowrap;
+    }
+    #physics-overlay .po-live span{
+      font-size: clamp(10px, 0.9vw, 12px);
+      font-weight: 400; letter-spacing: 0.03em;
+    }
+    #physics-overlay .po-wind{
+      display:flex; align-items:center; justify-content:flex-end;
+      gap: clamp(8px, 1vw, 14px);
+    }
+    #physics-overlay .po-wind .compass{
+      position:relative; flex-shrink:0;
+      width: clamp(36px, 3.6vw, 52px);
+      height: clamp(36px, 3.6vw, 52px);
+    }
+    #physics-overlay .po-wind .compass svg{
+      position:absolute; top:0; left:0; width:100%; height:100%;
+    }
+
+    /* Mobile / narrow viewports: pull to bottom-left, smaller */
+    @media (max-width: 720px){
+      #physics-overlay{
+        top:auto; bottom:12px; right:12px; left:12px;
+        width:auto; max-width:none;
+        text-align:left;
+      }
+      #physics-overlay .po-live{ justify-content:flex-start; }
+      #physics-overlay .po-wind{ justify-content:flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Joonwoo Kwon</a>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="studio.html" class="active">Studio</a>
+    <a href="photography.html">Photography</a>
+    <a href="mailto:kwonjoon@msu.edu">Contact</a>
+  </div>
+</nav>
+
+<div class="hero-wrap" id="hero-wrap">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-title">
+    <h2>Neural Point Cloud</h2>
+    <p>Physics-informed Wave Simulation</p>
+  </div>
+  <span class="hero-label">gerstner wave · 300k particles · real-time GPU &nbsp;·&nbsp; drag the boat</span>
+  <span class="hero-copyright">© Joonwoo Kwon · Original Work</span>
+
+  <!-- Physics equations + live numerical readout -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <div id="physics-overlay">
+    <div class="po-title">Active Physics Solvers</div>
+    <div class="po-section">① Gerstner Wave (GPU real-time, 6 modes)</div>
+    <div class="po-eq">r(t) = r₀ − Σ Qₙ Aₙ cos(kₙ·r − ωₙt)</div>
+    <div class="po-eq">y(t) = Σ Aₙ sin(kₙ·r − ωₙt)</div>
+    <div class="po-eq-sub">ω² = gk·tanh(kd)</div>
+    <div class="po-section">② Wind-driven advection</div>
+    <div class="po-wind">
+      <div style="display:flex; flex-direction:column; align-items:flex-end;">
+        <div class="po-eq">v_drift = W·sin(αt) &nbsp;<span style="color:rgba(180,210,240,0.45);">|</span>&nbsp; swell ∝ wind</div>
+        <div id="wind-speed" style="color:rgba(130,200,230,0.78); font-size:0.85em; margin-top:2px;">0.0 m/s</div>
+      </div>
+      <div class="compass">
+        <svg viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="26" fill="rgba(0,0,0,0.25)" stroke="rgba(160,200,240,0.30)" stroke-width="1"/>
+          <line x1="30" y1="4" x2="30" y2="9" stroke="rgba(200,220,240,0.55)" stroke-width="1.2"/>
+          <line x1="30" y1="51" x2="30" y2="56" stroke="rgba(200,220,240,0.30)" stroke-width="1"/>
+          <line x1="4" y1="30" x2="9" y2="30" stroke="rgba(200,220,240,0.30)" stroke-width="1"/>
+          <line x1="51" y1="30" x2="56" y2="30" stroke="rgba(200,220,240,0.30)" stroke-width="1"/>
+          <text x="30" y="14" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(200,220,240,0.55)" text-anchor="middle">N</text>
+        </svg>
+        <svg id="wind-arrow" viewBox="0 0 60 60" style="transition: transform 0.3s ease;">
+          <defs>
+            <linearGradient id="windGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="rgba(120,210,255,1.0)"/>
+              <stop offset="100%" stop-color="rgba(120,210,255,0.35)"/>
+            </linearGradient>
+          </defs>
+          <polygon points="30,7 37,23 30,19 23,23" fill="url(#windGrad)" stroke="rgba(150,220,255,0.9)" stroke-width="0.8"/>
+          <line x1="30" y1="19" x2="30" y2="48" stroke="rgba(120,210,255,0.65)" stroke-width="1.8"/>
+        </svg>
+      </div>
+    </div>
+    <div class="po-section">③ Buoyancy (Archimedes' Principle)</div>
+    <div class="po-eq">F_b = ρ·g·V_disp &nbsp;|&nbsp; τ = −k_θ·θ</div>
+    <div class="po-live" id="live-values-row">
+      <span id="lv-t" style="color:rgba(160,230,200,0.92);"></span>
+      <span id="lv-h" style="color:rgba(130,210,255,0.92);"></span>
+      <span id="lv-theta" style="color:rgba(210,180,255,0.92);"></span>
+      <span id="lv-f" style="color:rgba(255,200,140,0.92);"></span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section">
+    <h2>Artist Statement</h2>
+    <blockquote>I work at the boundary where physical law meets generative imagination — building software that turns equations into visual experiences, and turning canvases into interactive simulations.</blockquote>
+
+    <p>To me, science and art are not opposites — they are two languages describing the same reality. My work lives at their intersection: using physics-informed models to create generative art that is grounded in the real world, yet free to imagine beyond it.</p>
+
+    <p>That attempt has moved across mediums. <a href="https://arxiv.org/abs/2411.15913"><em>Stylus</em></a> reframed music as something a diffusion model could re-paint in the spectrogram domain. <a href="https://arxiv.org/abs/2412.05296"><em>Revisiting Your Memory</em></a> turned EEG signals into audiovisual reconstructions of affect-contextualized memory. More recently, my work has moved toward <strong>3D human motion</strong> — using physics-informed models to ground how bodies move in the real world.</p>
+
+    <p class="pull-quote">
+      Different surfaces, one question:<br>
+      <span>what is the world made of, and how do we show it?</span>
+    </p>
+  </div>
+  <div class="section">
+    <h2>Selected Works</h2>
+
+    <div class="work-card">
+      <div class="work-info">
+        <div class="work-year">2024</div>
+        <div class="work-title">AesFA</div>
+        <div class="work-subtitle">An Aesthetic Feature-Aware Arbitrary Neural Style Transfer</div>
+        <p class="work-desc">A lightweight style transfer method that captures aesthetic style through frequency decomposition and contrastive training, without relying on pre-trained CNNs.</p>
+        <div class="work-links">
+          <a href="https://aesfa-nst.github.io/AesFA/">project</a>
+          <a href="https://arxiv.org/abs/2312.05928">paper</a>
+          <span class="work-venue">AAAI 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="work-info">
+        <div class="work-year">2025</div>
+        <div class="work-title">Revisiting Your Memory</div>
+        <div class="work-subtitle">Reconstruction of Affect-Contextualized Memory via EEG-guided Audiovisual Generation</div>
+        <p class="work-desc">A multimodal framework that reconstructs video and music contextualized by human affect, using brain signals as the seed of the imagery.</p>
+        <div class="work-links">
+          <a href="https://arxiv.org/abs/2412.05296">paper</a>
+          <span class="work-venue">ACM MM CogMAEC 2025 · Oral</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="work-info">
+        <div class="work-year">2025</div>
+        <div class="work-title">Stylus</div>
+        <div class="work-subtitle">Repurposing Stable Diffusion for Training-Free Music Style Transfer on Mel-Spectrograms</div>
+        <p class="work-desc">A training-free framework that re-purposes a pre-trained Stable Diffusion model to perform music style transfer in the mel-spectrogram domain.</p>
+        <div class="work-links">
+          <a href="https://arxiv.org/abs/2411.15913">paper</a>
+          <span class="work-venue">arXiv 2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Exhibitions &amp; Awards</h2>
+    <ul style="padding-left:20px;color:rgba(255,255,255,0.65);">
+      <li style="margin-bottom:12px;"><strong>Grand Prize</strong>, AI &amp; Art Hackathon (2024)<br>Presented at <a href="https://www.tap.or.kr/en/home">ART DIFFUSION</a>, Seoul National University Museum of Art</li>
+      <li><strong>Sismologia</strong> (Movie Production)<br>Contributed to the production of the film</li>
+    </ul>
+  </div>
+</div>
+<footer>
+  &copy; 2026 Joonwoo Kwon. All rights reserved.<br>
+  <span style="font-size:9px; color:rgba(255,255,255,0.20); margin-top:6px; display:inline-block;">
+    All content, artwork, and code on this site are the intellectual property of Joonwoo Kwon.<br>
+    Unauthorized reproduction or distribution is prohibited.
+  </span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const wrap = document.getElementById('hero-wrap');
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x050505, 1);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x050505, 0.06);
+
+  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 200);
+  camera.position.set(0, 3.5, 8);
+  camera.lookAt(0, 0.5, 0);
+
+  function resize(){
+    const w=wrap.clientWidth, h=wrap.clientHeight;
+    renderer.setSize(w,h);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ---- Point cloud wave ----
+  // Auto LOD: start with a high count, measure fps for the first few
+  // seconds, and halve if performance is poor. This way powerful GPUs
+  // get the full 300k experience while weaker ones gracefully degrade.
+  const MAX_COUNT = 300000;
+  const MID_COUNT = 150000;
+  const LOW_COUNT = 80000;
+  let COUNT = MAX_COUNT;
+  const positions = new Float32Array(COUNT * 3);
+  const seeds     = new Float32Array(COUNT);
+  const sizes     = new Float32Array(COUNT);
+
+  // Distribute points on a large XZ plane — they'll be displaced by
+  // the wave function in the vertex shader every frame.
+  for (let i = 0; i < COUNT; i++) {
+    // More density at the center, sparser at edges (Gaussian-ish)
+    const r = Math.random();
+    const spreadX = 18;
+    const spreadZ = 10;
+    positions[i*3]   = (Math.random()-0.5) * spreadX;
+    positions[i*3+1] = 0;
+    positions[i*3+2] = (Math.random()-0.5) * spreadZ;
+    seeds[i] = Math.random();
+    // Varied sizes: mostly tiny, a few larger
+    const s = Math.random();
+    sizes[i] = 0.8 + s * s * 3.5;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
+  geo.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+
+  // ---- Point cloud material ----
+  const mat = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: {value: 0},
+      uPixelRatio: {value: Math.min(window.devicePixelRatio, 2)},
+      uMouse: {value: new THREE.Vector2(0, 0)},
+      uMouseOn: {value: 0},
+      uWind: {value: new THREE.Vector2(1, 0)},
+      uWindStr: {value: 0.5},
+    },
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.NormalBlending,
+    vertexShader: `
+      uniform float uTime;
+      uniform float uPixelRatio;
+      uniform vec2  uWind;     // wind direction (normalized XZ)
+      uniform float uWindStr;  // wind strength 0..1
+      attribute float aSeed;
+      attribute float aSize;
+      varying float vHeight;
+      varying float vFoam;
+      varying float vSeed;
+      varying float vDist;
+      varying float vEdge;
+
+      // Gerstner wave displacement — direction is biased by wind
+      vec3 gerstner(vec3 p, vec2 dir, float A, float w, float phi, float Q) {
+        // Blend wave direction toward wind (wind-driven swell)
+        vec2 windBias = mix(dir, uWind, uWindStr * 0.45);
+        windBias = normalize(windBias);
+        float theta = dot(windBias, p.xz) * w + uTime * phi;
+        float c = cos(theta), s = sin(theta);
+        return vec3(Q*A*windBias.x*c, A*s, Q*A*windBias.y*c);
+      }
+
+      void main() {
+        vec3 pos = position;
+        vSeed = aSeed;
+
+        // Wind-driven advection: particles drift slowly downwind
+        pos.x += uWind.x * uWindStr * uTime * 0.03;
+        pos.z += uWind.y * uWindStr * uTime * 0.03;
+        // Wrap around to keep the field populated
+        pos.x = mod(pos.x + 9.0, 18.0) - 9.0;
+        pos.z = mod(pos.z + 5.0, 10.0) - 5.0;
+
+        // ---- Gerstner base wave (analytic, wind-biased) ----
+        vec3 d = vec3(0.0);
+        d += gerstner(pos, normalize(vec2(1.0, 0.2)),  0.55, 0.50, 0.85, 0.70);
+        d += gerstner(pos, normalize(vec2(0.8,-0.5)),  0.35, 0.85, 1.10, 0.60);
+        d += gerstner(pos, normalize(vec2(-0.5,0.9)),  0.22, 1.30, 1.45, 0.50);
+        d += gerstner(pos, normalize(vec2(0.3, 0.85)), 0.14, 2.00, 1.80, 0.45);
+        d += gerstner(pos, normalize(vec2(-0.9,-0.2)), 0.09, 2.80, 2.30, 0.38);
+        d += gerstner(pos, normalize(vec2(0.6,-0.75)), 0.05, 4.20, 3.00, 0.32);
+
+        // Wind pushes crests higher on the downwind side
+        float windAlign = dot(normalize(pos.xz + 0.001), uWind);
+        d.y += windAlign * uWindStr * 0.15;
+
+        vec3 displaced = pos + d;
+
+        // Spray — clamped to stay within the wave field
+        float crestFactor = smoothstep(0.6, 1.2, d.y);
+        if (aSeed > 0.92 && crestFactor > 0.1) {
+          float sprayAge = mod(uTime * 2.0 + aSeed * 6.28, 2.0);
+          displaced.y += crestFactor * (0.8 * sprayAge - 0.5 * sprayAge * sprayAge);
+          displaced.x += (aSeed - 0.5) * sprayAge * 0.5;
+          displaced.z += (fract(aSeed * 7.3) - 0.5) * sprayAge * 0.3;
+        }
+        // Clamp all particles to the visible field bounds
+        displaced.x = clamp(displaced.x, -9.0, 9.0);
+        displaced.z = clamp(displaced.z, -5.0, 5.0);
+        displaced.y = clamp(displaced.y, -2.0, 5.0);
+
+        vHeight = displaced.y;
+        vFoam = crestFactor;
+
+        vec4 mv = modelViewMatrix * vec4(displaced, 1.0);
+        vDist = -mv.z;
+        gl_Position = projectionMatrix * mv;
+
+        float sizeBoost = 1.0 + smoothstep(0.0, 0.8, d.y) * 0.8;
+        // Edge proximity → passed to fragment for smooth alpha fade
+        vEdge = smoothstep(9.0, 6.5, abs(displaced.x))
+              * smoothstep(5.0, 3.5, abs(displaced.z));
+        gl_PointSize = clamp(aSize * sizeBoost * uPixelRatio * (18.0 / max(vDist, 0.1)), 1.0, 8.0);
+      }
+    `,
+    fragmentShader: `
+      varying float vHeight;
+      varying float vFoam;
+      varying float vSeed;
+      varying float vDist;
+      varying float vEdge;
+
+      void main() {
+        // Map gl_PointCoord to a sphere: treat each point sprite as a
+        // tiny 3D ball. Compute a normal from the disc position, then
+        // apply Lambert + Blinn-Phong + rim light for a wet droplet look.
+        vec2 uv = gl_PointCoord * 2.0 - 1.0;  // -1..1
+        float r2 = dot(uv, uv);
+        if (r2 > 1.0) discard;
+
+        // Sphere normal: z = sqrt(1 - x² - y²)
+        float nz = sqrt(1.0 - r2);
+        vec3 N = vec3(uv.x, -uv.y, nz);  // flip y for screen space
+
+        // Light from upper-right-front
+        vec3 L = normalize(vec3(0.4, 0.65, 0.65));
+        float NdotL = max(dot(N, L), 0.0);
+
+        // Blinn-Phong specular (wet sheen)
+        vec3 V = vec3(0.0, 0.0, 1.0);
+        vec3 H = normalize(L + V);
+        float spec = pow(max(dot(N, H), 0.0), 48.0);
+
+        // Fresnel rim
+        float fres = pow(1.0 - nz, 2.5);
+
+        // ---- Base color: wide spectrum from near-black to bright foam ----
+        vec3 abyss   = vec3(0.005, 0.012, 0.04);  // nearly black navy
+        vec3 deep    = vec3(0.015, 0.04, 0.12);    // very dark blue
+        vec3 mid     = vec3(0.04, 0.14, 0.35);     // rich dark blue
+        vec3 upper   = vec3(0.08, 0.32, 0.58);     // medium blue
+        vec3 shallow = vec3(0.18, 0.58, 0.82);     // bright cyan
+        vec3 foam    = vec3(0.82, 0.92, 1.00);     // near-white
+
+        float h = smoothstep(-1.0, 1.4, vHeight);
+        vec3 baseCol = mix(abyss, deep, smoothstep(0.0, 0.18, h));
+        baseCol = mix(baseCol, mid, smoothstep(0.15, 0.38, h));
+        baseCol = mix(baseCol, upper, smoothstep(0.35, 0.58, h));
+        baseCol = mix(baseCol, shallow, smoothstep(0.55, 0.78, h));
+        baseCol = mix(baseCol, foam, smoothstep(0.80, 0.97, h));
+
+        // Spray particles — bright white
+        if (vSeed > 0.92 && vFoam > 0.1) {
+          baseCol = mix(baseCol, vec3(1.0), 0.85);
+        }
+
+        // ---- Media-art shading: high contrast + sharp highlights ----
+
+        // Very dark ambient — deep shadows, only lit areas pop
+        vec3 ambient = baseCol * 0.06;
+
+        // Strong key light — cool blue, punchy diffuse
+        vec3 diffuse = baseCol * pow(NdotL, 1.3) * 0.75;
+
+        // Warm accent fill from below-left (subtle, adds depth)
+        vec3 L2 = normalize(vec3(-0.5, -0.4, 0.4));
+        float NdotL2 = max(dot(N, L2), 0.0);
+        vec3 warmFill = vec3(0.90, 0.40, 0.10) * pow(NdotL2, 1.5) * 0.12;
+
+        // Double specular: sharp primary + broad secondary
+        float specSharp = pow(max(dot(N, H), 0.0), 128.0);
+        float specBroad = pow(max(dot(N, H), 0.0), 24.0);
+        vec3 specCol = vec3(1.0, 0.98, 0.95) * specSharp * 0.80
+                     + vec3(0.7, 0.85, 1.0) * specBroad * 0.15;
+
+        // Intense cyan rim (signature media-art edge glow)
+        vec3 rimCol = vec3(0.15, 0.60, 0.95) * pow(fres, 1.5) * 0.70;
+
+        // Subsurface: thin-shell translucency
+        float sss = pow(1.0 - abs(dot(N, V)), 2.2);
+        vec3 sssCol = baseCol * sss * 0.15;
+
+        // Back light kick (particles pop against black background)
+        vec3 L3 = normalize(vec3(0.0, 0.3, -0.95));
+        float backLight = pow(max(dot(N, L3), 0.0), 3.0);
+        vec3 backCol = vec3(0.10, 0.30, 0.55) * backLight * 0.25;
+
+        vec3 col = ambient + diffuse + warmFill + specCol + rimCol + sssCol + backCol;
+
+        // Contrast boost — push darks darker, lights brighter
+        col = pow(col, vec3(0.92));
+
+        // Anti-aliased edge
+        float alpha = smoothstep(1.0, 0.85, sqrt(r2)) * 0.94;
+
+        // Depth fade
+        float fog = exp(-vDist * 0.07);
+        alpha *= fog;
+
+        // Soft edge fade — particles near the boundary gradually
+        // become transparent instead of popping out of existence.
+        alpha *= vEdge;
+
+        gl_FragColor = vec4(col, alpha);
+      }
+    `,
+  });
+
+  const points = new THREE.Points(geo, mat);
+  points.frustumCulled = false;
+  scene.add(points);
+
+  // ---- Sailboat (wireframe yacht) ----
+  // A wireframe-style yacht that floats on the wave surface. Its Y and
+  // roll/pitch are driven by the Gerstner wave each frame — proof that
+  // the physics simulation acts on real geometry, not just particles.
+  function gerstnerHeightJS(px, pz, t) {
+    function gw(dx, dz, A, w, phi, Q) {
+      const len = Math.sqrt(dx*dx + dz*dz) || 1;
+      dx /= len; dz /= len;
+      const dot = dx * px + dz * pz;
+      const theta = dot * w + t * phi;
+      return A * Math.sin(theta);
+    }
+    let h = 0;
+    h += gw(1.0, 0.2,  0.55, 0.50, 0.85, 0.70);
+    h += gw(0.8,-0.5,  0.35, 0.85, 1.10, 0.60);
+    h += gw(-0.5,0.9,  0.22, 1.30, 1.45, 0.50);
+    h += gw(0.3, 0.85, 0.14, 2.00, 1.80, 0.45);
+    h += gw(-0.9,-0.2, 0.09, 2.80, 2.30, 0.38);
+    h += gw(0.6,-0.75, 0.05, 4.20, 3.00, 0.32);
+    return h;
+  }
+
+  const boatGroup = new THREE.Group();
+  scene.add(boatGroup);
+
+  // Build a more detailed yacht from vertices + edges (wireframe look)
+  const boatScale = 1.1;
+
+  // Hull: a proper boat hull profile with bow and stern
+  const hullPts = [
+    // Bottom keel
+    [-0.5, -0.08, 0],
+    [-0.35, -0.14, 0],
+    [0, -0.16, 0],
+    [0.35, -0.14, 0],
+    [0.55, -0.06, 0],   // bow (pointed front)
+    // Deck line (wider)
+    [0.55, 0.0, 0],
+    [0.40, 0.02, 0.10],
+    [0.0, 0.04, 0.14],
+    [-0.30, 0.03, 0.12],
+    [-0.50, 0.0, 0.06],
+    [-0.50, -0.02, 0],
+    // Other side
+    [0.40, 0.02, -0.10],
+    [0.0, 0.04, -0.14],
+    [-0.30, 0.03, -0.12],
+    [-0.50, 0.0, -0.06],
+  ];
+  const hullVerts = new Float32Array(hullPts.flat().map(v => v * boatScale));
+  const hullIndices = [
+    // Keel outline
+    0,1, 1,2, 2,3, 3,4,
+    // Deck port side
+    5,6, 6,7, 7,8, 8,9, 9,10,
+    // Deck starboard side
+    5,11, 11,12, 12,13, 13,14, 14,10,
+    // Connect keel to deck
+    4,5, 0,10, 2,7, 2,12, 3,6, 3,11, 1,9, 1,14
+  ];
+  const hullGeo = new THREE.BufferGeometry();
+  hullGeo.setAttribute('position', new THREE.BufferAttribute(hullVerts, 3));
+  hullGeo.setIndex(hullIndices);
+  const hullMat = new THREE.LineBasicMaterial({ color: 0xddeeff, transparent: true, opacity: 0.92 });
+  const hullWire = new THREE.LineSegments(hullGeo, hullMat);
+  boatGroup.add(hullWire);
+
+  // Solid hull fill (dark blue body visible behind the wireframe)
+  const hullFillShape = new THREE.Shape();
+  hullFillShape.moveTo(-0.50 * boatScale, -0.02 * boatScale);
+  hullFillShape.lineTo(-0.35 * boatScale, -0.14 * boatScale);
+  hullFillShape.lineTo(0.0,               -0.16 * boatScale);
+  hullFillShape.lineTo(0.35 * boatScale,  -0.14 * boatScale);
+  hullFillShape.lineTo(0.55 * boatScale,  -0.06 * boatScale);
+  hullFillShape.lineTo(0.55 * boatScale,   0.0);
+  hullFillShape.lineTo(-0.50 * boatScale,  0.0);
+  const hullFillGeo = new THREE.ShapeGeometry(hullFillShape);
+  const hullFillMat = new THREE.MeshBasicMaterial({
+    color: 0x1a2a4a, side: THREE.DoubleSide,
+  });
+  boatGroup.add(new THREE.Mesh(hullFillGeo, hullFillMat));
+
+  // Mast
+  const mastH = 0.75 * boatScale;
+  const mastGeo = new THREE.BufferGeometry();
+  mastGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+    0, 0.04*boatScale, 0,  0, mastH, 0
+  ]), 3));
+  const mastMat = new THREE.LineBasicMaterial({ color: 0xeeeeff, transparent: true, opacity: 0.90 });
+  boatGroup.add(new THREE.Line(mastGeo, mastMat));
+
+  // Main sail — filled triangle mesh (visible, colored)
+  const sailShape = new THREE.Shape();
+  sailShape.moveTo(0, 0.08 * boatScale);
+  sailShape.lineTo(0, mastH * 0.95);
+  sailShape.lineTo(0.28 * boatScale, 0.12 * boatScale);
+  sailShape.lineTo(0, 0.08 * boatScale);
+  const sailGeo = new THREE.ShapeGeometry(sailShape);
+  const sailMat = new THREE.MeshBasicMaterial({
+    color: 0xeef4ff, side: THREE.DoubleSide,
+  });
+  boatGroup.add(new THREE.Mesh(sailGeo, sailMat));
+
+  // Jib (front sail) — filled triangle
+  const jibShape = new THREE.Shape();
+  jibShape.moveTo(0, mastH * 0.85);
+  jibShape.lineTo(0.40 * boatScale, 0.06 * boatScale);
+  jibShape.lineTo(0, 0.10 * boatScale);
+  jibShape.lineTo(0, mastH * 0.85);
+  const jibGeo = new THREE.ShapeGeometry(jibShape);
+  const jibMat = new THREE.MeshBasicMaterial({
+    color: 0xdde8ff, side: THREE.DoubleSide,
+  });
+  boatGroup.add(new THREE.Mesh(jibGeo, jibMat));
+
+  // Rigging lines (forestay, backstay, shrouds)
+  const rigVerts = new Float32Array([
+    // forestay: mast top → bow
+    0, mastH, 0,  0.55*boatScale, 0, 0,
+    // backstay: mast top → stern
+    0, mastH, 0,  -0.50*boatScale, 0, 0,
+    // shroud port
+    0, mastH * 0.9, 0,  -0.15*boatScale, 0.03*boatScale, 0.14*boatScale,
+    // shroud starboard
+    0, mastH * 0.9, 0,  -0.15*boatScale, 0.03*boatScale, -0.14*boatScale,
+  ]);
+  const rigGeo = new THREE.BufferGeometry();
+  rigGeo.setAttribute('position', new THREE.BufferAttribute(rigVerts, 3));
+  const rigMat = new THREE.LineBasicMaterial({ color: 0xaabbcc, transparent: true, opacity: 0.55 });
+  boatGroup.add(new THREE.LineSegments(rigGeo, rigMat));
+
+  // ---- Force arrows (buoyancy up, gravity down) ----
+  function makeArrow(color, len) {
+    const group = new THREE.Group();
+    // Shaft
+    const shaftGeo = new THREE.BufferGeometry();
+    shaftGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0,0,0, 0,len,0]), 3));
+    group.add(new THREE.Line(shaftGeo, new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0.85, linewidth: 2 })));
+    // Arrowhead (3 lines forming a cone shape)
+    const hs = len * 0.22;
+    const hw = len * 0.10;
+    const headGeo = new THREE.BufferGeometry();
+    headGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+      -hw, len - hs, 0,   0, len, 0,
+       hw, len - hs, 0,   0, len, 0,
+       0, len - hs, -hw,  0, len, 0,
+       0, len - hs,  hw,  0, len, 0,
+    ]), 3));
+    group.add(new THREE.LineSegments(headGeo, new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0.85 })));
+    return group;
+  }
+
+  const buoyArrow = makeArrow(0x40d0ff, 0.45);   // cyan-blue, pointing up
+  const gravArrow = makeArrow(0xff6060, 0.35);    // red, pointing down
+  gravArrow.rotation.z = Math.PI;                  // flip to point downward
+  boatGroup.add(buoyArrow);
+  boatGroup.add(gravArrow);
+
+  // Labels (small sprites)
+  function makeLabel(text, color) {
+    const c = document.createElement('canvas');
+    c.width = 64; c.height = 24;
+    const ctx = c.getContext('2d');
+    ctx.font = 'bold 16px monospace';
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center';
+    ctx.fillText(text, 32, 17);
+    const tex = new THREE.CanvasTexture(c);
+    const sp = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.80 });
+    const sprite = new THREE.Sprite(sp);
+    sprite.scale.set(0.3, 0.11, 1);
+    return sprite;
+  }
+  const buoyLabel = makeLabel('Fb', '#40d0ff');
+  buoyLabel.position.set(0.18, 0.50, 0);
+  buoyArrow.add(buoyLabel);
+
+  const gravLabel = makeLabel('mg', '#ff6060');
+  gravLabel.position.set(0.18, -0.08, 0);
+  gravArrow.add(gravLabel);
+
+  // ====================================================================
+  // BUOY FACTORY (IALA navigation marker — 3 types: can, cone, spar)
+  // ====================================================================
+  // Type: 'can' (flat-top cylinder, port), 'cone' (pointed top, starboard),
+  //       'spar' (tall thin pole, safe water)
+  function makeBuoy(type, hullColor) {
+    const g = new THREE.Group();
+
+    if (type === 'can') {
+      // Floating cylinder hull (port-hand mark, green in IALA-A)
+      const hull = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.14, 0.14, 0.20, 14),
+        new THREE.MeshBasicMaterial({ color: hullColor, transparent: true, opacity: 0.92 })
+      );
+      hull.position.y = 0.04;
+      g.add(hull);
+      g.add(new THREE.LineSegments(
+        new THREE.EdgesGeometry(hull.geometry),
+        new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.55 })
+      )).position.y = 0.04;
+      // Topmark: short cylinder
+      const top = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.05, 0.05, 0.10, 8),
+        new THREE.MeshBasicMaterial({ color: hullColor, transparent: true, opacity: 0.95 })
+      );
+      top.position.y = 0.22;
+      g.add(top);
+      // Light
+      const bulb = new THREE.Mesh(
+        new THREE.SphereGeometry(0.035, 8, 6),
+        new THREE.MeshBasicMaterial({ color: 0x88ff66, transparent: true, opacity: 1.0 })
+      );
+      bulb.position.y = 0.32;
+      g.add(bulb);
+      g.userData.bulb = bulb;
+      g.userData.blinkHz = 1.5;
+    } else if (type === 'cone') {
+      // Starboard mark: cone on cylinder
+      const hull = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.13, 0.15, 0.18, 14),
+        new THREE.MeshBasicMaterial({ color: hullColor, transparent: true, opacity: 0.92 })
+      );
+      hull.position.y = 0.04;
+      g.add(hull);
+      g.add(new THREE.LineSegments(
+        new THREE.EdgesGeometry(hull.geometry),
+        new THREE.LineBasicMaterial({ color: 0xfff0dd, transparent: true, opacity: 0.55 })
+      )).position.y = 0.04;
+      // Topmark cone pointing up
+      const top = new THREE.Mesh(
+        new THREE.ConeGeometry(0.08, 0.14, 10),
+        new THREE.MeshBasicMaterial({ color: hullColor, transparent: true, opacity: 0.95 })
+      );
+      top.position.y = 0.22;
+      g.add(top);
+      // Light
+      const bulb = new THREE.Mesh(
+        new THREE.SphereGeometry(0.035, 8, 6),
+        new THREE.MeshBasicMaterial({ color: 0xff5522, transparent: true, opacity: 1.0 })
+      );
+      bulb.position.y = 0.34;
+      g.add(bulb);
+      g.userData.bulb = bulb;
+      g.userData.blinkHz = 0.8;
+    } else if (type === 'spar') {
+      // Safe-water spar buoy: tall thin pole with sphere topmark
+      const hull = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.06, 0.10, 0.30, 12),
+        new THREE.MeshBasicMaterial({ color: hullColor, transparent: true, opacity: 0.92 })
+      );
+      hull.position.y = 0.05;
+      g.add(hull);
+      // Red-white stripes
+      const stripe = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.061, 0.085, 0.08, 12, 1, true),
+        new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.95, side: THREE.DoubleSide })
+      );
+      stripe.position.y = 0.10;
+      g.add(stripe);
+      // Pole
+      const pole = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.012, 0.012, 0.30, 6),
+        new THREE.MeshBasicMaterial({ color: 0x221108, transparent: true, opacity: 0.8 })
+      );
+      pole.position.y = 0.34;
+      g.add(pole);
+      // Spherical topmark
+      const ball = new THREE.Mesh(
+        new THREE.SphereGeometry(0.055, 10, 8),
+        new THREE.MeshBasicMaterial({ color: hullColor, transparent: true, opacity: 0.95 })
+      );
+      ball.position.y = 0.52;
+      g.add(ball);
+      // Light
+      const bulb = new THREE.Mesh(
+        new THREE.SphereGeometry(0.03, 8, 6),
+        new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1.0 })
+      );
+      bulb.position.y = 0.60;
+      g.add(bulb);
+      g.userData.bulb = bulb;
+      g.userData.blinkHz = 0.5;
+    }
+
+    // Underwater waterline ring (the submerged part hint)
+    const ring = new THREE.Mesh(
+      new THREE.RingGeometry(0.11, 0.15, 18),
+      new THREE.MeshBasicMaterial({ color: hullColor, transparent: true, opacity: 0.35, side: THREE.DoubleSide })
+    );
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.y = -0.04;
+    g.add(ring);
+
+    return g;
+  }
+
+  // Create 7 buoys scattered widely across the ocean (mixed types).
+  // Wave area is roughly x ∈ [-5, 5], z ∈ [-2.5, 2.5]. We avoid the
+  // lighthouse zone (x < -3, z < -1.5) and the boat's starting area.
+  const buoys = [
+    { mesh: makeBuoy('can',  0x28d070), x: -2.2, z:  1.8, tiltFactor: 0.45 },  // green — back-left
+    { mesh: makeBuoy('cone', 0xd83020), x:  4.2, z: -0.8, tiltFactor: 0.40 },  // red  — far right
+    { mesh: makeBuoy('spar', 0xd83020), x: -0.3, z: -2.1, tiltFactor: 0.55 },  // spar — front-center
+    { mesh: makeBuoy('can',  0x28d070), x:  3.0, z:  2.0, tiltFactor: 0.48 },  // green — far back-right
+    { mesh: makeBuoy('cone', 0xd83020), x: -4.2, z:  1.5, tiltFactor: 0.42 },  // red — far back-left
+    { mesh: makeBuoy('spar', 0xd83020), x:  1.6, z: -1.2, tiltFactor: 0.50 },  // spar — mid-front
+    { mesh: makeBuoy('can',  0x28d070), x:  4.5, z:  0.6, tiltFactor: 0.46 },  // green — far right-mid
+  ];
+  buoys.forEach(b => scene.add(b.mesh));
+
+  // ====================================================================
+  // LIGHTHOUSE (realistic anatomy: base → tower → watch room →
+  //   gallery walkway → lantern room → cupola → lightning rod)
+  // ====================================================================
+  // References: https://en.wikipedia.org/wiki/Lighthouse
+  //             https://uslhs.org/resources/education/glossaries-facts-trivia/lighthouse-glossary-terms
+  const lighthouseGroup = new THREE.Group();
+  scene.add(lighthouseGroup);
+
+  // ---- Rocky foundation (irregular stacked rocks) ----
+  const rockMat = new THREE.MeshBasicMaterial({ color: 0x384550, transparent: true, opacity: 0.95 });
+  const rockEdgeMat = new THREE.LineBasicMaterial({ color: 0x9bb0c2, transparent: true, opacity: 0.55 });
+  // Main rock
+  const rock1Geo = new THREE.DodecahedronGeometry(0.60, 0);
+  const rock1 = new THREE.Mesh(rock1Geo, rockMat);
+  rock1.position.y = 0.05;
+  rock1.scale.set(1.0, 0.55, 1.0);
+  lighthouseGroup.add(rock1);
+  lighthouseGroup.add(new THREE.LineSegments(new THREE.EdgesGeometry(rock1Geo), rockEdgeMat))
+    .position.copy(rock1.position);
+  lighthouseGroup.children[lighthouseGroup.children.length - 1].scale.copy(rock1.scale);
+  // Smaller side rocks
+  const rock2Geo = new THREE.DodecahedronGeometry(0.28, 0);
+  const rock2 = new THREE.Mesh(rock2Geo, rockMat);
+  rock2.position.set(0.55, 0.02, -0.15);
+  rock2.scale.set(1.0, 0.5, 1.0);
+  lighthouseGroup.add(rock2);
+  const rock3 = new THREE.Mesh(rock2Geo, rockMat);
+  rock3.position.set(-0.45, 0.03, 0.25);
+  rock3.scale.set(1.1, 0.45, 0.9);
+  rock3.rotation.y = 0.7;
+  lighthouseGroup.add(rock3);
+
+  // ---- Stone plinth (square base the tower sits on) ----
+  const plinthGeo = new THREE.BoxGeometry(0.52, 0.14, 0.52);
+  const plinthMat = new THREE.MeshBasicMaterial({ color: 0x6a7380, transparent: true, opacity: 0.92 });
+  const plinth = new THREE.Mesh(plinthGeo, plinthMat);
+  plinth.position.y = 0.30;
+  lighthouseGroup.add(plinth);
+  lighthouseGroup.add(new THREE.LineSegments(
+    new THREE.EdgesGeometry(plinthGeo),
+    new THREE.LineBasicMaterial({ color: 0xcad4e0, transparent: true, opacity: 0.6 })
+  )).position.y = 0.30;
+
+  // ---- Main tower (tapered cylinder, white) ----
+  // Proportions based on real lighthouses: taper ~20%, height ~4x base radius
+  const towerH = 1.40;
+  const towerRBot = 0.28;
+  const towerRTop = 0.20;
+  const towerGeo = new THREE.CylinderGeometry(towerRTop, towerRBot, towerH, 20, 1);
+  const towerMat = new THREE.MeshBasicMaterial({ color: 0xf4f6f8, transparent: true, opacity: 0.92 });
+  const tower = new THREE.Mesh(towerGeo, towerMat);
+  tower.position.y = 0.37 + towerH / 2;
+  lighthouseGroup.add(tower);
+  lighthouseGroup.add(new THREE.LineSegments(
+    new THREE.EdgesGeometry(towerGeo),
+    new THREE.LineBasicMaterial({ color: 0xd0dae4, transparent: true, opacity: 0.45 })
+  )).position.y = tower.position.y;
+
+  // ---- Red spiral stripe (painted band — like Cape Hatteras style) ----
+  // Simulate with 2 horizontal bands (simple, visually clear)
+  [0.65, 1.25].forEach(yOff => {
+    // Interpolate radius at this height
+    const t = (yOff - 0) / towerH;
+    const r = towerRBot + (towerRTop - towerRBot) * t;
+    const bandGeo = new THREE.CylinderGeometry(r + 0.003, r + 0.003, 0.14, 20, 1, true);
+    const bandMat = new THREE.MeshBasicMaterial({ color: 0xc42818, transparent: true, opacity: 0.90, side: THREE.DoubleSide });
+    const band = new THREE.Mesh(bandGeo, bandMat);
+    band.position.y = 0.37 + yOff;
+    lighthouseGroup.add(band);
+  });
+
+  // ---- Small square windows on tower (3 vertical windows) ----
+  const windowMat = new THREE.MeshBasicMaterial({ color: 0x1a2838, transparent: true, opacity: 0.85 });
+  [0.55, 0.95, 1.35].forEach((yOff, i) => {
+    const t = yOff / towerH;
+    const r = towerRBot + (towerRTop - towerRBot) * t;
+    const win = new THREE.Mesh(new THREE.PlaneGeometry(0.05, 0.08), windowMat);
+    win.position.set(0, 0.37 + yOff, r + 0.002);
+    lighthouseGroup.add(win);
+  });
+
+  // ---- Door at base ----
+  const door = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.08, 0.14),
+    new THREE.MeshBasicMaterial({ color: 0x3a2010, transparent: true, opacity: 0.92 })
+  );
+  door.position.set(0, 0.48, towerRBot + 0.002);
+  lighthouseGroup.add(door);
+
+  // ---- Watch room (slightly wider ring just below gallery) ----
+  const watchRoomY = 0.37 + towerH;
+  const watchRoomGeo = new THREE.CylinderGeometry(0.23, 0.22, 0.10, 20);
+  const watchRoomMat = new THREE.MeshBasicMaterial({ color: 0xe8ebf0, transparent: true, opacity: 0.92 });
+  const watchRoom = new THREE.Mesh(watchRoomGeo, watchRoomMat);
+  watchRoom.position.y = watchRoomY + 0.05;
+  lighthouseGroup.add(watchRoom);
+  lighthouseGroup.add(new THREE.LineSegments(
+    new THREE.EdgesGeometry(watchRoomGeo),
+    new THREE.LineBasicMaterial({ color: 0xc0d0dc, transparent: true, opacity: 0.55 })
+  )).position.y = watchRoomY + 0.05;
+
+  // ---- Gallery walkway (the ring platform around the lantern room) ----
+  const galleryY = watchRoomY + 0.12;
+  const galleryGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.025, 22);
+  const galleryMat = new THREE.MeshBasicMaterial({ color: 0x505a68, transparent: true, opacity: 0.92 });
+  const gallery = new THREE.Mesh(galleryGeo, galleryMat);
+  gallery.position.y = galleryY;
+  lighthouseGroup.add(gallery);
+
+  // Gallery railing (top ring + vertical posts + bottom ring)
+  const railMat = new THREE.LineBasicMaterial({ color: 0xaab8c6, transparent: true, opacity: 0.85 });
+  function makeRingLine(radius, segments, yPos) {
+    const pts = [];
+    for (let i = 0; i <= segments; i++) {
+      const a = (i / segments) * Math.PI * 2;
+      pts.push(Math.cos(a) * radius, yPos, Math.sin(a) * radius);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pts), 3));
+    return new THREE.Line(geo, railMat);
+  }
+  lighthouseGroup.add(makeRingLine(0.32, 24, galleryY + 0.09));   // top rail
+  lighthouseGroup.add(makeRingLine(0.32, 24, galleryY + 0.05));   // mid rail
+  // Vertical posts
+  const postPts = [];
+  const nPosts = 16;
+  for (let i = 0; i < nPosts; i++) {
+    const a = (i / nPosts) * Math.PI * 2;
+    const x = Math.cos(a) * 0.32, z = Math.sin(a) * 0.32;
+    postPts.push(x, galleryY + 0.01, z,  x, galleryY + 0.09, z);
+  }
+  const postGeo = new THREE.BufferGeometry();
+  postGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(postPts), 3));
+  lighthouseGroup.add(new THREE.LineSegments(postGeo, railMat));
+
+  // ---- Lantern room (glass-walled light housing) ----
+  const lanternY = galleryY + 0.12;
+  const lanternH = 0.20;
+  const lanternR = 0.19;
+  // Glass cylinder (translucent)
+  const lanternGlassGeo = new THREE.CylinderGeometry(lanternR, lanternR, lanternH, 12, 1, true);
+  const lanternGlassMat = new THREE.MeshBasicMaterial({
+    color: 0xaaccee, transparent: true, opacity: 0.32, side: THREE.DoubleSide
+  });
+  const lanternGlass = new THREE.Mesh(lanternGlassGeo, lanternGlassMat);
+  lanternGlass.position.y = lanternY + lanternH / 2;
+  lighthouseGroup.add(lanternGlass);
+  // Frame bars (vertical lines)
+  const frameMat = new THREE.LineBasicMaterial({ color: 0x1a2430, transparent: true, opacity: 0.88 });
+  const framePts = [];
+  const nFrames = 12;
+  for (let i = 0; i < nFrames; i++) {
+    const a = (i / nFrames) * Math.PI * 2;
+    const x = Math.cos(a) * lanternR, z = Math.sin(a) * lanternR;
+    framePts.push(x, lanternY, z,  x, lanternY + lanternH, z);
+  }
+  // Top and bottom rings of lantern room
+  for (let i = 0; i <= nFrames; i++) {
+    const a1 = (i / nFrames) * Math.PI * 2;
+    const a2 = ((i + 1) / nFrames) * Math.PI * 2;
+    framePts.push(
+      Math.cos(a1) * lanternR, lanternY, Math.sin(a1) * lanternR,
+      Math.cos(a2) * lanternR, lanternY, Math.sin(a2) * lanternR,
+      Math.cos(a1) * lanternR, lanternY + lanternH, Math.sin(a1) * lanternR,
+      Math.cos(a2) * lanternR, lanternY + lanternH, Math.sin(a2) * lanternR,
+    );
+  }
+  const frameGeo = new THREE.BufferGeometry();
+  frameGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(framePts), 3));
+  lighthouseGroup.add(new THREE.LineSegments(frameGeo, frameMat));
+
+  // ---- Glowing light bulb (inside lantern room) ----
+  const lightBulbGeo = new THREE.SphereGeometry(0.09, 14, 10);
+  const lightBulbMat = new THREE.MeshBasicMaterial({ color: 0xfff4c0, transparent: true, opacity: 1.0 });
+  const lightBulb = new THREE.Mesh(lightBulbGeo, lightBulbMat);
+  lightBulb.position.y = lanternY + lanternH / 2;
+  lighthouseGroup.add(lightBulb);
+
+  // Halo glow around bulb (additive sprite-style sphere)
+  const haloMat = new THREE.MeshBasicMaterial({
+    color: 0xfff4c0, transparent: true, opacity: 0.22,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  });
+  const halo = new THREE.Mesh(new THREE.SphereGeometry(0.14, 12, 10), haloMat);
+  halo.position.y = lanternY + lanternH / 2;
+  lighthouseGroup.add(halo);
+
+  // ---- Cupola (domed roof) ----
+  const cupolaY = lanternY + lanternH;
+  const cupolaGeo = new THREE.SphereGeometry(lanternR + 0.01, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2);
+  const cupolaMat = new THREE.MeshBasicMaterial({ color: 0x5a1810, transparent: true, opacity: 0.92 });
+  const cupola = new THREE.Mesh(cupolaGeo, cupolaMat);
+  cupola.position.y = cupolaY;
+  cupola.scale.y = 0.55;
+  lighthouseGroup.add(cupola);
+  lighthouseGroup.add(new THREE.LineSegments(
+    new THREE.EdgesGeometry(cupolaGeo),
+    new THREE.LineBasicMaterial({ color: 0x8a3020, transparent: true, opacity: 0.55 })
+  )).position.y = cupolaY;
+  lighthouseGroup.children[lighthouseGroup.children.length - 1].scale.y = 0.55;
+
+  // ---- Ventilator ball (small sphere atop cupola) ----
+  const ventBall = new THREE.Mesh(
+    new THREE.SphereGeometry(0.025, 8, 6),
+    new THREE.MeshBasicMaterial({ color: 0x2a2018, transparent: true, opacity: 0.95 })
+  );
+  ventBall.position.y = cupolaY + 0.13;
+  lighthouseGroup.add(ventBall);
+
+  // ---- Lightning rod (thin spike at very top) ----
+  const rodGeo = new THREE.BufferGeometry();
+  rodGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+    0, cupolaY + 0.14, 0,   0, cupolaY + 0.26, 0
+  ]), 3));
+  lighthouseGroup.add(new THREE.Line(rodGeo, new THREE.LineBasicMaterial({
+    color: 0xddddee, transparent: true, opacity: 0.85
+  })));
+
+  // ---- Physical multi-layer beam (plain meshes, no shader) ----
+  // Added directly to the scene so lighthouseGroup.traverse() can't touch
+  // the beam materials. We'll mirror the lantern world position below.
+  const beamGroup = new THREE.Group();
+  scene.add(beamGroup);
+
+  // Build one beam as a stack of nested cones:
+  //   - solid bright core  (small radius, high opacity)
+  //   - mid glow           (medium radius, medium opacity)
+  //   - outer halo         (wide radius, low opacity)
+  // All share the same apex at origin; cone tips point along -Y (we'll
+  // rotate the Mesh so -Y becomes +X horizontally).
+  function makeBeamCone(radius, length, color, opacity) {
+    const geo = new THREE.ConeGeometry(radius, length, 28, 1, true);
+    geo.translate(0, -length / 2, 0);
+    const mat = new THREE.MeshBasicMaterial({
+      color: color,
+      transparent: true,
+      opacity: opacity,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.frustumCulled = false;
+    mesh.renderOrder = 1500;
+    return mesh;
+  }
+
+  function makeBeamStack() {
+    // Approximate a Gaussian radial profile with N nested cones.
+    // All cones share the same length so there's no pointy "inner tip"
+    // showing through when outer layers end earlier.
+    const g = new THREE.Group();
+    const N = 18;
+    const maxRadius = 0.70;
+    const length    = 2.4;
+    const sigma     = 0.40;
+    const baseAlpha = 0.10;
+    const color     = 0xfff2b8;
+    for (let i = N; i >= 1; i--) {
+      const r = (i / N) * maxRadius;
+      const gauss = Math.exp(-(r * r) / (2 * sigma * sigma));
+      const alpha = baseAlpha * gauss;
+      g.add(makeBeamCone(r, length, color, alpha));  // same length for every layer
+    }
+    return g;
+  }
+
+  // Two beams pointing in opposite horizontal directions
+  const beam1 = makeBeamStack();
+  beam1.rotation.z =  Math.PI / 2;   // cone (apex→-Y) becomes apex→+X
+  const beam2 = makeBeamStack();
+  beam2.rotation.z = -Math.PI / 2;   // apex→-X
+  beamGroup.add(beam1);
+  beamGroup.add(beam2);
+
+  // Bright additive glow at the source (no silhouette — pure light add)
+  const beamCoreGeo = new THREE.SphereGeometry(0.11, 16, 12);
+  const beamCoreMat = new THREE.MeshBasicMaterial({
+    color: 0xfff6c0, transparent: true, opacity: 0.55,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false, depthTest: false,
+  });
+  const beamCore = new THREE.Mesh(beamCoreGeo, beamCoreMat);
+  beamCore.renderOrder = 1500;
+  beamCore.frustumCulled = false;
+  beamGroup.add(beamCore);
+
+  // Position lighthouse far back-left, on the "horizon"
+  lighthouseGroup.position.set(-3.8, 0, -2.2);
+  // Mirror beamGroup world position to the lantern atop the lighthouse
+  beamGroup.position.set(-3.8, lanternY + lanternH / 2, -2.2);
+
+  // ====================================================================
+  // Render order — keep all foreground objects above particles
+  // ====================================================================
+  buoys.forEach(b => {
+    b.mesh.renderOrder = 999;
+    b.mesh.traverse((child) => {
+      if (child.material) {
+        child.material.depthTest = true;
+        child.renderOrder = 999;
+      }
+    });
+  });
+  lighthouseGroup.renderOrder = 999;
+  lighthouseGroup.traverse((child) => {
+    if (child.material) {
+      // Keep halo additive (don't force depthTest on it)
+      if (child === halo) {
+        child.material.depthTest = false;
+        child.material.depthWrite = false;
+        child.renderOrder = 1100;
+      } else {
+        child.material.depthTest = true;
+        child.renderOrder = 999;
+      }
+    }
+  });
+  // beamGroup lives at the scene root. Each beam mesh already has
+  // depthTest=false, depthWrite=false, renderOrder=1500 set individually
+  // at creation time — don't override those here.
+
+  // Render boat on top of particles to prevent z-fighting flicker
+  boatGroup.renderOrder = 999;
+  boatGroup.traverse((child) => {
+    if (child.material) {
+      child.material.depthTest = true;
+      child.renderOrder = 999;
+    }
+  });
+
+  let boatX = 1.5;
+  let boatZ = 0.3;
+  let boatVX = 0, boatVZ = 0;       // velocity for inertia after release
+  const cameraOrbitCenter = { x: 0, y: 0.3, z: 0 };
+
+  // ---- Draggable object registry ----
+  // Boat uses its own boatX/boatZ; buoys use b.x/b.z. Unify under proxies
+  // that read/write the underlying state.
+  const draggables = [];
+  // Boat proxy
+  draggables.push({
+    getX: () => boatX,
+    getZ: () => boatZ,
+    setX: v => { boatX = v; },
+    setZ: v => { boatZ = v; },
+    getVX: () => boatVX,
+    getVZ: () => boatVZ,
+    setVX: v => { boatVX = v; },
+    setVZ: v => { boatVZ = v; },
+    pickRadius: 0.9,
+    displayOffsetZ: 0.3,   // boat renders slightly forward for z-fighting
+  });
+  // One proxy per buoy. Each buoy stores its own velocity in _vx/_vz.
+  buoys.forEach(b => {
+    b._vx = 0; b._vz = 0;
+    draggables.push({
+      getX: () => b.x,
+      getZ: () => b.z,
+      setX: v => { b.x = v; },
+      setZ: v => { b.z = v; },
+      getVX: () => b._vx,
+      getVZ: () => b._vz,
+      setVX: v => { b._vx = v; },
+      setVZ: v => { b._vz = v; },
+      pickRadius: 0.45,
+      displayOffsetZ: 0.3,
+    });
+  });
+
+  let draggedObj = null;       // currently held draggable (or null)
+  let dragOffsetX = 0, dragOffsetZ = 0;
+
+  // ---- Mouse + Drag ----
+  let mouseX = 0, mouseY = 0, mouseIn = false;
+  const raycaster = new THREE.Raycaster();
+  const ndc = new THREE.Vector2();
+  const dragPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+  const hitPoint = new THREE.Vector3();
+
+  function getMouseWorld(e) {
+    const r = wrap.getBoundingClientRect();
+    ndc.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    ndc.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+    raycaster.setFromCamera(ndc, camera);
+    return raycaster.ray.intersectPlane(dragPlane, hitPoint);
+  }
+
+  // Find the nearest draggable within pick radius, returns {obj, dist} or null
+  function pickDraggable(hit) {
+    let best = null;
+    for (const d of draggables) {
+      const dx = hit.x - d.getX();
+      const dz = hit.z - (d.getZ() + d.displayOffsetZ);
+      const dist2 = dx * dx + dz * dz;
+      if (dist2 < d.pickRadius * d.pickRadius) {
+        if (!best || dist2 < best.dist2) best = { obj: d, dist2 };
+      }
+    }
+    return best ? best.obj : null;
+  }
+
+  wrap.addEventListener('mousemove', (e) => {
+    const r = wrap.getBoundingClientRect();
+    mouseX = ((e.clientX - r.left) / r.width) * 2 - 1;
+    mouseY = -((e.clientY - r.top) / r.height) * 2 + 1;
+    mouseIn = true;
+    const hit = getMouseWorld(e);
+    if (!hit) return;
+    if (draggedObj) {
+      const newX = hit.x + dragOffsetX;
+      const newZ = hit.z + dragOffsetZ;
+      const curX = draggedObj.getX();
+      const curZ = draggedObj.getZ();
+      draggedObj.setVX((newX - curX) * 0.6 + draggedObj.getVX() * 0.4);
+      draggedObj.setVZ((newZ - curZ) * 0.6 + draggedObj.getVZ() * 0.4);
+      draggedObj.setX(newX);
+      draggedObj.setZ(newZ);
+    } else {
+      // Hover cursor
+      const picked = pickDraggable(hit);
+      wrap.style.cursor = picked ? 'grab' : '';
+    }
+  });
+  wrap.addEventListener('mouseleave', () => { mouseIn = false; draggedObj = null; });
+
+  wrap.addEventListener('mousedown', (e) => {
+    const hit = getMouseWorld(e);
+    if (!hit) return;
+    const picked = pickDraggable(hit);
+    if (picked) {
+      draggedObj = picked;
+      dragOffsetX = picked.getX() - hit.x;
+      dragOffsetZ = picked.getZ() - hit.z;
+      wrap.style.cursor = 'grabbing';
+    }
+  });
+  window.addEventListener('mouseup', () => {
+    if (draggedObj) {
+      draggedObj = null;
+      wrap.style.cursor = '';
+    }
+  });
+
+  // Touch support
+  wrap.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    const t = e.touches[0];
+    const hit = getMouseWorld({ clientX: t.clientX, clientY: t.clientY });
+    if (!hit) return;
+    const picked = pickDraggable(hit);
+    if (picked) {
+      draggedObj = picked;
+      dragOffsetX = picked.getX() - hit.x;
+      dragOffsetZ = picked.getZ() - hit.z;
+      e.preventDefault();
+    }
+  }, { passive: false });
+  wrap.addEventListener('touchmove', (e) => {
+    if (!draggedObj || e.touches.length !== 1) return;
+    const t = e.touches[0];
+    const hit = getMouseWorld({ clientX: t.clientX, clientY: t.clientY });
+    if (hit) {
+      const newX = hit.x + dragOffsetX;
+      const newZ = hit.z + dragOffsetZ;
+      const curX = draggedObj.getX();
+      const curZ = draggedObj.getZ();
+      draggedObj.setVX((newX - curX) * 0.6 + draggedObj.getVX() * 0.4);
+      draggedObj.setVZ((newZ - curZ) * 0.6 + draggedObj.getVZ() * 0.4);
+      draggedObj.setX(newX);
+      draggedObj.setZ(newZ);
+    }
+    e.preventDefault();
+  }, { passive: false });
+  wrap.addEventListener('touchend', () => { draggedObj = null; });
+
+  // ---- Animate with auto-LOD ----
+  const clock = new THREE.Clock();
+  let frameCount = 0;
+  let fpsCheckStart = performance.now();
+  let lodApplied = false;
+
+  function animate() {
+    const dt = Math.min(clock.getDelta(), 0.033);
+    mat.uniforms.uTime.value += dt;
+    frameCount++;
+
+    // Auto LOD: after 3 seconds, check average fps and downgrade if needed
+    if (!lodApplied && performance.now() - fpsCheckStart > 3000) {
+      const avgFps = frameCount / 3.0;
+      lodApplied = true;
+      if (avgFps < 30) {
+        // Rebuild with fewer particles
+        const newCount = avgFps < 20 ? LOW_COUNT : MID_COUNT;
+        console.log('[artist] auto-LOD: ' + avgFps.toFixed(0) + ' fps → reducing to ' + newCount + ' particles');
+        geo.setDrawRange(0, newCount);
+      } else {
+        console.log('[artist] auto-LOD: ' + avgFps.toFixed(0) + ' fps — keeping ' + COUNT + ' particles');
+      }
+    }
+
+    // ---- Wind direction evolves slowly ----
+    const bt = mat.uniforms.uTime.value;
+    const windAngle = bt * 0.08;
+    const windStr = 0.4 + 0.25 * Math.sin(bt * 0.12);
+    mat.uniforms.uWind.value.set(Math.cos(windAngle), Math.sin(windAngle));
+    mat.uniforms.uWindStr.value = windStr;
+
+    // ---- Inertia update for all draggables (skipped for the one held) ----
+    draggables.forEach(d => {
+      if (d === draggedObj) return;
+      d.setX(d.getX() + d.getVX());
+      d.setZ(d.getZ() + d.getVZ());
+      d.setVX(d.getVX() * 0.94);
+      d.setVZ(d.getVZ() * 0.94);
+    });
+    // Clamp all draggables to visible area
+    draggables.forEach(d => {
+      d.setX(Math.max(-4.8, Math.min(4.8, d.getX())));
+      d.setZ(Math.max(-2.2, Math.min(2.2, d.getZ())));
+    });
+
+    // ---- Update boat position from wave physics ----
+    const waveH = gerstnerHeightJS(boatX, boatZ, bt);
+    // Wave gradient for roll angle (finite difference)
+    const e = 0.15;
+    const hL = gerstnerHeightJS(boatX - e, boatZ, bt);
+    const hR = gerstnerHeightJS(boatX + e, boatZ, bt);
+    const rollAngle = Math.atan2(hL - hR, 2 * e) * 0.6;
+
+    // Offset boat slightly toward camera so it's always in front of
+    // the point cloud at the same world position — prevents z-fighting.
+    boatGroup.position.set(boatX, waveH, boatZ + 0.3);
+    boatGroup.rotation.z = rollAngle;
+    // Slight pitch from Z gradient
+    const hF = gerstnerHeightJS(boatX, boatZ + e, bt);
+    const hB = gerstnerHeightJS(boatX, boatZ - e, bt);
+    boatGroup.rotation.x = Math.atan2(hB - hF, 2 * e) * 0.3;
+
+    // ---- Scale force arrows by buoyancy ----
+    const buoyMag = Math.max(0.1 - waveH * 0.05, 0);  // same formula as readout
+    const buoyScale = 0.6 + buoyMag * 8.0;              // range ~0.6–1.4
+    buoyArrow.scale.set(1, buoyScale, 1);
+    buoyArrow.position.set(0, -0.08, 0);
+    gravArrow.position.set(0, -0.08, 0);
+
+    // ---- Buoys: bob with waves at fixed XZ (3 buoys, each with own blink) ----
+    buoys.forEach(b => {
+      const bh = gerstnerHeightJS(b.x, b.z, bt);
+      const bL = gerstnerHeightJS(b.x - e, b.z, bt);
+      const bR = gerstnerHeightJS(b.x + e, b.z, bt);
+      const bF = gerstnerHeightJS(b.x, b.z + e, bt);
+      const bB = gerstnerHeightJS(b.x, b.z - e, bt);
+      b.mesh.position.set(b.x, bh, b.z + 0.3);
+      b.mesh.rotation.z = Math.atan2(bL - bR, 2 * e) * b.tiltFactor;
+      b.mesh.rotation.x = Math.atan2(bB - bF, 2 * e) * b.tiltFactor;
+      // Per-buoy blink
+      const bulb = b.mesh.userData.bulb;
+      if (bulb) {
+        const period = 1.0 / b.mesh.userData.blinkHz;
+        const phase = (bt % period) / period;
+        const on = phase < 0.4;
+        bulb.material.opacity = on ? 1.0 : 0.25;
+        bulb.scale.setScalar(on ? 1.35 : 1.0);
+      }
+    });
+
+    // ---- Lighthouse: steadily rotating beam (like a real lighthouse) ----
+    beamGroup.rotation.y = bt * 0.85;
+    // Keep bulb/halo steady
+    lightBulb.material.opacity = 1.0;
+    lightBulb.scale.setScalar(1.0);
+    halo.material.opacity = 0.30;
+    halo.scale.setScalar(1.0);
+
+    // Slow camera orbit (paused softly while dragging anything)
+    if (!draggedObj) {
+      cameraOrbitCenter.t = (cameraOrbitCenter.t || 0) + dt;
+    }
+    const ct = cameraOrbitCenter.t || 0;
+    camera.position.x = Math.sin(ct * 0.06) * 2.5;
+    camera.position.y = 3.2 + Math.sin(ct * 0.10) * 0.3;
+    camera.position.z = 8.0 + Math.cos(ct * 0.04) * 1.0;
+    // lookAt drifts slightly toward boat for better tracking
+    cameraOrbitCenter.x += (boatX * 0.25 - cameraOrbitCenter.x) * 0.04;
+    cameraOrbitCenter.z += (boatZ * 0.25 - cameraOrbitCenter.z) * 0.04;
+    camera.lookAt(cameraOrbitCenter.x, 0.3, cameraOrbitCenter.z);
+
+    // ---- Live physics readout ----
+    if (frameCount % 6 === 0) {
+      const lvT = document.getElementById('lv-t');
+      if (lvT) {
+        const hBoat = waveH.toFixed(2);
+        const roll = (rollAngle * 180 / Math.PI).toFixed(1);
+        const buoyF = (1025 * 9.81 * Math.max(0.1 - waveH * 0.05, 0)).toFixed(1);
+        document.getElementById('lv-t').textContent = 't = ' + bt.toFixed(1) + ' s';
+        document.getElementById('lv-h').textContent = 'h = ' + hBoat + ' m';
+        document.getElementById('lv-theta').textContent = '\u03B8 = ' + roll + '\u00B0';
+        document.getElementById('lv-f').innerHTML = 'F<sub style="font-size:9px">b</sub> = ' + buoyF + ' N';
+        // Update wind arrow
+        const windDeg = (windAngle * 180 / Math.PI) % 360;
+        const arrow = document.getElementById('wind-arrow');
+        if (arrow) arrow.style.transform = 'rotate(' + windDeg.toFixed(0) + 'deg)';
+        const ws = document.getElementById('wind-speed');
+        if (ws) ws.textContent = (windStr * 10).toFixed(1) + ' m/s';
+      }
+    }
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>
