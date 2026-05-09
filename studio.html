@@ -12,94 +12,79 @@
   <!-- Unified type system shared with Home -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="studio.css?v=20260509a">
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="studio.css?v=20260509b">
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
 
     :root {
-      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Fira Sans', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --font-serif: 'Fira Sans', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
       --font-mono:  'JetBrains Mono', "SF Mono", Menlo, monospace;
-      --bg:         #050608;
-      --fg:         #ffffff;
-      --fg-muted:   rgba(255, 255, 255, 0.68);
-      --fg-faint:   rgba(255, 255, 255, 0.42);
-      --accent:     #9bcae8;
-      --accent-hi:  #c1ddf0;
-      --accent-warm:#d8542a;
-      --link:       #9bcae8;
-      --link-hi:    #c1ddf0;
-      --line:       rgba(255, 255, 255, 0.10);
-      --line-strong:rgba(255, 255, 255, 0.20);
+      --bg:         #fdfdfd;
+      --bg-alt:     #f5f7fa;
+      --fg:         #111;
+      --fg-muted:   #555;
+      --fg-faint:   #828282;
+      --accent:     #2a7ae2;
+      --accent-hi:  #1f5fb8;
+      --accent-warm:#b04a2a;
+      --link:       #2a7ae2;
+      --link-hi:    #111;
+      --line:       #e8e8e8;
+      --line-strong:#cfd5dc;
     }
 
-    body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-weight:300;-webkit-font-smoothing:antialiased;line-height:1.7}
-    a{color:var(--link);text-decoration:none;transition:color 0.25s}a:hover{color:var(--link-hi)}
+    body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-weight:400;-webkit-font-smoothing:antialiased;line-height:1.7}
+    a{color:var(--link);text-decoration:none;transition:color 0.25s}a:hover{color:var(--link-hi);text-decoration:underline}
 
-    /* ----- Nav (matches Home exactly) ----- */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+    /* ----- Site header (matches index.html) ----- */
+    .site-header {
+      border-top: 5px solid #424242;
+      border-bottom: 1px solid var(--line);
+      min-height: 56px;
+      line-height: 56px;
+    }
+    .site-header-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 40px;
-      background: rgba(5, 6, 8, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
     }
-    nav .nav-brand {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: 24px;
-      font-weight: 400;
-      letter-spacing: 0.03em;
-      color: rgba(255, 255, 255, 0.94);
+    .site-title {
+      font-size: 1.625rem;
+      font-weight: 300;
+      letter-spacing: -1px;
+      color: #424242;
       text-decoration: none;
-      text-transform: none;
     }
-    nav .nav-links {
-      display: flex;
-      gap: 38px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
+    .site-title:hover { text-decoration: none; color: #424242; }
+    .site-nav a {
+      margin-left: 20px;
+      color: #111;
+      font-size: 1rem;
+      text-decoration: none;
     }
-    nav .nav-links a {
-      color: rgba(255, 255, 255, 0.55);
-      transition: color 0.25s;
-      position: relative;
+    .site-nav a:first-child { margin-left: 0; }
+    .site-nav a:hover { color: var(--link); text-decoration: underline; }
+    .site-nav a.active { color: var(--link); }
+
+    /* Wrapper matches index.html */
+    .wrapper {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
-    nav .nav-links a::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0; bottom: -4px;
-      height: 1px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.35s ease;
-    }
-    nav .nav-links a:hover { color: #fff; }
-    nav .nav-links a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    nav .nav-links a.active { color: #fff; }
-    nav .nav-links a.active::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    .hero-wrap{width:100%;height:75vh;min-height:450px;max-height:750px;position:relative;margin-top:60px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.06)}
+
+    .hero-wrap{width:100%;max-width:880px;margin:24px auto 0;height:42vh;min-height:280px;max-height:440px;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:#050505}
     .hero-wrap canvas{display:block;width:100%;height:100%}
-    .hero-label{position:absolute;bottom:14px;right:18px;font-size:9px;letter-spacing:0.3em;color:rgba(255,255,255,0.25);text-transform:uppercase;pointer-events:none}
+    .hero-label{position:absolute;bottom:14px;right:18px;font-size:9px;letter-spacing:0.3em;color:rgba(255,255,255,0.45);text-transform:uppercase;pointer-events:none}
     .hero-copyright{
       position:absolute;
       bottom:14px;
@@ -107,30 +92,30 @@
       font-family:var(--font-mono);
       font-size:9px;
       letter-spacing:0.20em;
-      color:rgba(255,255,255,0.30);
+      color:rgba(255,255,255,0.40);
       text-transform:uppercase;
       pointer-events:none;
     }
-    .hero-title{position:absolute;top:28px;left:32px;pointer-events:none}
-    .hero-title h2{font-size:clamp(16px,2.2vw,28px);font-weight:300;letter-spacing:0.35em;color:rgba(255,255,255,0.75);text-transform:uppercase;margin-bottom:6px}
-    .hero-title p{font-size:clamp(9px,0.9vw,11px);letter-spacing:0.28em;color:rgba(255,255,255,0.35);text-transform:uppercase}
-    .container{max-width:900px;margin:0 auto;padding:60px 32px}
+    .hero-title{position:absolute;top:18px;left:22px;pointer-events:none}
+    .hero-title h2{font-size:clamp(13px,1.4vw,18px);font-weight:500;letter-spacing:0.08em;color:rgba(255,255,255,0.88);text-transform:uppercase;margin-bottom:3px}
+    .hero-title p{font-size:clamp(9px,0.8vw,10px);letter-spacing:0.10em;color:rgba(255,255,255,0.55);text-transform:uppercase}
+    .container{max-width:880px;margin:0 auto;padding:40px 20px 0}
     .section{margin-bottom:56px}
-    .section h2{font-size:18px;font-weight:400;letter-spacing:0.20em;text-transform:uppercase;color:rgba(255,255,255,0.90);padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:24px}
-    .section p,.section li{font-size:15px;color:rgba(255,255,255,0.72);line-height:1.8}
-    .section blockquote{border-left:3px solid rgba(255,255,255,0.15);padding:16px 24px;margin:24px 0;font-style:italic;color:rgba(255,255,255,0.60);font-size:16px;line-height:1.8}
+    .section h2{font-size:1.5rem;font-weight:500;letter-spacing:0;text-transform:none;color:#111;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:20px}
+    .section p,.section li{font-size:16px;color:#222;line-height:1.7}
+    .section blockquote{border-left:3px solid var(--accent);padding:14px 20px;margin:22px 0;font-style:italic;color:var(--fg-muted);font-size:16px;line-height:1.8;background:var(--bg-alt)}
     /* Pull quote — large serif italic, sky-blue accent, breathing room */
     .section .pull-quote {
       font-family: var(--font-serif);
       font-style: italic;
-      font-size: clamp(20px, 2.4vw, 28px);
+      font-size: clamp(18px, 2vw, 24px);
       line-height: 1.5;
-      color: rgba(255, 255, 255, 0.94);
+      color: var(--fg);
       max-width: 720px;
-      margin: 48px auto 24px;
-      padding: 28px 32px;
-      border-top: 1px solid rgba(155, 202, 232, 0.30);
-      border-bottom: 1px solid rgba(155, 202, 232, 0.30);
+      margin: 40px auto 20px;
+      padding: 24px 28px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
       text-align: center;
       position: relative;
     }
@@ -138,47 +123,41 @@
       color: var(--accent);
       display: inline-block;
       margin-top: 6px;
+      font-style: normal;
+      font-size: 0.875rem;
     }
-    /* Inline links inside artist statement — academic blue */
     .section p a {
       color: var(--link);
-      border-bottom: 1px dotted rgba(155, 202, 232, 0.35);
-      transition: color 0.25s, border-color 0.25s;
+      transition: color 0.25s;
     }
     .section p a:hover {
       color: var(--link-hi);
-      border-bottom-color: var(--link-hi);
+      text-decoration: underline;
     }
 
-    /* ----- Selected Works cards ----- */
+    /* ----- Selected Works cards (light) ----- */
     .work-card {
       display: flex;
-      gap: 28px;
+      gap: 24px;
       align-items: flex-start;
-      padding: 22px 0;
+      padding: 20px 0;
       border-bottom: 1px solid var(--line);
     }
     .work-card:last-child { border-bottom: none; }
-    /* Museum-frame style (matches Home pub thumbnails) */
     .work-card .work-thumb {
       flex: 0 0 180px;
       align-self: flex-start;
       padding: 4px;
-      background: linear-gradient(145deg, #2a241a, #1a1610);
-      border: 1px solid rgba(155, 202, 232, 0.18);
+      background: #fff;
+      border: 1px solid var(--line);
       border-radius: 3px;
-      box-shadow:
-        0 6px 22px rgba(0, 0, 0, 0.55),
-        0 1px 0 rgba(255, 255, 255, 0.04) inset;
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
     .work-card .work-thumb-mat {
-      padding: 8px;
-      background: #ece1c2;
+      padding: 6px;
+      background: #fafafa;
       border-radius: 1px;
-      box-shadow:
-        0 0 0 1px rgba(110, 85, 35, 0.20) inset,
-        0 1px 3px rgba(0, 0, 0, 0.35) inset;
       overflow: hidden;
     }
     .work-card .work-thumb img {
@@ -186,21 +165,18 @@
       height: auto;
       display: block;
       border-radius: 1px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
-      transition: transform 0.6s ease;
+      transition: transform 0.5s ease;
     }
     .work-card:hover .work-thumb {
-      transform: translateY(-3px);
-      box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.65),
-        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-    .work-card:hover .work-thumb img { transform: scale(1.04); }
+    .work-card:hover .work-thumb img { transform: scale(1.03); }
     .work-card .work-info { flex: 1; min-width: 0; }
     .work-card .work-year {
       font-family: var(--font-mono);
       font-size: 10px;
-      letter-spacing: 0.20em;
+      letter-spacing: 0.18em;
       color: var(--accent);
       text-transform: uppercase;
       margin-bottom: 6px;
@@ -208,22 +184,22 @@
     .work-card .work-title {
       font-family: var(--font-serif);
       font-style: italic;
-      font-size: 26px;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.96);
-      line-height: 1.15;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--fg);
+      line-height: 1.2;
       margin-bottom: 4px;
     }
     .work-card .work-subtitle {
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.55);
+      color: var(--fg-faint);
       line-height: 1.5;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .work-card .work-desc {
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.75;
+      color: var(--fg-muted);
+      line-height: 1.7;
       margin-bottom: 12px;
       font-style: italic;
     }
@@ -232,212 +208,240 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 14px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 13px;
     }
     .work-card .work-links a {
       color: var(--link);
-      border-bottom: 1px dotted rgba(155, 202, 232, 0.35);
       padding-bottom: 1px;
     }
     .work-card .work-links a:hover {
       color: var(--link-hi);
-      border-bottom-color: var(--link-hi);
+      text-decoration: underline;
     }
     .work-card .work-venue {
-      color: rgba(255, 255, 255, 0.42);
-      padding-left: 4px;
+      color: var(--fg-faint);
+      padding-left: 14px;
       border-left: 1px solid var(--line);
       margin-left: 2px;
-      padding-left: 14px;
+      font-size: 13px;
     }
     @media (max-width: 700px) {
-      nav { padding: 16px 16px; gap: 12px; }
-      nav .nav-brand { font-size: 17px; flex-shrink: 0; white-space: nowrap; }
-      nav .nav-links {
-        gap: 14px;
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        flex-wrap: nowrap;
-        justify-content: flex-end;
-      }
-      nav .nav-links a { padding: 8px 2px; }
-      .hero-wrap { height: 52vh; min-height: 340px; margin-top: 62px; }
+      html { font-size: 15px; }
+      .site-header { line-height: 1.4; min-height: 0; padding: 12px 0; }
+      .site-header-inner { gap: 8px; }
+      .site-title { font-size: 1.4rem; }
+      .site-nav { margin-top: 4px; }
+      .site-nav a { margin-left: 14px; font-size: 0.9375rem; }
+      .site-nav a:first-child { margin-left: 0; }
+      .hero-wrap { height: 38vh; min-height: 240px; margin: 16px 16px 0; max-width: calc(100% - 32px); }
       .hero-title { top: 16px; left: 18px; right: 18px; }
       .hero-title h2 { font-size: 16px; letter-spacing: 0.24em; margin-bottom: 4px; }
       .hero-title p { font-size: 9px; letter-spacing: 0.22em; }
       .hero-label { font-size: 8px; letter-spacing: 0.2em; bottom: 10px; right: 12px; }
       .hero-copyright { bottom: 10px; left: 12px; font-size: 8px; letter-spacing: 0.15em; }
-      .container { padding: 48px 20px; }
-      .section h2 { font-size: 16px; }
+      .container { padding: 28px 16px 0; }
+      .section h2 { font-size: 1.25rem; }
       .work-card { flex-direction: column; gap: 16px; }
       .work-card .work-thumb { flex: 0 0 auto; max-width: 240px; }
     }
-    @media (max-width: 440px) {
-      nav { padding: 14px 12px; gap: 8px; }
-      nav .nav-brand { font-size: 14px; }
-      nav .nav-links { gap: 11px; font-size: 10px; letter-spacing: 0.08em; }
+    /* ----- Site footer (matches index.html) ----- */
+    .site-footer {
+      border-top: 1px solid var(--line);
+      margin-top: 40px;
+      padding: 36px 0 48px;
+      font-size: 0.9375rem;
+      color: var(--fg-faint);
     }
-    @media (max-width: 360px) {
-      nav { padding: 14px 10px; }
-      nav .nav-brand { font-size: 13px; }
-      nav .nav-links { gap: 9px; font-size: 9.5px; letter-spacing: 0.06em; }
+    .site-footer .wrapper {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
-    footer{text-align:center;padding:40px 20px;font-size:11px;color:rgba(255,255,255,0.30);letter-spacing:0.15em;border-top:1px solid rgba(255,255,255,0.06)}
+    .site-footer ul.contact-list {
+      list-style: none;
+      padding: 0;
+    }
+    .site-footer ul.contact-list li {
+      line-height: 1.6;
+    }
 
-    /* ----- Active Physics Solvers panel: responsive ----- */
+    /* ----- Active Physics Solvers — compact wide bar in hero top-right ----- */
     #physics-overlay{
-      position:absolute; top:20px; right:20px;
-      width: clamp(280px, 32vw, 480px);
-      max-width: calc(100vw - 40px);
+      position:absolute; top:14px; right:14px;
+      width: max-content;
+      max-width: calc(100% - 28px);
       font-family:'JetBrains Mono',monospace;
-      font-size: clamp(10px, 0.95vw, 13px);
-      line-height:1.65;
-      color:rgba(200,225,250,0.82);
+      font-size: 10px;
+      line-height: 1.45;
+      color:rgba(210,230,250,0.85);
       pointer-events:none; user-select:none;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
-      text-align:right;
-      background: rgba(0,0,0,0.40);
-      padding: clamp(8px, 1vw, 12px) clamp(12px, 1.4vw, 18px);
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.08);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+      text-align:left;
+      background: rgba(0,0,0,0.42);
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.10);
       backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
     #physics-overlay .po-title{
-      font-family:'Playfair Display',serif; font-style:italic;
-      color:rgba(220,235,255,0.92);
-      font-size: clamp(13px, 1.25vw, 17px);
-      margin-bottom: 6px; letter-spacing:0.08em;
+      font-family: var(--font-serif); font-style:italic;
+      color:rgba(220,235,255,0.95);
+      font-size: 12px;
+      margin-bottom: 3px; letter-spacing:0.02em;
+      font-weight: 500;
+    }
+    /* Each solver row is a horizontal line: section label · equation */
+    #physics-overlay .po-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 10px;
+      white-space: nowrap;
     }
     #physics-overlay .po-section{
-      color:rgba(160,195,230,0.62);
-      font-size: clamp(9px, 0.85vw, 11px);
-      margin-top: 4px; margin-bottom: 1px;
+      color:rgba(160,195,230,0.70);
+      font-size: 10px;
+      margin: 0;
+      flex-shrink: 0;
     }
     #physics-overlay .po-eq{
-      color:rgba(180,210,240,0.82);
-      font-size: clamp(10px, 0.95vw, 13px);
+      color:rgba(190,215,240,0.88);
+      font-size: 10px;
     }
     #physics-overlay .po-eq-sub{
       color:rgba(180,210,240,0.55);
-      font-size: clamp(9px, 0.88vw, 12px);
+      font-size: 9px;
+      margin-left: 4px;
     }
     #physics-overlay .po-live{
-      margin-top: 8px; padding-top: 6px;
+      margin-top: 4px; padding-top: 4px;
       border-top: 1px solid rgba(255,255,255,0.12);
-      display:flex; gap: clamp(8px, 1.1vw, 16px);
-      justify-content:flex-end; flex-wrap:wrap;
+      display:flex; gap: 12px;
+      justify-content:flex-start; flex-wrap:wrap;
       white-space:nowrap;
     }
     #physics-overlay .po-live span{
-      font-size: clamp(10px, 0.9vw, 12px);
-      font-weight: 400; letter-spacing: 0.03em;
+      font-size: 10px;
+      font-weight: 400; letter-spacing: 0.02em;
     }
+    /* Inline wind row — equation + small inline arrow indicator */
     #physics-overlay .po-wind{
-      display:flex; align-items:center; justify-content:flex-end;
-      gap: clamp(8px, 1vw, 14px);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     #physics-overlay .po-wind .compass{
       position:relative; flex-shrink:0;
-      width: clamp(36px, 3.6vw, 52px);
-      height: clamp(36px, 3.6vw, 52px);
+      width: 18px;
+      height: 18px;
     }
     #physics-overlay .po-wind .compass svg{
       position:absolute; top:0; left:0; width:100%; height:100%;
     }
-
-    /* Mobile / narrow viewports: compact corner panel, dimmer so the
-       simulation stays visible underneath. */
-    /* Mobile: overlay is relocated out of the hero via JS (.po-detached).
-       Render it as a normal block section with full equations visible. */
-    #physics-overlay-section {
-      display: none;
+    #physics-overlay .po-wind #wind-speed {
+      font-size: 9px;
+      color: rgba(130,200,230,0.78);
     }
-    @media (max-width: 720px) {
-      /* JS fallback: if relocation hasn't happened yet, shrink the overlay
-         so it doesn't cover the simulation on first paint. */
-      #physics-overlay:not(.po-detached) {
-        top: auto; bottom: 8px; right: 8px; left: auto;
-        width: min(60vw, 200px);
-        max-width: calc(100vw - 16px);
-        font-size: 8px;
-        line-height: 1.35;
-        padding: 6px 8px;
-        text-align: left;
-        background: rgba(0, 0, 0, 0.55);
-      }
-      #physics-overlay:not(.po-detached) .po-title { font-size: 9px; margin-bottom: 2px; }
-      #physics-overlay:not(.po-detached) .po-section { font-size: 7px; margin-top: 2px; }
-      #physics-overlay:not(.po-detached) .po-eq { font-size: 7px; }
-      #physics-overlay:not(.po-detached) .po-eq-sub { font-size: 6.5px; }
-      #physics-overlay:not(.po-detached) .po-live { gap: 5px; margin-top: 3px; padding-top: 2px; }
-      #physics-overlay:not(.po-detached) .po-live span { font-size: 7px; }
-      #physics-overlay:not(.po-detached) .po-wind .compass { width: 20px; height: 20px; }
 
-      #physics-overlay-section {
-        display: block;
-        background: #050608;
-        padding: 20px 18px 24px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      #physics-overlay.po-detached {
-        position: static;
-        width: 100%;
-        max-width: none;
-        top: auto; right: auto; bottom: auto; left: auto;
-        text-align: left;
-        background: rgba(255, 255, 255, 0.025);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 6px;
-        padding: 14px 16px;
-        font-size: 11px;
-        line-height: 1.6;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
-      #physics-overlay.po-detached .po-title {
-        font-size: 14px;
-        margin-bottom: 8px;
-        letter-spacing: 0.06em;
-      }
-      #physics-overlay.po-detached .po-section {
-        font-size: 10px;
-        margin-top: 8px;
-        margin-bottom: 2px;
-      }
+    /* Detached overlay — JS moves #physics-overlay out of the hero into
+       its own block section right below the simulation (Active Physics
+       Solvers panel). Light-themed card on the white page. */
+    #physics-overlay-section {
+      max-width: 880px;
+      margin: 16px auto 0;
+      padding: 0 20px;
+    }
+    #physics-overlay.po-detached {
+      position: static;
+      width: 100%;
+      max-width: none;
+      top: auto; right: auto; bottom: auto; left: auto;
+      text-align: left;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a3a6a;
+      text-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    #physics-overlay.po-detached .po-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+      color: #0e2a55;
+    }
+    #physics-overlay.po-detached .po-row {
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    #physics-overlay.po-detached .po-section {
+      font-size: 11px;
+      margin-top: 0;
+      margin-bottom: 0;
+      color: #3a5e90;
+      font-weight: 500;
+    }
+    #physics-overlay.po-detached .po-eq {
+      font-size: 12px;
+      color: #1a3a6a;
+    }
+    #physics-overlay.po-detached .po-eq-sub {
+      font-size: 11px;
+      color: #5a78a8;
+    }
+    #physics-overlay.po-detached .po-live {
+      justify-content: flex-start;
+      gap: 16px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    #physics-overlay.po-detached .po-live span { font-size: 12px; }
+    #physics-overlay.po-detached .po-wind {
+      justify-content: flex-start;
+      gap: 12px;
+    }
+    #physics-overlay.po-detached .po-wind .compass {
+      width: 36px;
+      height: 36px;
+    }
+
+    @media (max-width: 700px) {
+      #physics-overlay-section { padding: 0 16px; margin-top: 12px; }
+      #physics-overlay.po-detached { padding: 12px 14px; font-size: 12px; }
+      #physics-overlay.po-detached .po-title { font-size: 14px; margin-bottom: 8px; }
+      #physics-overlay.po-detached .po-section { font-size: 10px; }
       #physics-overlay.po-detached .po-eq { font-size: 11px; }
       #physics-overlay.po-detached .po-eq-sub { font-size: 10px; }
-      #physics-overlay.po-detached .po-live {
-        justify-content: flex-start;
-        gap: 14px;
-        margin-top: 10px;
-        padding-top: 8px;
-      }
+      #physics-overlay.po-detached .po-live { gap: 12px; }
       #physics-overlay.po-detached .po-live span { font-size: 11px; }
-      #physics-overlay.po-detached .po-wind {
-        justify-content: flex-start;
-        gap: 12px;
-      }
-      #physics-overlay.po-detached .po-wind .compass {
-        width: 40px;
-        height: 40px;
-      }
+      #physics-overlay.po-detached .po-wind .compass { width: 30px; height: 30px; }
     }
   </style>
 </head>
 <body>
 
-<nav>
-  <a class="nav-brand" href="index.html">Joonwoo Kwon</a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="studio.html" class="active">Studio</a>
-    <a href="photography.html">Photography</a>
-    <a href="mailto:kwonjoon@msu.edu">Contact</a>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-title" href="index.html">Joonwoo Kwon</a>
+    <nav class="site-nav">
+      <a href="index.html">About</a>
+      <a href="studio.html" class="active">Studio</a>
+      <a href="photography.html">Photography</a>
+    </nav>
   </div>
-</nav>
+</header>
 
 <div class="hero-wrap" id="hero-wrap">
   <canvas id="hero-canvas"></canvas>
@@ -452,39 +456,38 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
   <div id="physics-overlay">
     <div class="po-title">Active Physics Solvers</div>
-    <div class="po-section">① Gerstner Wave (GPU real-time, 6 modes)</div>
-    <div class="po-eq">r(t) = r₀ − Σ Qₙ Aₙ cos(kₙ·r − ωₙt)</div>
-    <div class="po-eq">y(t) = Σ Aₙ sin(kₙ·r − ωₙt)</div>
-    <div class="po-eq-sub">ω² = gk·tanh(kd)</div>
-    <div class="po-section">② Wind-driven advection</div>
-    <div class="po-wind">
-      <div style="display:flex; flex-direction:column; align-items:flex-end;">
-        <div class="po-eq">v_drift = W·sin(αt) &nbsp;<span style="color:rgba(180,210,240,0.45);">|</span>&nbsp; swell ∝ wind</div>
-        <div id="wind-speed" style="color:rgba(130,200,230,0.78); font-size:0.85em; margin-top:2px;">0.0 m/s</div>
-      </div>
-      <div class="compass">
-        <svg viewBox="0 0 60 60">
-          <circle cx="30" cy="30" r="26" fill="rgba(0,0,0,0.25)" stroke="rgba(160,200,240,0.30)" stroke-width="1"/>
-          <line x1="30" y1="4" x2="30" y2="9" stroke="rgba(200,220,240,0.55)" stroke-width="1.2"/>
-          <line x1="30" y1="51" x2="30" y2="56" stroke="rgba(200,220,240,0.30)" stroke-width="1"/>
-          <line x1="4" y1="30" x2="9" y2="30" stroke="rgba(200,220,240,0.30)" stroke-width="1"/>
-          <line x1="51" y1="30" x2="56" y2="30" stroke="rgba(200,220,240,0.30)" stroke-width="1"/>
-          <text x="30" y="14" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(200,220,240,0.55)" text-anchor="middle">N</text>
-        </svg>
-        <svg id="wind-arrow" viewBox="0 0 60 60" style="transition: transform 0.3s ease;">
-          <defs>
-            <linearGradient id="windGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="rgba(120,210,255,1.0)"/>
-              <stop offset="100%" stop-color="rgba(120,210,255,0.35)"/>
-            </linearGradient>
-          </defs>
-          <polygon points="30,7 37,23 30,19 23,23" fill="url(#windGrad)" stroke="rgba(150,220,255,0.9)" stroke-width="0.8"/>
-          <line x1="30" y1="19" x2="30" y2="48" stroke="rgba(120,210,255,0.65)" stroke-width="1.8"/>
-        </svg>
-      </div>
+    <div class="po-row">
+      <span class="po-section">① Gerstner Wave</span>
+      <span class="po-eq">r(t) = r₀ − Σ Qₙ Aₙ cos(kₙ·r − ωₙt)</span>
     </div>
-    <div class="po-section">③ Buoyancy (Archimedes' Principle)</div>
-    <div class="po-eq">F_b = ρ·g·V_disp &nbsp;|&nbsp; τ = −k_θ·θ</div>
+    <div class="po-row">
+      <span class="po-section">② Wind advection</span>
+      <span class="po-wind">
+        <span class="po-eq">v_drift = W·sin(αt)</span>
+        <span class="compass">
+          <svg viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="26" fill="rgba(0,0,0,0.25)" stroke="rgba(160,200,240,0.30)" stroke-width="1"/>
+            <text x="30" y="14" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(200,220,240,0.55)" text-anchor="middle">N</text>
+          </svg>
+          <svg id="wind-arrow" viewBox="0 0 60 60" style="transition: transform 0.3s ease;">
+            <defs>
+              <linearGradient id="windGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="rgba(120,210,255,1.0)"/>
+                <stop offset="100%" stop-color="rgba(120,210,255,0.35)"/>
+              </linearGradient>
+            </defs>
+            <polygon points="30,7 37,23 30,19 23,23" fill="url(#windGrad)" stroke="rgba(150,220,255,0.9)" stroke-width="0.8"/>
+            <line x1="30" y1="19" x2="30" y2="48" stroke="rgba(120,210,255,0.65)" stroke-width="1.8"/>
+          </svg>
+        </span>
+        <span id="wind-speed">0.0 m/s</span>
+      </span>
+    </div>
+    <div class="po-row">
+      <span class="po-section">③ Buoyancy</span>
+      <span class="po-eq">F_b = ρ·g·V_disp</span>
+      <span class="po-eq-sub">τ = −k_θ·θ</span>
+    </div>
     <div class="po-live" id="live-values-row">
       <span id="lv-t" style="color:rgba(160,230,200,0.92);"></span>
       <span id="lv-h" style="color:rgba(130,210,255,0.92);"></span>
@@ -497,15 +500,15 @@
 <div class="container">
   <div class="section">
     <h2>Artist Statement</h2>
-    <blockquote>I work at the boundary where physical law meets generative imagination — building software that turns equations into visual experiences, and turning canvases into interactive simulations.</blockquote>
+    <blockquote>I work at the boundary where physical law meets generative imagination, building software that turns equations into visual experiences, and turning canvases into interactive simulations.</blockquote>
 
-    <p>To me, science and art are not opposites — they are two languages describing the same reality. My work lives at their intersection: using physics-informed models to create generative art that is grounded in the real world, yet free to imagine beyond it.</p>
+    <p>To me, science and art are not opposites. They are two languages describing the same reality. My work lives at their intersection, using physics-informed models to create generative art that is grounded in the real world, yet free to imagine beyond it.</p>
 
-    <p>That attempt has moved across mediums. <a href="https://arxiv.org/abs/2411.15913"><em>Stylus</em></a> reframed music as something a diffusion model could re-paint in the spectrogram domain. <a href="https://arxiv.org/abs/2412.05296"><em>Revisiting Your Memory</em></a> turned EEG signals into audiovisual reconstructions of affect-contextualized memory. More recently, my work has moved toward <strong>3D human motion</strong> — using physics-informed models to ground how bodies move in the real world.</p>
+    <p>That attempt has moved across mediums. <a href="https://arxiv.org/abs/2411.15913"><em>Stylus</em></a> reframed music as something a diffusion model could re-paint in the spectrogram domain. <a href="https://arxiv.org/abs/2412.05296"><em>Revisiting Your Memory</em></a> turned EEG signals into audiovisual reconstructions of affect-contextualized memory. More recently, my work has moved toward <strong>3D human motion</strong>, using physics-informed models to ground how bodies move in the real world.</p>
 
     <p class="pull-quote">
-      Different surfaces, one question:<br>
-      <span>what is the world made of, and how do we show it?</span>
+      Different surfaces, one question.<br>
+      <span>What is the world made of, and how do we show it?</span>
     </p>
   </div>
   <div class="section">
@@ -553,7 +556,7 @@
   </div>
   <div class="section">
     <h2>Exhibitions &amp; Awards</h2>
-    <ul style="padding-left:20px;color:rgba(255,255,255,0.65);">
+    <ul style="padding-left:20px;color:#333;">
       <li style="margin-bottom:12px;"><strong>Grand Prize</strong>, AI &amp; Art Hackathon (2024)<br>Presented at <a href="https://www.tap.or.kr/en/home">ART DIFFUSION</a>, Seoul National University Museum of Art</li>
       <li><strong>Sismologia</strong> (Movie Production)<br>Contributed to the production of the film</li>
     </ul>
@@ -571,16 +574,17 @@
         <button class="gallery-dot active" data-index="0"></button>
         <button class="gallery-dot" data-index="1"></button>
       </div>
-      <p class="gallery-caption">Drag across each painting — the surface responds like wet oil.</p>
+      <p class="gallery-caption">Drag across each painting. The surface responds like wet oil.</p>
     </div>
   </div>
 </div>
-<footer>
-  &copy; 2026 Joonwoo Kwon. All rights reserved.<br>
-  <span style="font-size:9px; color:rgba(255,255,255,0.20); margin-top:6px; display:inline-block;">
-    All content, artwork, and code on this site are the intellectual property of Joonwoo Kwon.<br>
-    Unauthorized reproduction or distribution is prohibited.
-  </span>
+<footer class="site-footer">
+  <div class="wrapper">
+    <ul class="contact-list">
+      <li>Joonwoo Kwon</li>
+      <li>PhD Student, Computer Science, Michigan State University</li>
+    </ul>
+  </div>
 </footer>
 
 <script type="importmap">
@@ -1774,16 +1778,14 @@ import * as THREE from 'three';
   animate();
 })();
 
-/* Mobile: relocate physics-overlay out of the hero into its own section
-   below the simulation, so the equations no longer cover the artwork. */
+/* On narrow screens, relocate physics-overlay out of the hero (it covers
+   too much of the small simulation). Desktop keeps the overlay anchored
+   to the top-right corner of the hero. */
 function relocatePhysicsOverlay(){
   try {
     const overlay = document.getElementById('physics-overlay');
     const heroWrap = document.getElementById('hero-wrap');
-    if (!overlay || !heroWrap) {
-      console.warn('[physics-overlay] elements not found, retrying...');
-      return false;
-    }
+    if (!overlay || !heroWrap) return false;
 
     const originalParent = overlay.parentNode;
     const originalNext = overlay.nextSibling;
@@ -1812,7 +1814,6 @@ function relocatePhysicsOverlay(){
     apply();
     if (mq.addEventListener) mq.addEventListener('change', apply);
     else if (mq.addListener) mq.addListener(apply);
-    console.log('[physics-overlay] relocation ready, mobile=', mq.matches);
     return true;
   } catch (e) {
     console.error('[physics-overlay] relocation failed:', e);
