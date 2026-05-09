@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="studio.css?v=20260509a">
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
@@ -431,7 +432,7 @@
 <nav>
   <a class="nav-brand" href="index.html">Joonwoo Kwon</a>
   <div class="nav-links">
-    <a href="home.html">Home</a>
+    <a href="index.html">Home</a>
     <a href="studio.html" class="active">Studio</a>
     <a href="photography.html">Photography</a>
     <a href="mailto:kwonjoon@msu.edu">Contact</a>
@@ -556,6 +557,22 @@
       <li style="margin-bottom:12px;"><strong>Grand Prize</strong>, AI &amp; Art Hackathon (2024)<br>Presented at <a href="https://www.tap.or.kr/en/home">ART DIFFUSION</a>, Seoul National University Museum of Art</li>
       <li><strong>Sismologia</strong> (Movie Production)<br>Contributed to the production of the film</li>
     </ul>
+  </div>
+
+  <div class="section">
+    <h2>Gallery</h2>
+    <div class="studio-gallery-embed">
+      <div class="gallery-box" id="gallery-box">
+        <canvas id="studio-canvas"></canvas>
+        <button class="gallery-arrow gallery-arrow-prev" id="gallery-prev" aria-label="Previous">‹</button>
+        <button class="gallery-arrow gallery-arrow-next" id="gallery-next" aria-label="Next">›</button>
+      </div>
+      <div class="gallery-nav">
+        <button class="gallery-dot active" data-index="0"></button>
+        <button class="gallery-dot" data-index="1"></button>
+      </div>
+      <p class="gallery-caption">Drag across each painting — the surface responds like wet oil.</p>
+    </div>
   </div>
 </div>
 <footer>
@@ -1809,5 +1826,8 @@ if (document.readyState === 'loading') {
   relocatePhysicsOverlay();
 }
 </script>
+
+<!-- Gallery — interactive painting embed -->
+<script type="module" src="studio.js?v=20260509a"></script>
 </body>
 </html>

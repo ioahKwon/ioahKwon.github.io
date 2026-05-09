@@ -1,7 +1,7 @@
 name: Update Pageview Counter
 
 # Fetches the current total pageview count from the mapmyvisitors widget
-# backend and rewrites the number in home.html. Runs once a day and can
+# backend and rewrites the number in index.html. Runs once a day and can
 # also be triggered manually from the Actions tab.
 on:
   schedule:
@@ -32,14 +32,14 @@ jobs:
       - name: Run update_pageviews.mjs
         run: node scripts/update_pageviews.mjs
 
-      - name: Commit and push if home.html changed
+      - name: Commit and push if index.html changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- home.html; then
-            echo "home.html unchanged — nothing to commit"
+          if git diff --quiet -- index.html; then
+            echo "index.html unchanged — nothing to commit"
             exit 0
           fi
-          git add home.html
+          git add index.html
           git commit -m "chore: refresh pageview counter [skip ci]"
           git push

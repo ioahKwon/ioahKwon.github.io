@@ -3,32 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Joonwoo Kwon Studio</title>
+  <title>Joonwoo Kwon</title>
+  <meta name="author" content="Joonwoo Kwon">
   <link rel="shortcut icon" href="image/icon.png">
-  <link rel="stylesheet" href="studio.css?v=20260413h">
-</head>
-<body>
-  <div class="studio-top">
-    <h1 class="studio-title">JOONWOO&nbsp;KWON&nbsp;STUDIO</h1>
-    <p class="studio-subtitle">Physics-informed Generative Software Studio</p>
-    <p class="studio-location">Michigan&nbsp;&amp;&nbsp;Ohio,&nbsp;USA</p>
-  </div>
 
-  <div class="gallery-box" id="gallery-box">
-    <canvas id="studio-canvas"></canvas>
-    <button class="gallery-arrow gallery-arrow-prev" id="gallery-prev" aria-label="Previous">‹</button>
-    <button class="gallery-arrow gallery-arrow-next" id="gallery-next" aria-label="Next">›</button>
-  </div>
+  <!-- Unified type system: Inter (body) + Cormorant Garamond (display) + JetBrains Mono (meta) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-  <div class="studio-bottom">
-    <div class="gallery-nav">
-      <button class="gallery-dot active" data-index="0"></button>
-      <button class="gallery-dot" data-index="1"></button>
-    </div>
-    <button class="studio-enter" id="enter-btn">STEP&nbsp;&nbsp;IN</button>
-    <div class="studio-copyright">© Joonwoo Kwon</div>
-  </div>
-
+  <!-- Three.js for the visitor globe -->
   <script type="importmap">
   {
     "imports": {
@@ -36,6 +20,2658 @@
     }
   }
   </script>
-  <script type="module" src="studio.js?v=20260413h"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'JetBrains Mono', "SF Mono", Menlo, monospace;
+
+      /* ----- Refik Anadol palette: deep navy black + near-pure white +
+              sky blue accent + warm terracotta highlight ----- */
+      --bg:         #050608;          /* near-black with a hint of cool blue */
+      --bg-soft:    #0b0d12;
+      --fg:         #ffffff;          /* pure white */
+      --fg-bright:  #ffffff;
+      --fg-muted:   rgba(255, 255, 255, 0.68);
+      --fg-faint:   rgba(255, 255, 255, 0.42);
+      --accent:     #9bcae8;          /* sky blue — primary cool accent */
+      --accent-hi:  #c1ddf0;          /* lighter sky blue — hover */
+      --accent-warm:#d8542a;          /* terracotta — Oral / Acc highlight */
+      --link:       #9bcae8;          /* same sky blue family */
+      --link-hi:    #c1ddf0;
+      --line:       rgba(255, 255, 255, 0.10);
+      --line-strong:rgba(255, 255, 255, 0.20);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+    }
+
+    a { color: var(--link); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--link-hi); }
+
+    /* --- Navigation --- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: rgba(5, 6, 8, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .nav-brand {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      color: rgba(255, 255, 255, 0.94);
+      text-transform: none;
+    }
+    nav .nav-links {
+      display: flex;
+      gap: 38px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+    }
+    nav .nav-links a {
+      color: rgba(255, 255, 255,0.55);
+      transition: color 0.2s;
+    }
+    nav .nav-links a:hover { color: #ffffff; }
+    nav .nav-links a.active { color: #ffffff; }
+
+    /* --- Main container --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 100px 32px 60px;
+    }
+
+    /* --- Hero / Bio --- */
+    .hero {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+    .hero-photo {
+      flex: 0 0 180px;
+    }
+    .hero-photo {
+      position: relative;
+    }
+    .hero-photo {
+      overflow: hidden;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 2px solid var(--line-strong);
+    }
+    .hero-photo img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      transition: opacity 0.3s ease, transform 0.4s ease;
+    }
+    /* portrait3 (main) — small breathing room above the head */
+    .hero-photo img.photo-main {
+      object-position: center 42%;
+      transform: scale(1.25);
+      transform-origin: center 38%;
+    }
+    /* alt (hover) — keep its existing crop, looks great as-is */
+    .hero-photo img.photo-alt {
+      object-position: center 18%;
+      transform: scale(1.25);
+      transform-origin: center 15%;
+    }
+    .hero-photo img.photo-alt {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+    .hero-photo:hover img.photo-main { opacity: 0; }
+    .hero-photo:hover img.photo-alt  { opacity: 1; }
+    .hero-text { flex: 1; }
+    .hero-text h1 {
+      font-family: var(--font-serif);
+      font-size: 44px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .hero-text .affiliation {
+      font-size: 15px;
+      color: rgba(255, 255, 255,0.60);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .hero-text .affiliation .aff-line {
+      white-space: nowrap;
+    }
+    .hero-text .links {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .hero-text .links a { margin-right: 18px; }
+    .hero-text .bio {
+      font-size: 15px;
+      color: rgba(255, 255, 255,0.72);
+      line-height: 1.85;
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 16px; gap: 12px; }
+      nav .nav-brand { font-size: 17px; flex-shrink: 0; white-space: nowrap; }
+      nav .nav-links {
+        gap: 14px;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+      }
+      nav .nav-links a {
+        padding: 8px 2px;
+      }
+      .container { padding: 96px 20px 48px; }
+      .hero { flex-direction: column; text-align: center; gap: 24px; margin-bottom: 44px; }
+      .hero-photo, .hero-photo img { width: 140px; height: 140px; }
+      .hero-photo { flex: 0 0 auto; }
+      .hero-text h1 { font-size: 32px; }
+      .hero-text .affiliation { font-size: 14px; line-height: 1.5; }
+      .hero-text .affiliation .aff-line { display: block; }
+      .hero-text .affiliation .aff-sep { display: none; }
+      .hero-text .links { justify-content: center; display: flex; flex-wrap: wrap; gap: 10px 14px; }
+      .hero-text .links a { margin-right: 0; }
+      .section { margin-bottom: 40px; }
+      .section h2 { font-size: 22px; }
+    }
+    @media (max-width: 440px) {
+      nav { padding: 14px 12px; gap: 8px; }
+      nav .nav-brand { font-size: 14px; }
+      nav .nav-links { gap: 11px; font-size: 10px; letter-spacing: 0.08em; }
+    }
+    @media (max-width: 360px) {
+      nav { padding: 14px 10px; }
+      nav .nav-brand { font-size: 13px; }
+      nav .nav-links { gap: 9px; font-size: 9.5px; letter-spacing: 0.06em; }
+    }
+
+    /* --- Sections --- */
+    .section {
+      margin-bottom: 56px;
+    }
+    .section h2 {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      color: rgba(255, 255, 255,0.92);
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line-strong);
+      margin-bottom: 26px;
+    }
+
+    /* --- News --- */
+    .news-item {
+      font-size: 14px;
+      color: rgba(255, 255, 255,0.68);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    /* ----- Publication cards (temp page — index.html style) ----- */
+    .pub-card {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 28px;
+      padding: 22px 24px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255,0.02);
+      border: 1px solid var(--line);
+      transition: border-color 0.4s, background 0.4s, transform 0.4s;
+      position: relative;
+    }
+    .pub-card:hover {
+      background: rgba(255, 255, 255,0.045);
+      border-color: var(--line-strong);
+      transform: translateY(-2px);
+    }
+    /* Museum-style frame: dark wood + cream mat + image */
+    .pub-card .pub-thumb {
+      width: 158px;
+      flex-shrink: 0;
+      align-self: flex-start;
+      padding: 4px;
+      background: linear-gradient(145deg, #2a241a, #1a1610);
+      border: 1px solid rgba(155, 202, 232, 0.18);
+      border-radius: 3px;
+      box-shadow:
+        0 6px 22px rgba(0, 0, 0, 0.55),
+        0 1px 0 rgba(255, 255, 255, 0.04) inset;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      position: relative;
+    }
+    .pub-card .pub-thumb-mat {
+      padding: 8px;
+      background: #ece1c2;          /* warm amber-tinted mat (matches gold accent) */
+      border-radius: 1px;
+      box-shadow:
+        0 0 0 1px rgba(110, 85, 35, 0.20) inset,
+        0 1px 3px rgba(0, 0, 0, 0.35) inset;
+      overflow: hidden;
+      position: relative;
+    }
+    .pub-card .pub-thumb img {
+      width: 100%;
+      display: block;
+      border-radius: 1px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+      transition: transform 0.6s ease;
+    }
+    .pub-card:hover .pub-thumb {
+      transform: translateY(-3px);
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.65),
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    }
+    .pub-card:hover .pub-thumb img { transform: scale(1.04); }
+
+    .pub-card .pub-info { flex: 1; min-width: 0; }
+    .pub-card .pub-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.96);
+      margin-bottom: 8px;
+      line-height: 1.35;
+      letter-spacing: 0.005em;
+    }
+    .pub-card .pub-authors {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 8px;
+    }
+    .pub-card .pub-authors strong {
+      color: #ffffff;
+      font-weight: 500;
+    }
+    .pub-card .pub-venue {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+      font-size: 11px;
+    }
+    .pub-card .pub-links {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .pub-card .pub-links a {
+      margin-right: 14px;
+      padding-bottom: 1px;
+      border-bottom: 1px dotted rgba(155, 202, 232, 0.35);
+    }
+    .pub-card .pub-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    @media (max-width: 720px) {
+      .pub-card {
+        flex-direction: column;
+        gap: 18px;
+        padding: 18px 16px;
+        align-items: center;
+      }
+      .pub-card .pub-thumb {
+        width: 100%;
+        max-width: 260px;
+        margin: 0 auto;
+        align-self: center;
+      }
+      .pub-card .pub-info {
+        width: 100%;
+        text-align: left;
+      }
+      .pub-card.featured { padding-top: 36px; }
+      .pub-card.featured::before { top: 10px; right: 12px; }
+      .pub-card .pub-title { font-size: 17px; }
+    }
+
+    /* --- Miscellanea (matches index.html framed style) --- */
+    .misc-card {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+      padding: 18px 0;
+    }
+    .misc-card img {
+      width: 116px;
+      height: auto;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 6px;
+      filter: grayscale(0.20);
+      transition: filter 0.4s ease;
+    }
+    .misc-card:hover img { filter: grayscale(0); }
+    .misc-card p {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.85;
+      font-style: italic;
+    }
+
+    /* --- Research statement enhancements --- */
+    .research-text {
+      font-size: 15px;
+      color: rgba(255, 255, 255,0.78);
+      line-height: 1.9;
+      margin-bottom: 22px;
+    }
+    .research-text .keyword {
+      color: #ffffff;
+      font-weight: 400;
+      position: relative;
+      padding: 0 2px;
+    }
+    .research-text .keyword::after {
+      content: '';
+      position: absolute;
+      left: 2px; right: 2px; bottom: -2px;
+      height: 1px;
+      background: #9bcae8;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    .research-text:hover .keyword::after,
+    .research-text .keyword:hover::after {
+      transform: scaleX(1);
+    }
+    .research-bullets {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+    }
+    .research-bullets li {
+      padding: 14px 0 14px 28px;
+      border-top: 1px solid rgba(255, 255, 255,0.08);
+      font-size: 14px;
+      color: rgba(255, 255, 255,0.68);
+      line-height: 1.75;
+      position: relative;
+    }
+    .research-bullets li:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255,0.08);
+    }
+    .research-bullets li::before {
+      content: '◇';
+      position: absolute;
+      left: 4px;
+      top: 14px;
+      color: #9bcae8;
+      font-size: 11px;
+    }
+    .research-bullets li strong {
+      color: #ffffff;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    /* --- News timeline (dot + vertical line) --- */
+    .news-list {
+      list-style: none;
+      padding: 0;
+      position: relative;
+    }
+    .news-list::before {
+      content: '';
+      position: absolute;
+      left: 100px;                 /* aligns with center of the dots */
+      top: 18px;
+      bottom: 18px;
+      width: 1px;
+      background: var(--line);
+    }
+    .news-list li {
+      display: flex;
+      gap: 24px;
+      padding: 12px 0;
+      font-size: 14px;
+      color: rgba(255, 255, 255,0.70);
+      line-height: 1.7;
+      position: relative;
+    }
+    .news-list .news-date {
+      flex: 0 0 92px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.42);
+      padding-top: 5px;
+      text-align: right;
+    }
+    .news-list .news-dot {
+      flex: 0 0 9px;
+      position: relative;
+    }
+    .news-list .news-dot::before {
+      content: '';
+      position: absolute;
+      left: -4px;                  /* center on the vertical line */
+      top: 8px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--bg);       /* matches body bg → ring effect */
+      border: 1px solid rgba(155, 202, 232, 0.65);
+    }
+    .news-list .news-text { flex: 1; padding-left: 4px; }
+    .news-list .news-text strong { color: #ffffff; font-weight: 500; }
+
+    /* --- Pill venue badges (matching index.html cream + terracotta system) --- */
+    .pub-card .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      color: rgba(255, 255, 255, 0.62);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+    .pub-card .pill.pill-top {
+      color: #9bcae8;
+      border-color: rgba(155, 202, 232, 0.35);
+    }
+    .pub-card .pill.pill-oral {
+      color: var(--accent-warm);
+      border-color: rgba(216, 84, 42, 0.45);
+    }
+    .pub-card .pill.pill-acc {
+      color: var(--accent-warm);
+      border-color: rgba(216, 84, 42, 0.55);
+      background: rgba(216, 84, 42, 0.08);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+    }
+
+    /* Featured publication card */
+    .pub-card.featured {
+      background: linear-gradient(135deg,
+        rgba(155, 202, 232, 0.06),
+        rgba(255, 255, 255, 0.02) 60%);
+      border-color: rgba(155, 202, 232, 0.22);
+    }
+    .pub-card.featured::before {
+      content: 'FEATURED';
+      position: absolute;
+      top: 14px; right: 18px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.25em;
+      color: #9bcae8;
+      padding: 3px 8px;
+      border: 1px solid rgba(155, 202, 232, 0.35);
+      border-radius: 2px;
+    }
+
+    /* --- Footer (3-column grid, matches index.html) --- */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 50px 36px 40px;
+      max-width: 920px;
+      margin: 40px auto 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 36px;
+    }
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.38);
+      margin-bottom: 12px;
+    }
+    .footer-col p, .footer-col a {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.8;
+      display: block;
+    }
+    .footer-bottom {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: rgba(255, 255, 255, 0.38);
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .footer-bottom .ascii {
+      display: block;
+      color: rgba(155, 202, 232, 0.30);
+      margin-bottom: 14px;
+      font-size: 10px;
+      letter-spacing: 0.4em;
+    }
+    @media (max-width: 720px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 22px; }
+    }
+
+    /* --- Physics-informed visitor globe (frameless) --- */
+    .viz-row {
+      max-width: 540px;
+      margin: 24px auto 32px;
+    }
+    .viz-card {
+      padding: 0;
+      border: none;
+      background: none;
+      position: relative;
+    }
+    .viz-card canvas {
+      display: block;
+      width: 100%;
+      height: 360px;
+    }
+    .viz-card .viz-title {
+      position: absolute;
+      top: 8px; left: 12px;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
+      pointer-events: none;
+    }
+    .viz-card .viz-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      padding: 0 12px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.38);
+    }
+    .viz-card .viz-meta .meta-value { color: #9bcae8; }
+
+    /* Hide the old visitor-map (kept for the mapmyvisitors counter only) */
+    .visitor-map { display: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html" style="text-decoration:none;">Joonwoo Kwon</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="studio.html">Studio</a>
+    <a href="photography.html">Photography</a>
+    <a href="mailto:kwonjoon@msu.edu">Contact</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Hero / Bio -->
+  <div class="hero">
+    <div class="hero-photo">
+      <img class="photo-main" src="image/portrait3.jpg" alt="Joonwoo Kwon">
+      <img class="photo-alt" src="image/portrait.png" alt="Joonwoo Kwon">
+    </div>
+    <div class="hero-text">
+      <h1>Joonwoo Kwon</h1>
+      <div class="affiliation">
+        <span class="aff-line">PhD Student in Computer Science</span>
+        <span class="aff-sep"> · </span><span class="aff-line">Generative Artist</span><br>
+        Michigan State University
+      </div>
+      <div class="links">
+        <a href="mailto:kwonjoon@msu.edu">Email</a>
+        <a href="https://www.linkedin.com/in/joonwookwon/">LinkedIn</a>
+        <a href="files/CV_Joonwoo Kwon.pdf">CV</a>
+        <a href="https://scholar.google.com/citations?user=pdnfn3YAAAAJ&hl=en">Scholar</a>
+        <a href="https://github.com/ioahKwon">Github</a>
+      </div>
+      <div class="bio">
+        I am a first-year PhD student in Computer Science at Michigan State University,
+        where I'm fortunate to be advised by <a href="https://zijunjkl.github.io/">Prof. Zijun Cui</a>.
+        Prior to this, I earned my B.S. in Electronic and Electrical Engineering at <a href="https://www.skku.edu/eng/">SKKU</a>
+        and my M.S. in Bioengineering at <a href="https://en.snu.ac.kr/index.html">SNU</a>,
+        where I was advised by <a href="https://www.connectomelab.com/home">Prof. Jiook Cha</a>.
+        I also had the opportunity to collaborate with <a href="https://scholar.google.com/citations?user=KFYsgnIAAAAJ&hl=en">Prof. Shinjae Yoo</a>
+        and <a href="https://ywlincq.github.io/">Prof. Yuewei Lin</a> at Brookhaven National Laboratory.
+      </div>
+    </div>
+  </div>
+
+  <!-- Research Statement -->
+  <div class="section">
+    <h2>Research</h2>
+    <p class="research-text">
+      My research lies at the intersection of <span class="keyword">computer vision</span>,
+      <span class="keyword">generative AI</span>, and <span class="keyword">physics-informed learning</span>.
+      The core objective of my work is to embed physical laws into deep generative and vision models to achieve interpretable and
+      physically coherent 3D motion representations.
+    </p>
+    <ul class="research-bullets">
+      <li><strong>Physical Knowledge Representation</strong> — modeling physical principles within AI systems to enable grounded reasoning and interpretable real-world perception.</li>
+      <li><strong>Knowledge Integration</strong> — incorporating these representations into generative architectures for realistic 3D motion estimation and generation.</li>
+    </ul>
+  </div>
+
+  <!-- News -->
+  <div class="section">
+    <h2>News</h2>
+    <ul class="news-list">
+      <li>
+        <div class="news-date">Apr 2026</div>
+        <div class="news-dot"></div>
+        <div class="news-text">Invited as a reviewer for <strong>CVPR</strong>, <strong>ICIP</strong>, and <strong>NeurIPS</strong>.</div>
+      </li>
+      <li>
+        <div class="news-date">Aug 2025</div>
+        <div class="news-dot"></div>
+        <div class="news-text">Our paper, <a href="https://arxiv.org/abs/2412.05296">Revisiting Your Memory</a>, is accepted as an <span style="color:var(--accent-warm);font-style:italic;">Oral Paper</span> at ACM Multimedia 2025 — <a href="https://cogmaec.github.io/MM2025/">CogMAEC</a> Workshop.</div>
+      </li>
+      <li>
+        <div class="news-date">Aug 2025</div>
+        <div class="news-dot"></div>
+        <div class="news-text">Started my Ph.D. in MSU CS.</div>
+      </li>
+      <li>
+        <div class="news-date">Oct 2024</div>
+        <div class="news-dot"></div>
+        <div class="news-text">Our team won the <strong>Grand Prize</strong> at the AI &amp; Art Hackathon and presented the work at <a href="https://www.tap.or.kr/en/home">the ART DIFFUSION</a>, SNU MoA.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Publications -->
+  <div class="section">
+    <h2>Publications</h2>
+
+    <div class="pub-card featured">
+      <div class="pub-thumb"><div class="pub-thumb-mat"><img src="image/aesfa.jpg" alt=""></div></div>
+      <div class="pub-info">
+        <div class="pub-title">AesFA: An Aesthetic Feature-Aware Arbitrary Neural Style Transfer</div>
+        <div class="pub-authors"><strong>J. Kwon*</strong>, S. Kim*, S. Yoo, Y. Lin and J. Cha</div>
+        <div class="pub-venue">
+          <span class="pill pill-top">AAAI 2024</span>
+          <span class="pill pill-acc">Acc. 23.75%</span>
+        </div>
+        <div class="pub-links"><a href="https://aesfa-nst.github.io/AesFA/">[project]</a> <a href="https://arxiv.org/abs/2312.05928">[paper]</a></div>
+        <div class="pub-desc">A lightweight style transfer method that captures aesthetic style through frequency decomposition and contrastive training — without relying on pre-trained CNNs.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-thumb"><div class="pub-thumb-mat"><img src="image/EEG.jpg" alt=""></div></div>
+      <div class="pub-info">
+        <div class="pub-title">Revisiting Your Memory: Reconstruction of Affect-Contextualized Memory via EEG-guided Audiovisual Generation</div>
+        <div class="pub-authors"><strong>J. Kwon*</strong>, H. Wang*, J. Yi*, S. Kim*, S. Yoo, Y. Lin and J. Cha</div>
+        <div class="pub-venue">
+          <span class="pill pill-top">ACM MM CogMAEC 2025</span>
+          <span class="pill pill-oral">Oral</span>
+        </div>
+        <div class="pub-links"><a href="https://arxiv.org/abs/2412.05296">[paper]</a></div>
+        <div class="pub-desc">A multimodal framework for reconstructing video with music contextualized by human affect from brain signals.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-thumb"><div class="pub-thumb-mat"><img src="image/music.png" alt=""></div></div>
+      <div class="pub-info">
+        <div class="pub-title">Stylus: Repurposing Stable Diffusion For Training-Free Music Style Transfer on Mel-Spectrograms</div>
+        <div class="pub-authors">H. Wang*, <strong>J. Kwon*</strong>, S. Kim*, J. Seo, S. Yoo, Y. Lin and J. Cha</div>
+        <div class="pub-venue">
+          <span class="pill">arXiv 2025</span>
+        </div>
+        <div class="pub-links"><a href="https://arxiv.org/abs/2411.15913">[paper]</a></div>
+        <div class="pub-desc">A training-free framework that repurposes a pre-trained Stable Diffusion model for music style transfer in the mel-spectrogram domain.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-thumb"><div class="pub-thumb-mat"><img src="image/macro2micro.jpg" alt=""></div></div>
+      <div class="pub-info">
+        <div class="pub-title">Macro2Micro: Cross-modal Magnetic Resonance Imaging Synthesis Leveraging Multi-scale Brain Structures</div>
+        <div class="pub-authors">S. Kim*, <strong>J. Kwon*</strong>, J. Kwon*, J. Min, S. Bae, S. Yoo, Y. Lin and J. Cha</div>
+        <div class="pub-venue">
+          <span class="pill">arXiv 2024</span>
+        </div>
+        <div class="pub-links"><a href="https://arxiv.org/abs/2412.05296">[paper]</a></div>
+        <div class="pub-desc">An image-to-image translation model based on GAN for cross-modal MRI synthesis.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manuscripts in Preparation -->
+  <div class="section">
+    <h2>Manuscripts in Preparation</h2>
+
+    <div class="pub-card">
+      <div class="pub-thumb"><div class="pub-thumb-mat"><img src="image/planningo.jpg" alt=""></div></div>
+      <div class="pub-info">
+        <div class="pub-title">An Instance-Adaptive Photorealistic Style Optimization for Commercial Image Harmonization</div>
+        <div class="pub-authors">S. Kim*, <strong>J. Kwon*</strong>, J. Shin, J. Cha and S. Kim</div>
+        <div class="pub-desc">A relighting and harmonization framework that resolves lighting, texture, and color mismatches in AI-generated commercial imagery.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-thumb"><div class="pub-thumb-mat"><img src="image/insideout.jpg" alt=""></div></div>
+      <div class="pub-info">
+        <div class="pub-title">Compositional Brain Decoding from Symbolic Representations in the Hierarchical Visual System</div>
+        <div class="pub-authors">S. Kim*, <strong>J. Kwon*</strong>, H. Wang, J. Kwon, M. Park, S. Yoo, Y. Lin, V. Pavlovic, Z. Cui and J. Cha</div>
+        <div class="pub-desc">A compositional brain decoding framework that maps fMRI signals to spatially grounded noun phrases by disentangling semantic and spatial pathways.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-thumb"><div class="pub-thumb-mat"><img src="image/aesPHA.jpg" alt=""></div></div>
+      <div class="pub-info">
+        <div class="pub-title">A Viscosity-guided Artistic Style Optimization via Brushstroke Parameterization</div>
+        <div class="pub-authors"><strong>J. Kwon*</strong>, S. Kim*, S. Lee, S. Yoo, Y. Lin and J. Cha</div>
+        <div class="pub-desc">Viscosity-aware style optimization and brushstroke parameterization to emulate the physical and textural properties of oil painting and watercolor.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .container -->
+
+<div class="container" style="padding-top:0;">
+
+  <!-- Miscellanea -->
+  <div class="section">
+    <h2>Miscellanea</h2>
+    <div class="misc-card">
+      <img src="image/painting.jpg" alt="">
+      <p>My father is a researcher in electrical engineering, and my mother is an artist. In many ways, what I pursue lies at the intersection of their worlds. The painting on the left is one of her works.</p>
+    </div>
+    <div class="misc-card">
+      <img src="image/LMS.png" alt="">
+      <p>I spent part of my childhood in Pullman, WA, where I completed eighth grade. I was voted "Most Friendly" and runner-up for "Most Inspirational" in 2011. Go Spartans! Miss you all.</p>
+    </div>
+  </div>
+
+  <!-- Physics-informed visitor globe -->
+  <div class="viz-row">
+    <div class="viz-card">
+      <div class="viz-title">Network of Curiosity</div>
+      <canvas id="globe-canvas"></canvas>
+      <div class="viz-meta">
+        <span>Visitor Globe · Drag to Rotate</span>
+        <span><span class="meta-value">7,796</span> &nbsp;Pageviews</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden mapmyvisitors counter (loads silently for the count) -->
+  <div class="visitor-map">
+    <script type='text/javascript' id='mapmyvisitors' src='https://mapmyvisitors.com/map.js?cl=1a3550&w=a&t=tt&d=PhTVc0EN9UJ-ZZX2mFvu3Dju_S7JehGQbZrOF2gfBOo&co=050608&ct=4a7090&cmo=9bcae8&cmn=c1ddf0'></script>
+  </div>
+
+</div>
+
+<!-- =================== FOOTER =================== -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:kwonjoon@msu.edu">kwonjoon@msu.edu</a>
+      <p>Department of Computer Science<br>Michigan State University</p>
+    </div>
+    <div class="footer-col">
+      <h4>Elsewhere</h4>
+      <a href="https://github.com/ioahKwon">github.com/ioahKwon</a>
+      <a href="https://scholar.google.com/citations?user=pdnfn3YAAAAJ&hl=en">Google Scholar</a>
+      <a href="https://www.linkedin.com/in/joonwookwon/">LinkedIn</a>
+    </div>
+    <div class="footer-col">
+      <h4>Beyond Research</h4>
+      <p>Football, photography, and the slow craft of physics-informed generative art.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="ascii">· · ·  ─  · · ·</span>
+    &copy; 2026 Joonwoo Kwon · All rights reserved
+  </div>
+</footer>
+
+<!-- ============== Physics-informed visitor globe ============== -->
+<script type="module">
+import * as THREE from 'three';
+
+(function () {
+  const canvas = document.getElementById('globe-canvas');
+  if (!canvas) return;
+
+  // ---------- Scene setup ----------
+  const scene = new THREE.Scene();
+  const W = () => canvas.clientWidth;
+  const H = () => canvas.clientHeight;
+
+  const camera = new THREE.PerspectiveCamera(45, W() / H(), 0.1, 200);
+  camera.position.set(0, 0, 5.0);
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas: canvas, antialias: true, alpha: true,
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W(), H(), false);
+  renderer.setClearColor(0x000000, 0);
+
+  // ---------- Wireframe globe (latitude × longitude lines) ----------
+  const RADIUS = 1.45;
+  const globeGroup = new THREE.Group();
+  scene.add(globeGroup);
+
+  const wireMat = new THREE.LineBasicMaterial({
+    color: 0x9bcae8, transparent: true, opacity: 0.10,
+  });
+
+  // Latitude rings
+  const NLAT = 11;
+  for (let i = 1; i < NLAT; i++) {
+    const phi = (i / NLAT) * Math.PI;       // 0 → π
+    const r = Math.sin(phi) * RADIUS;
+    const y = Math.cos(phi) * RADIUS;
+    const segs = 64;
+    const pts = new Float32Array((segs + 1) * 3);
+    for (let s = 0; s <= segs; s++) {
+      const t = (s / segs) * Math.PI * 2;
+      pts[s * 3 + 0] = Math.cos(t) * r;
+      pts[s * 3 + 1] = y;
+      pts[s * 3 + 2] = Math.sin(t) * r;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pts, 3));
+    globeGroup.add(new THREE.Line(g, wireMat));
+  }
+
+  // Longitude meridians
+  const NLON = 16;
+  for (let i = 0; i < NLON; i++) {
+    const theta = (i / NLON) * Math.PI * 2;
+    const segs = 64;
+    const pts = new Float32Array((segs + 1) * 3);
+    for (let s = 0; s <= segs; s++) {
+      const phi = (s / segs) * Math.PI;
+      pts[s * 3 + 0] = Math.sin(phi) * Math.cos(theta) * RADIUS;
+      pts[s * 3 + 1] = Math.cos(phi) * RADIUS;
+      pts[s * 3 + 2] = Math.sin(phi) * Math.sin(theta) * RADIUS;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pts, 3));
+    globeGroup.add(new THREE.Line(g, wireMat));
+  }
+
+  // Subtle inner sphere to occlude back-side dots
+  const innerGeo = new THREE.SphereGeometry(RADIUS * 0.998, 48, 32);
+  const innerMat = new THREE.MeshBasicMaterial({ color: 0x050608 });
+  globeGroup.add(new THREE.Mesh(innerGeo, innerMat));
+
+  // ---------- Coastlines from GeoJSON (Natural Earth 110m) ----------
+  // Helper: spherical → 3D
+  function llToVec3(lat, lon, r) {
+    const phi   = (90 - lat) * Math.PI / 180;
+    const theta = (lon + 180) * Math.PI / 180;
+    return [
+      -r * Math.sin(phi) * Math.cos(theta),
+       r * Math.cos(phi),
+       r * Math.sin(phi) * Math.sin(theta),
+    ];
+  }
+  // Recursively pull every Position out of any GeoJSON geometry.
+  // We always emit segment pairs: [lon,lat, lon,lat, ...] for LineSegments.
+  function geomToSegments(geom, out) {
+    if (!geom) return;
+    const t = geom.type;
+    if (t === 'Polygon') {
+      geom.coordinates.forEach(ring => ringToSegments(ring, out));
+    } else if (t === 'MultiPolygon') {
+      geom.coordinates.forEach(poly =>
+        poly.forEach(ring => ringToSegments(ring, out)));
+    } else if (t === 'LineString') {
+      ringToSegments(geom.coordinates, out, false);
+    } else if (t === 'MultiLineString') {
+      geom.coordinates.forEach(line => ringToSegments(line, out, false));
+    } else if (t === 'GeometryCollection') {
+      geom.geometries.forEach(g => geomToSegments(g, out));
+    }
+  }
+  function ringToSegments(coords, out, closed = true) {
+    for (let i = 0; i < coords.length - 1; i++) {
+      out.push(coords[i], coords[i + 1]);
+    }
+    if (closed && coords.length > 1) {
+      out.push(coords[coords.length - 1], coords[0]);
+    }
+  }
+
+  // Build a Three.js LineSegments mesh from a list of [[lon,lat],[lon,lat],...]
+  // segment pairs. Each segment is interpolated along the great-circle so that
+  // straight equirectangular edges curve nicely on the sphere.
+  function buildCoastMesh(segments) {
+    const verts = [];
+    const STEPS = 4;            // sub-divisions per segment
+    for (let i = 0; i < segments.length; i += 2) {
+      const a = segments[i];
+      const b = segments[i + 1];
+      for (let s = 0; s < STEPS; s++) {
+        const t1 = s / STEPS;
+        const t2 = (s + 1) / STEPS;
+        const lat1 = a[1] + (b[1] - a[1]) * t1;
+        const lon1 = a[0] + (b[0] - a[0]) * t1;
+        const lat2 = a[1] + (b[1] - a[1]) * t2;
+        const lon2 = a[0] + (b[0] - a[0]) * t2;
+        const v1 = llToVec3(lat1, lon1, RADIUS * 1.003);
+        const v2 = llToVec3(lat2, lon2, RADIUS * 1.003);
+        verts.push(v1[0], v1[1], v1[2], v2[0], v2[1], v2[2]);
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position',
+      new THREE.BufferAttribute(new Float32Array(verts), 3));
+    const m = new THREE.LineBasicMaterial({
+      color: 0x9bcae8,
+      transparent: true,
+      opacity: 0.55,
+    });
+    return new THREE.LineSegments(g, m);
+  }
+
+  // Fetch Natural Earth 110m coastlines (small, < 100 KB)
+  const COAST_URL =
+    'https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json';
+  const COAST_GEOJSON_FALLBACK =
+    'https://raw.githubusercontent.com/martynafford/natural-earth-geojson/master/110m/physical/ne_110m_land.json';
+
+  // We use the geojson fallback by default — it's ready-to-use.
+  fetch(COAST_GEOJSON_FALLBACK)
+    .then(r => r.json())
+    .then(json => {
+      const segments = [];
+      if (json.type === 'FeatureCollection') {
+        json.features.forEach(f => geomToSegments(f.geometry, segments));
+      } else if (json.type === 'Feature') {
+        geomToSegments(json.geometry, segments);
+      } else {
+        geomToSegments(json, segments);
+      }
+      const coast = buildCoastMesh(segments);
+      globeGroup.add(coast);
+    })
+    .catch(err => {
+      console.warn('[globe] failed to load coastline data:', err);
+    });
+
+  // ---------- Visitor "cities" (lat/lon hand-picked clusters) ----------
+  // [latitude °, longitude °, weight 0..1, recency 0..1, name]
+  // recency: 1 = most recent visit, 0 = oldest.
+  const CITIES = [
+    // Most recent (rec ≥ 0.85)
+    [42.7, -84.5, 1.0, 1.00, 'East Lansing'],
+    [37.5, 127.0, 1.0, 0.95, 'Seoul'],
+    [35.7, 139.7, 0.9, 0.90, 'Tokyo'],
+    [40.7, -74.0, 0.9, 0.88, 'New York'],
+    [51.5,  -0.1, 0.85,0.86, 'London'],
+    [37.8,-122.4, 0.85,0.84, 'San Francisco'],
+    // Recent (0.55–0.84)
+    [48.9,   2.3, 0.8, 0.78, 'Paris'],
+    [52.5,  13.4, 0.75,0.72, 'Berlin'],
+    [42.4, -71.1, 0.6, 0.70, 'Boston'],
+    [40.0, -83.0, 0.7, 0.68, 'Ohio'],
+    [34.0,-118.2, 0.7, 0.66, 'Los Angeles'],
+    [31.2, 121.5, 0.7, 0.62, 'Shanghai'],
+    [47.6,-122.3, 0.55,0.60, 'Seattle'],
+    [41.9,  12.5, 0.55,0.58, 'Rome'],
+    // Mid (0.30–0.55)
+    [22.3, 114.2, 0.55,0.50, 'Hong Kong'],
+    [41.9, -87.6, 0.5, 0.48, 'Chicago'],
+    [40.4,  -3.7, 0.5, 0.45, 'Madrid'],
+    [55.7,  12.6, 0.5, 0.42, 'Copenhagen'],
+    [25.0, 121.5, 0.45,0.40, 'Taipei'],
+    [-33.9,151.2, 0.5, 0.38, 'Sydney'],
+    [59.3,  18.0, 0.45,0.36, 'Stockholm'],
+    [29.8, -95.4, 0.45,0.34, 'Houston'],
+    [45.5, -73.6, 0.4, 0.32, 'Montreal'],
+    [ 1.3, 103.8, 0.5, 0.30, 'Singapore'],
+    // Oldest (≤ 0.30)
+    [50.8,   4.4, 0.4, 0.25, 'Brussels'],
+    [28.6,  77.2, 0.5, 0.22, 'New Delhi'],
+    [25.2,  55.3, 0.4, 0.18, 'Dubai'],
+    [13.7, 100.5, 0.35,0.14, 'Bangkok'],
+    [-23.6,-46.6, 0.4, 0.10, 'São Paulo'],
+  ];
+
+  function latLonToXYZ(lat, lon, r) {
+    const phi   = (90 - lat) * Math.PI / 180;
+    const theta = (lon + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+      -r * Math.sin(phi) * Math.cos(theta),
+       r * Math.cos(phi),
+       r * Math.sin(phi) * Math.sin(theta)
+    );
+  }
+
+  // City dot — single tight pin, sky blue, soft falloff.
+  // Total visible radius ≈ 18% of the sprite canvas so it stays small
+  // even when the camera dollies in.
+  function makeDotSprite() {
+    const s = 64;
+    const c = document.createElement('canvas');
+    c.width = c.height = s;
+    const ctx = c.getContext('2d');
+    // Tight radial gradient — bright core fading to transparent within 18%
+    const g = ctx.createRadialGradient(s/2, s/2, 0, s/2, s/2, s * 0.18);
+    g.addColorStop(0.00, 'rgba(255, 255, 255, 1.0)');
+    g.addColorStop(0.30, 'rgba(193, 221, 240, 0.95)');
+    g.addColorStop(0.65, 'rgba(155, 202, 232, 0.45)');
+    g.addColorStop(1.00, 'rgba(155, 202, 232, 0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, s, s);
+    return new THREE.CanvasTexture(c);
+  }
+  const dotTex = makeDotSprite();
+
+  // Halo sprite — a soft, wide glow that sits BEHIND high-weight city dots.
+  // Uses a gentle radial falloff so busy cities bloom visibly but quiet
+  // cities barely register.
+  function makeHaloSprite() {
+    const s = 128;
+    const c = document.createElement('canvas');
+    c.width = c.height = s;
+    const ctx = c.getContext('2d');
+    const g = ctx.createRadialGradient(s/2, s/2, 0, s/2, s/2, s * 0.50);
+    g.addColorStop(0.00, 'rgba(220, 240, 255, 0.85)');
+    g.addColorStop(0.20, 'rgba(180, 220, 250, 0.55)');
+    g.addColorStop(0.45, 'rgba(140, 195, 235, 0.22)');
+    g.addColorStop(0.80, 'rgba(110, 175, 220, 0.06)');
+    g.addColorStop(1.00, 'rgba(110, 175, 220, 0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, s, s);
+    return new THREE.CanvasTexture(c);
+  }
+  const haloTex = makeHaloSprite();
+
+  // Place dots slightly above the surface so they don't z-fight
+  const dotPositions = new Float32Array(CITIES.length * 3);
+  const dotSizes     = new Float32Array(CITIES.length);
+  CITIES.forEach((c, i) => {
+    const v = latLonToXYZ(c[0], c[1], RADIUS * 1.005);
+    dotPositions[i*3+0] = v.x;
+    dotPositions[i*3+1] = v.y;
+    dotPositions[i*3+2] = v.z;
+    dotSizes[i] = 0.012 + c[2] * 0.014;
+  });
+
+  // Build a tiny plain text label — no background pill, just text
+  function makeLabelSprite(text, recency) {
+    const padX = 4, padY = 4;
+    const fontSize = 22;                          // canvas px (scaled down)
+    const c = document.createElement('canvas');
+    const measure = document.createElement('canvas').getContext('2d');
+    measure.font = `400 ${fontSize}px "JetBrains Mono", monospace`;
+    const w = Math.ceil(measure.measureText(text).width) + padX * 2;
+    const h = fontSize + padY * 2;
+    c.width = w; c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.font = `400 ${fontSize}px "JetBrains Mono", monospace`;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    // Plain text only — no backdrop
+    const op = 0.50 + recency * 0.45;
+    ctx.fillStyle = `rgba(220, 235, 250, ${op})`;
+    ctx.fillText(text, padX, h / 2 + 1);
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    const mat = new THREE.SpriteMaterial({
+      map: tex, transparent: true, depthTest: false, depthWrite: false,
+    });
+    const sp = new THREE.Sprite(mat);
+    sp.renderOrder = 10;
+    const scale = 0.0024;
+    sp.scale.set(w * scale, h * scale, 1);
+    sp.userData_size = { w, h, scale };
+    return sp;
+  }
+
+  // Use individual sprite meshes so we get per-dot twinkle + size variance
+  const dotMeshes = [];
+  const haloMeshes = [];
+  const labelMeshes = [];
+  CITIES.forEach((c, i) => {
+    const weight  = c[2];                       // visitor count 0..1
+    const recency = c[3];                       // 0..1
+    const name    = c[4];
+    const px = dotPositions[i*3+0], py = dotPositions[i*3+1], pz = dotPositions[i*3+2];
+
+    // Halo — soft wide glow behind the dot. High-weight cities bloom
+    // noticeably; low-weight cities get almost nothing. Rendered first so
+    // the sharp dot sits on top.
+    const haloMat = new THREE.SpriteMaterial({
+      map: haloTex,
+      color: 0xbcdcf4,
+      transparent: true,
+      opacity: 0.0,                             // driven by animate loop
+      blending: THREE.AdditiveBlending,
+      depthTest: true,
+      depthWrite: false,
+    });
+    const halo = new THREE.Sprite(haloMat);
+    halo.position.set(px, py, pz);
+    const haloBase = dotSizes[i] * (4.0 + weight * 8.0);
+    halo.scale.set(haloBase, haloBase, haloBase);
+    halo.userData = {
+      phase: Math.random() * Math.PI * 2,
+      base: haloBase,
+      weight,
+      recency,
+      // Base glow = primarily driven by weight (visitor count)
+      baseOpacity: Math.pow(weight, 1.4) * (0.35 + recency * 0.25),
+      pulseSpeed: 0.8 + recency * 1.6,
+      pulseAmp:   0.25 + weight * 0.35,
+    };
+    globeGroup.add(halo);
+    haloMeshes.push(halo);
+
+    // Dot — normal blending so it stays a small dot regardless of camera
+    // distance (additive blending caused exploding white blobs).
+    const mat = new THREE.SpriteMaterial({
+      map: dotTex,
+      color: 0xc1ddf0,
+      transparent: true,
+      opacity: 0.85 + recency * 0.15,
+      blending: THREE.NormalBlending,
+      depthTest: true,
+      depthWrite: false,
+    });
+    const sp = new THREE.Sprite(mat);
+    sp.position.set(px, py, pz);
+    const sz = dotSizes[i] * (0.55 + recency * 0.55);
+    sp.scale.set(sz, sz, sz);
+    sp.userData = {
+      phase: Math.random() * Math.PI * 2,
+      base: sz,
+      baseOpacity: 0.85 + recency * 0.15,
+      w: c[2],
+      recency: recency,
+      // Twinkle speed/amp now also scale with weight so popular cities pulse harder
+      twinkleSpeed: 0.6 + recency * 2.4,
+      twinkleAmp:   0.06 + recency * 0.10 + weight * 0.08,
+    };
+    globeGroup.add(sp);
+    dotMeshes.push(sp);
+
+    // City name label — sits just above the dot, on the same outward ray
+    const label = makeLabelSprite(name, recency);
+    const ray = new THREE.Vector3(px, py, pz).normalize();
+    const labelOffset = ray.clone().multiplyScalar(RADIUS * 0.10);
+    label.position.set(px + labelOffset.x, py + labelOffset.y, pz + labelOffset.z);
+    label.userData = {
+      dot: sp,
+      ray,
+      baseOpacity: 0.95,                // text alpha is already baked into the canvas
+      recency,
+      weight: c[2],                     // visitor count
+    };
+    globeGroup.add(label);
+    labelMeshes.push(label);
+  });
+
+  // ====================================================================
+  //  F L I G H T S — planes hop between visited cities along great-circles
+  // ====================================================================
+  // Each flight is a glowing dot that interpolates along the shortest arc
+  // between two random city positions on the sphere (slerp). When the
+  // flight reaches its destination it picks a new random pair and starts
+  // again. A short fading trail follows the head.
+
+  const FLIGHT_COUNT = 6;
+  const FLIGHT_TRAIL = 26;             // particles per trail
+  const FLIGHT_ALT   = 1.12;           // altitude as a multiple of RADIUS
+
+  // Pre-compute city positions on a unit sphere for slerp
+  const cityVecs = CITIES.map(c => {
+    const v = latLonToXYZ(c[0], c[1], 1.0);
+    return v.clone();
+  });
+
+  // Slerp between two unit vectors → returns a position on the FLIGHT_ALT sphere
+  function slerp(a, b, t) {
+    const dot = Math.max(-1, Math.min(1, a.dot(b)));
+    const omega = Math.acos(dot);
+    const sinO = Math.sin(omega);
+    if (sinO < 1e-5) {
+      // Same point — just return a
+      return a.clone().multiplyScalar(RADIUS * FLIGHT_ALT);
+    }
+    const sa = Math.sin((1 - t) * omega) / sinO;
+    const sb = Math.sin(t * omega) / sinO;
+    return new THREE.Vector3()
+      .addScaledVector(a, sa)
+      .addScaledVector(b, sb)
+      .normalize()
+      .multiplyScalar(RADIUS * FLIGHT_ALT);
+  }
+
+  // ---- Commercial airliner silhouette (Boeing 737 / A320 style) ----
+  // Long narrow fuselage, slightly swept main wings, smaller tail wings.
+  // Symmetric polygon, nose at the top of the canvas.
+  function makePlaneTexture() {
+    const S = 256;
+    const c = document.createElement('canvas');
+    c.width = c.height = S;
+    const ctx = c.getContext('2d');
+
+    function poly(pts) {
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = p[0] * S;
+        const y = p[1] * S;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.closePath();
+    }
+
+    // Right half of the silhouette (will be mirrored).
+    // Y goes 0 (nose) → 1 (tail). X = 0.5 is the centreline.
+    const right = [
+      // ----- nose & forward fuselage -----
+      [0.500, 0.040],   // nose tip
+      [0.518, 0.080],   // nose round-out
+      [0.530, 0.150],
+      [0.534, 0.260],   // narrow forward fuselage
+      [0.536, 0.380],   // wing root front
+      // ----- main wing (slight sweep back) -----
+      [0.560, 0.395],
+      [0.870, 0.495],   // wingtip leading edge
+      [0.940, 0.520],   // wingtip
+      [0.940, 0.535],
+      [0.560, 0.520],   // wing trailing edge
+      // ----- back to fuselage -----
+      [0.538, 0.535],
+      [0.534, 0.700],   // narrow rear fuselage
+      [0.534, 0.810],   // tail wing root front
+      // ----- horizontal stabiliser (small, near the rear) -----
+      [0.560, 0.825],
+      [0.660, 0.860],   // tail tip
+      [0.660, 0.880],
+      [0.540, 0.870],
+      // ----- tail cone -----
+      [0.530, 0.940],
+      [0.500, 0.965],   // tail centre
+    ];
+    const pts = right.slice();
+    for (let i = right.length - 2; i >= 0; i--) {
+      pts.push([1 - right[i][0], right[i][1]]);
+    }
+    poly(pts);
+    ctx.fillStyle = '#c1ddf0';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.90)';
+    ctx.lineWidth = 1.6;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    return tex;
+  }
+  const planeTex = makePlaneTexture();
+
+  // Plane = sprite-style billboard mesh that always faces the camera, but
+  // because we set `material.rotation` per frame from the great-circle
+  // tangent in screen space, the nose points along the direction of travel.
+  function makePlaneHead() {
+    const mat = new THREE.SpriteMaterial({
+      map: planeTex,
+      transparent: true,
+      opacity: 1.0,
+      depthWrite: false,
+      depthTest: true,
+    });
+    const sp = new THREE.Sprite(mat);
+    sp.scale.set(0.085, 0.085, 0.085);
+    sp.userData.materials = [mat];
+    return sp;
+  }
+
+  // Plane trail — small Points cloud, normal blending so it stays a thin
+  // sky-blue line and doesn't bloom into a white blob.
+  function makePlaneTrail() {
+    const positions = new Float32Array(FLIGHT_TRAIL * 3);
+    const alphas    = new Float32Array(FLIGHT_TRAIL);
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    g.setAttribute('aAlpha',   new THREE.BufferAttribute(alphas, 1));
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { uPx: { value: Math.min(window.devicePixelRatio, 2) } },
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.NormalBlending,
+      vertexShader: /* glsl */`
+        uniform float uPx;
+        attribute float aAlpha;
+        varying float vAlpha;
+        void main() {
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * mv;
+          vAlpha = aAlpha;
+          gl_PointSize = (1.5 + aAlpha * 2.0) * uPx;
+        }
+      `,
+      fragmentShader: /* glsl */`
+        varying float vAlpha;
+        void main() {
+          vec2 p = gl_PointCoord - 0.5;
+          float d = length(p);
+          if (d > 0.5) discard;
+          float a = pow(1.0 - d * 2.0, 2.0) * vAlpha * 0.85;
+          gl_FragColor = vec4(0.61, 0.79, 0.91, a);
+        }
+      `,
+    });
+    return { geo: g, mat, points: new THREE.Points(g, mat),
+             positions, alphas };
+  }
+
+  function spawnFlight(f) {
+    function pickCity() {
+      const totalW = CITIES.reduce((s, c) => s + c[2], 0);
+      let r = Math.random() * totalW;
+      for (let i = 0; i < CITIES.length; i++) {
+        r -= CITIES[i][2];
+        if (r <= 0) return i;
+      }
+      return CITIES.length - 1;
+    }
+    let i = pickCity();
+    let j = pickCity();
+    if (j === i) j = (j + 1) % CITIES.length;
+    f.from  = cityVecs[i];
+    f.to    = cityVecs[j];
+    const angle = Math.acos(Math.max(-1, Math.min(1, f.from.dot(f.to))));
+    f.t = 0;
+    f.duration = 4 + angle * 4;
+    const start = slerp(f.from, f.to, 0);
+    for (let k = 0; k < FLIGHT_TRAIL; k++) {
+      f.trail.positions[k*3+0] = start.x;
+      f.trail.positions[k*3+1] = start.y;
+      f.trail.positions[k*3+2] = start.z;
+      f.trail.alphas[k] = 0;
+    }
+    f.head.position.copy(start);
+    setPlaneOpacity(f.head, 1.0);
+    if (f.track) rebuildTrack(f.track, f.from, f.to);
+  }
+
+  function setPlaneOpacity(head, op) {
+    // Toggle visibility for the solid mesh and fade the outline.
+    head.visible = op > 0.05;
+    const mats = head.userData.materials || [];
+    mats.forEach(m => {
+      if (m.transparent) m.opacity = op;
+    });
+  }
+
+  // Static dashed great-circle "track" line for each flight — shows the
+  // full route the plane is travelling.
+  function makeFlightTrack() {
+    const segs = 64;
+    const positions = new Float32Array((segs + 1) * 3);
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const m = new THREE.LineDashedMaterial({
+      color: 0x9bcae8,
+      transparent: true,
+      opacity: 0.45,
+      dashSize: 0.06,
+      gapSize: 0.04,
+      depthWrite: false,
+    });
+    const line = new THREE.Line(g, m);
+    return { line, geo: g, positions, segs };
+  }
+
+  function rebuildTrack(track, from, to) {
+    const N = track.segs;
+    const pts = track.positions;
+    for (let k = 0; k <= N; k++) {
+      const u = k / N;
+      const p = slerp(from, to, u);
+      pts[k*3+0] = p.x;
+      pts[k*3+1] = p.y;
+      pts[k*3+2] = p.z;
+    }
+    track.geo.attributes.position.needsUpdate = true;
+    track.geo.computeBoundingSphere();
+    track.line.computeLineDistances();    // required for LineDashedMaterial
+  }
+
+  const flights = [];
+  for (let i = 0; i < FLIGHT_COUNT; i++) {
+    const head  = makePlaneHead();
+    const trail = makePlaneTrail();
+    const track = makeFlightTrack();
+    globeGroup.add(head);
+    globeGroup.add(trail.points);
+    globeGroup.add(track.line);
+    const f = { head, trail, track, from: null, to: null, t: 0, duration: 1 };
+    spawnFlight(f);
+    f.t = Math.random() * f.duration;
+    flights.push(f);
+  }
+
+  function updateFlights(dt) {
+    for (let i = 0; i < flights.length; i++) {
+      const f = flights[i];
+      f.t += dt;
+      const u = Math.min(1, f.t / f.duration);
+      // Current head position via slerp on the unit sphere
+      const pos = slerp(f.from, f.to, u);
+      f.head.position.copy(pos);
+
+      // Orient the airplane sprite so the nose (drawn pointing UP in the
+      // sprite texture, i.e. the texture's +Y) points along the actual
+      // direction of travel in screen space.
+      //
+      // SpriteMaterial.rotation is counter-clockwise (radians).
+      //   forward angle (NDC, X-axis based, CCW) = atan2(dy, dx)
+      //   nose currently points to NDC +Y, which is angle = +π/2
+      //   so rotation needed = forward_angle − π/2
+      const aheadVec = slerp(f.from, f.to, Math.min(1, u + 0.02));
+      const headWorld  = pos.clone();
+      const aheadWorld = aheadVec.clone();
+      f.head.parent.localToWorld(headWorld);
+      f.head.parent.localToWorld(aheadWorld);
+      const headSc  = headWorld.clone().project(camera);
+      const aheadSc = aheadWorld.clone().project(camera);
+      const dx = aheadSc.x - headSc.x;
+      const dy = aheadSc.y - headSc.y;
+      if (Math.hypot(dx, dy) > 1e-6) {
+        f.head.material.rotation = Math.atan2(dy, dx) - Math.PI / 2;
+      }
+
+      // Shift trail buffer back by one slot
+      const N = FLIGHT_TRAIL;
+      const tp = f.trail.positions;
+      const ta = f.trail.alphas;
+      for (let k = N - 1; k > 0; k--) {
+        tp[k*3+0] = tp[(k-1)*3+0];
+        tp[k*3+1] = tp[(k-1)*3+1];
+        tp[k*3+2] = tp[(k-1)*3+2];
+        ta[k] = ta[k-1];
+      }
+      tp[0] = pos.x;
+      tp[1] = pos.y;
+      tp[2] = pos.z;
+      ta[0] = 1.0;
+      for (let k = 1; k < N; k++) ta[k] *= 0.92;
+
+      f.trail.geo.attributes.position.needsUpdate = true;
+      f.trail.geo.attributes.aAlpha.needsUpdate = true;
+
+      // Fade out plane when nearly done
+      const op = (u < 0.9) ? 1.0 : (1 - (u - 0.9) / 0.1);
+      setPlaneOpacity(f.head, op);
+
+      if (u >= 1) {
+        spawnFlight(f);
+      }
+    }
+  }
+
+  // ---------- Subtle outer atmosphere ring ----------
+  const atmoGeo = new THREE.RingGeometry(RADIUS * 1.04, RADIUS * 1.18, 96);
+  const atmoMat = new THREE.MeshBasicMaterial({
+    color: 0x9bcae8, transparent: true, opacity: 0.05,
+    side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false,
+  });
+  const atmo = new THREE.Mesh(atmoGeo, atmoMat);
+  scene.add(atmo);
+
+  // ====================================================================
+  //  S P A C E   B A C K G R O U N D
+  //  Layered starfield (deep + mid + bright) · galactic band · nebula tints
+  //  Reference: cinematic 3D space portfolios — multi-layer parallax stars,
+  //  perlin-clustered density, varied per-star color temperatures.
+  // ====================================================================
+
+  // Helper: random point on a sphere of given radius
+  function randPointOnSphere(rMin, rMax) {
+    const u = Math.random();
+    const v = Math.random();
+    const theta = u * 2 * Math.PI;
+    const phi = Math.acos(2 * v - 1);
+    const r = rMin + Math.random() * (rMax - rMin);
+    return [
+      r * Math.sin(phi) * Math.cos(theta),
+      r * Math.sin(phi) * Math.sin(theta),
+      r * Math.cos(phi),
+    ];
+  }
+
+  // Star color palette (blue → white → warm yellow) — proper stellar temps
+  function starColor(i) {
+    const r = Math.random();
+    if (r < 0.18) return [0.62, 0.78, 1.00];   // hot blue (O / B class)
+    if (r < 0.42) return [0.82, 0.90, 1.00];   // blue-white (A)
+    if (r < 0.68) return [1.00, 1.00, 0.96];   // pure white (F)
+    if (r < 0.86) return [1.00, 0.96, 0.84];   // yellow-white (G — sun)
+    if (r < 0.96) return [1.00, 0.86, 0.66];   // orange (K)
+    return            [1.00, 0.74, 0.55];      // red (M)
+  }
+
+  // ---- Build a star layer with optional galactic-plane bias ----
+  function buildStarLayer(count, rMin, rMax, sizeScale, opacityScale, bandStrength) {
+    const positions = new Float32Array(count * 3);
+    const colors    = new Float32Array(count * 3);
+    const seeds     = new Float32Array(count);
+    const sizes     = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      let p;
+      if (Math.random() < bandStrength) {
+        // Cluster along a tilted galactic-plane band
+        const u = Math.random();
+        const theta = u * 2 * Math.PI;
+        // Bias y toward zero (band) with a Gaussian-ish curl
+        let y = (Math.random() - 0.5);
+        y = Math.sign(y) * Math.pow(Math.abs(y), 2.5) * 0.55;
+        const r = rMin + Math.random() * (rMax - rMin);
+        const ringR = Math.sqrt(1 - y * y);
+        const x0 = ringR * Math.cos(theta);
+        const z0 = ringR * Math.sin(theta);
+        // Tilt the band ~15° around X
+        const tilt = 0.26;
+        const ct = Math.cos(tilt), st = Math.sin(tilt);
+        const xR = x0;
+        const yR = y * ct - z0 * st;
+        const zR = y * st + z0 * ct;
+        p = [xR * r, yR * r, zR * r];
+      } else {
+        p = randPointOnSphere(rMin, rMax);
+      }
+      positions[i*3+0] = p[0];
+      positions[i*3+1] = p[1];
+      positions[i*3+2] = p[2];
+      const col = starColor(i);
+      colors[i*3+0] = col[0];
+      colors[i*3+1] = col[1];
+      colors[i*3+2] = col[2];
+      seeds[i] = Math.random() * 1000;
+      // Size distribution: most tiny, very few bright (power 5)
+      sizes[i] = sizeScale * (0.4 + Math.pow(Math.random(), 5) * 6.0);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+    geo.setAttribute('aSeed',    new THREE.BufferAttribute(seeds, 1));
+    geo.setAttribute('aSize',    new THREE.BufferAttribute(sizes, 1));
+
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uPx:   { value: Math.min(window.devicePixelRatio, 2) },
+        uOpacity: { value: opacityScale },
+      },
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexShader: /* glsl */`
+        uniform float uTime;
+        uniform float uPx;
+        attribute float aSeed;
+        attribute float aSize;
+        attribute vec3 color;
+        varying float vTwinkle;
+        varying vec3  vColor;
+        void main() {
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * mv;
+          float speed = 0.4 + fract(aSeed) * 1.6;
+          vTwinkle = 0.55 + 0.45 * sin(uTime * speed + aSeed);
+          vColor = color;
+          // Distance-aware size — far stars stay tiny but bright stars survive
+          gl_PointSize = aSize * uPx * vTwinkle * (160.0 / max(-mv.z, 1.0));
+          gl_PointSize = clamp(gl_PointSize, 0.6, 14.0);
+        }
+      `,
+      fragmentShader: /* glsl */`
+        uniform float uOpacity;
+        varying float vTwinkle;
+        varying vec3  vColor;
+        void main() {
+          vec2 p = gl_PointCoord - 0.5;
+          float d = length(p);
+          if (d > 0.5) discard;
+          // Soft round star with diffraction core
+          float core = pow(1.0 - d * 2.0, 3.0);
+          float halo = pow(1.0 - d * 2.0, 1.0) * 0.30;
+          float a = (core + halo) * vTwinkle * uOpacity;
+          gl_FragColor = vec4(vColor * (0.85 + vTwinkle * 0.30), a);
+        }
+      `,
+    });
+    return new THREE.Points(geo, mat);
+  }
+
+  // Five layers — pushed up to ~32K total so the sky reads dense
+  const starsAtmos = buildStarLayer(13000, 130, 180, 0.04, 0.55, 0.80); // ultra-far dust
+  const starsDust  = buildStarLayer( 9500,  95, 130, 0.06, 0.72, 0.72); // deep dust
+  const starsFar   = buildStarLayer( 6000,  60,  90, 0.11, 0.90, 0.62); // milky way bulk
+  const starsMid   = buildStarLayer( 2800,  28,  55, 0.20, 0.96, 0.50); // mid layer
+  const starsNear  = buildStarLayer(  650,  12,  22, 0.34, 1.00, 0.38); // near hero stars
+  scene.add(starsAtmos);
+  scene.add(starsDust);
+  scene.add(starsFar);
+  scene.add(starsMid);
+  scene.add(starsNear);
+  const starLayers = [starsAtmos, starsDust, starsFar, starsMid, starsNear];
+
+  // (Nebula clouds removed — they read as fake "blobs" rather than real
+  // interstellar gas. Pure starfield + drift particles look more honest.)
+
+  // ====================================================================
+  //  P L A N E T S   ·   M O O N   ·   O R B I T S   ·   C O M E T S
+  //  Reference: shanebrumback comet particle system, three-globe orbits
+  // ====================================================================
+
+  // ---- A single shared sphere geometry used for all bodies ----
+  const planetGeo = new THREE.SphereGeometry(1, 32, 24);
+
+  // ---------- Procedural planet textures + lit shader ----------
+  // Builds a 1024×512 equirectangular texture tinted with multi-octave
+  // noise and small craters, then renders the planet with a Lambert
+  // shader so the sun lights one hemisphere.
+
+  function valueNoise(x, y, scale) {
+    const sx = Math.sin(x * scale * 12.9898 + y * scale * 78.233);
+    return (sx - Math.floor(sx)) * 2 - 1;
+  }
+
+  // Make a textured planet: pass a base color tuple (r,g,b 0-255) and a
+  // surface flavour that selects how much terrain detail to add.
+  function makePlanetTexture(baseRGB, options) {
+    const W = 1024, H = 512;
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const ctx = c.getContext('2d');
+    // Base
+    ctx.fillStyle = `rgb(${baseRGB[0]},${baseRGB[1]},${baseRGB[2]})`;
+    ctx.fillRect(0, 0, W, H);
+
+    // Multi-octave noise wash for terrain
+    const img = ctx.getImageData(0, 0, W, H);
+    const data = img.data;
+    const amp = options.noiseAmp ?? 36;
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const n = valueNoise(x, y, 0.04) * 0.5
+                + valueNoise(x, y, 0.13) * 0.3
+                + valueNoise(x, y, 0.40) * 0.2;
+        const v = n * amp;
+        const i = (y * W + x) * 4;
+        data[i]   = Math.max(0, Math.min(255, data[i]   + v));
+        data[i+1] = Math.max(0, Math.min(255, data[i+1] + v * 0.92));
+        data[i+2] = Math.max(0, Math.min(255, data[i+2] + v * 0.78));
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+
+    // Larger continental / dark plains
+    const plains = options.plains ?? 6;
+    for (let i = 0; i < plains; i++) {
+      const x = Math.random() * W;
+      const y = Math.random() * H * 0.8 + H * 0.1;
+      const r = 35 + Math.random() * 75;
+      const dark = options.darkColor ?? 'rgba(40, 25, 10,';
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0.0, `${dark} 0.55)`);
+      g.addColorStop(0.6, `${dark} 0.18)`);
+      g.addColorStop(1.0, `${dark} 0)`);
+      ctx.fillStyle = g;
+      ctx.save(); ctx.translate(x, y); ctx.scale(1, 0.85);
+      ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+
+    // Small craters
+    const craterCount = options.craters ?? 80;
+    for (let i = 0; i < craterCount; i++) {
+      const x = Math.random() * W;
+      const y = Math.random() * H;
+      const r = 2 + Math.pow(Math.random(), 2.5) * 11;
+      // Dark interior
+      const dg = ctx.createRadialGradient(x, y, 0, x, y, r);
+      dg.addColorStop(0.0, 'rgba(20, 10, 5, 0.55)');
+      dg.addColorStop(1.0, 'rgba(20, 10, 5, 0)');
+      ctx.fillStyle = dg;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      // Bright rim (offset for 3D feel)
+      const rg = ctx.createRadialGradient(
+        x - r * 0.15, y - r * 0.15, r * 0.45,
+        x, y, r * 1.05);
+      rg.addColorStop(0.55, 'rgba(255, 240, 220, 0)');
+      rg.addColorStop(0.85, 'rgba(255, 240, 220, 0.35)');
+      rg.addColorStop(1.00, 'rgba(255, 240, 220, 0)');
+      ctx.fillStyle = rg;
+      ctx.beginPath(); ctx.arc(x, y, r * 1.05, 0, Math.PI * 2); ctx.fill();
+    }
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    return tex;
+  }
+
+  // Helper: returns a body group with a textured, lit sphere
+  function makePlanet(radius, baseColor, options) {
+    const grp = new THREE.Group();
+    const tex = makePlanetTexture(baseColor, options || {});
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(radius, 48, 32),
+      new THREE.ShaderMaterial({
+        uniforms: {
+          uMap:   { value: tex },
+          uLight: { value: new THREE.Vector3(1, 0.4, 0.6).normalize() },
+          uAmbient: { value: options && options.ambient || 0.10 },
+        },
+        vertexShader: /* glsl */`
+          varying vec2 vUv;
+          varying vec3 vWorldNormal;
+          void main() {
+            vUv = uv;
+            vWorldNormal = normalize(mat3(modelMatrix) * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: /* glsl */`
+          uniform sampler2D uMap;
+          uniform vec3 uLight;
+          uniform float uAmbient;
+          varying vec2 vUv;
+          varying vec3 vWorldNormal;
+          void main() {
+            vec3 base = texture2D(uMap, vUv).rgb;
+            float lambert = max(dot(normalize(vWorldNormal), normalize(uLight)), 0.0);
+            float light = uAmbient + lambert * 1.05;
+            light = smoothstep(0.0, 0.55, light) * 0.85 + light * 0.15;
+            gl_FragColor = vec4(base * light, 1.0);
+          }
+        `,
+      })
+    );
+    grp.add(mesh);
+    grp.userData.mesh = mesh;
+    return grp;
+  }
+
+  // Build an orbit ring (thin circle of points) around the camera center
+  function makeOrbitRing(radius, tiltAxis, tiltAngle, color, opacity) {
+    const segs = 192;
+    const pts = new Float32Array((segs + 1) * 3);
+    for (let i = 0; i <= segs; i++) {
+      const t = (i / segs) * Math.PI * 2;
+      pts[i*3+0] = Math.cos(t) * radius;
+      pts[i*3+1] = 0;
+      pts[i*3+2] = Math.sin(t) * radius;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pts, 3));
+    const m = new THREE.LineBasicMaterial({
+      color, transparent: true, opacity,
+      depthWrite: false, blending: THREE.AdditiveBlending,
+    });
+    const line = new THREE.Line(g, m);
+    if (tiltAxis && tiltAngle) {
+      line.rotateOnAxis(tiltAxis, tiltAngle);
+    }
+    return line;
+  }
+
+  // ---- The Sun: bright body + animated corona ----
+  // Procedural surface texture — granulation pattern + sunspots
+  function makeSunTexture() {
+    const W = 1024, H = 512;
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const ctx = c.getContext('2d');
+    // Base — luminous warm yellow (still bright but less neon than pure orange)
+    ctx.fillStyle = '#f5c64a';
+    ctx.fillRect(0, 0, W, H);
+    // Bright + dark granulation pattern
+    for (let i = 0; i < 6000; i++) {
+      const x = Math.random() * W;
+      const y = Math.random() * H;
+      const r = 2 + Math.random() * 6;
+      const bright = Math.random() < 0.55;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      if (bright) {
+        g.addColorStop(0, 'rgba(255, 245, 200, 0.55)');
+        g.addColorStop(1, 'rgba(255, 245, 200, 0)');
+      } else {
+        g.addColorStop(0, 'rgba(165, 90, 35, 0.45)');
+        g.addColorStop(1, 'rgba(165, 90, 35, 0)');
+      }
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    }
+    // Large sunspots — warm dark umbra
+    for (let i = 0; i < 8; i++) {
+      const x = Math.random() * W;
+      const y = Math.random() * H;
+      const r = 14 + Math.random() * 22;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0.0, 'rgba(80, 35, 10, 0.80)');
+      g.addColorStop(0.4, 'rgba(140, 65, 20, 0.45)');
+      g.addColorStop(1.0, 'rgba(165, 90, 35, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    return tex;
+  }
+  const sunTex = makeSunTexture();
+
+  const sunGroup = new THREE.Group();
+  // Main sun body — emissive, slow rotation
+  const sunMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(0.7, 64, 48),
+    new THREE.ShaderMaterial({
+      uniforms: {
+        uMap:  { value: sunTex },
+        uTime: { value: 0 },
+      },
+      vertexShader: /* glsl */`
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vView;
+        void main() {
+          vUv = uv;
+          vNormal = normalize(normalMatrix * normal);
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          vView = normalize(-mv.xyz);
+          gl_Position = projectionMatrix * mv;
+        }
+      `,
+      fragmentShader: /* glsl */`
+        uniform sampler2D uMap;
+        uniform float uTime;
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vView;
+        void main() {
+          // Animate the surface texture by scrolling UVs slowly
+          vec2 uv = vUv + vec2(uTime * 0.012, sin(uTime * 0.04) * 0.02);
+          vec3 base = texture2D(uMap, uv).rgb;
+          // Limb darkening would be the opposite — we want limb BRIGHTENING
+          // (a hot rim) so use 1 - dot(N, V).
+          float fresnel = pow(1.0 - max(dot(vNormal, vView), 0.0), 1.6);
+          // Warm rim — slightly saturated yellow so the sun reads as
+          // self-luminous, not as another grey moon.
+          vec3 hot = vec3(1.00, 0.86, 0.45);
+          vec3 col = base * 1.20 + hot * fresnel * 1.10;
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `,
+    })
+  );
+  sunGroup.add(sunMesh);
+
+  // Corona — 3 stacked additive sprites at different radii
+  function makeSunCoronaTex(stops) {
+    const s = 256;
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = s;
+    const ctx = cv.getContext('2d');
+    const g = ctx.createRadialGradient(s/2, s/2, 0, s/2, s/2, s/2);
+    stops.forEach(([t, color]) => g.addColorStop(t, color));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, s, s);
+    return new THREE.CanvasTexture(cv);
+  }
+  const coronaTex1 = makeSunCoronaTex([
+    [0.00, 'rgba(255, 230, 150, 1.00)'],
+    [0.20, 'rgba(255, 200,  90, 0.55)'],
+    [0.55, 'rgba(255, 140,  40, 0.18)'],
+    [1.00, 'rgba(255, 140,  40, 0)'],
+  ]);
+  const coronaTex2 = makeSunCoronaTex([
+    [0.00, 'rgba(255, 200, 100, 0.55)'],
+    [0.40, 'rgba(255, 130,  40, 0.22)'],
+    [1.00, 'rgba(255, 100,  20, 0)'],
+  ]);
+  function addCorona(tex, scale, opacity) {
+    const m = new THREE.SpriteMaterial({
+      map: tex, transparent: true, opacity,
+      depthWrite: false, blending: THREE.AdditiveBlending,
+    });
+    const sp = new THREE.Sprite(m);
+    sp.scale.setScalar(scale);
+    sunGroup.add(sp);
+    return sp;
+  }
+  // (Atmosphere shell + corona removed — the bare sphere reads more
+  // honestly as a distant star without the cartoonish ring.)
+
+  // Place the sun far back so it reads as a distant light source
+  sunGroup.position.set(-9, 3, -12);
+  scene.add(sunGroup);
+
+  // ---- Planet 1: warm rusty world (Mars-ish), large orbit ----
+  const planet1 = makePlanet(0.32, [198, 106, 60], {
+    noiseAmp: 42,
+    plains: 8,
+    craters: 110,
+    darkColor: 'rgba(80, 30, 10,',
+    ambient: 0.10,
+  });
+  const orbit1Radius = 8.5;
+  const orbit1Tilt   = 0.18;
+  const orbit1 = makeOrbitRing(
+    orbit1Radius,
+    new THREE.Vector3(1, 0, 0).normalize(),
+    orbit1Tilt,
+    0x9bcae8, 0.10
+  );
+  scene.add(orbit1);
+  scene.add(planet1);
+
+  // ---- Planet 2: pale blue ice world, smaller orbit ----
+  const planet2 = makePlanet(0.22, [136, 170, 196], {
+    noiseAmp: 28,
+    plains: 5,
+    craters: 60,
+    darkColor: 'rgba(20, 50, 90,',
+    ambient: 0.12,
+  });
+  const orbit2Radius = 5.6;
+  const orbit2Tilt   = -0.32;
+  const orbit2 = makeOrbitRing(
+    orbit2Radius,
+    new THREE.Vector3(1, 0, 0.3).normalize(),
+    orbit2Tilt,
+    0x9bcae8, 0.09
+  );
+  scene.add(orbit2);
+  scene.add(planet2);
+
+  // ---- The Moon: highly textured procedural surface ----
+  // Builds a 1024px equirectangular map with multi-octave noise + many
+  // craters of varying sizes, so the body actually reads as the Moon
+  // when shaded with Lambert lighting.
+  function makeMoonTexture() {
+    const W = 1024, H = 512;
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const ctx = c.getContext('2d');
+
+    // 1. Base color — warm grey-cream
+    ctx.fillStyle = '#c8c2b4';
+    ctx.fillRect(0, 0, W, H);
+
+    // 2. Multi-octave noise wash for highland terrain variation
+    const img = ctx.getImageData(0, 0, W, H);
+    const data = img.data;
+    function vnoise(x, y, scale) {
+      // Cheap deterministic 2D value noise
+      const sx = Math.sin(x * scale * 12.9898 + y * scale * 78.233);
+      return (sx - Math.floor(sx)) * 2 - 1;
+    }
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const n = vnoise(x, y, 0.05) * 0.5
+                + vnoise(x, y, 0.15) * 0.3
+                + vnoise(x, y, 0.45) * 0.2;
+        const v = n * 28;
+        const i = (y * W + x) * 4;
+        data[i]   = Math.max(0, Math.min(255, data[i]   + v));
+        data[i+1] = Math.max(0, Math.min(255, data[i+1] + v));
+        data[i+2] = Math.max(0, Math.min(255, data[i+2] + v * 0.85));
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+
+    // 3. Maria — large dark basaltic plains (Mare Imbrium, Tranquillitatis,
+    //    Serenitatis...). Concentrate on the "near side" hemisphere.
+    const MARIA = [
+      // [centerX, centerY, radius, opacity]
+      [W * 0.42, H * 0.32, 95, 0.65],   // Imbrium
+      [W * 0.55, H * 0.36, 75, 0.60],   // Serenitatis
+      [W * 0.62, H * 0.42, 70, 0.55],   // Tranquillitatis
+      [W * 0.50, H * 0.50, 50, 0.50],   // Vaporum
+      [W * 0.40, H * 0.55, 60, 0.55],   // Nubium
+      [W * 0.55, H * 0.62, 55, 0.45],   // Cognitum
+      [W * 0.32, H * 0.40, 45, 0.40],   // Procellarum bay
+      [W * 0.70, H * 0.48, 40, 0.45],   // Crisium
+    ];
+    MARIA.forEach(([x, y, r, op]) => {
+      // Slightly elliptical maria
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0.00, `rgba(60, 55, 50, ${op})`);
+      grad.addColorStop(0.55, `rgba(60, 55, 50, ${op * 0.5})`);
+      grad.addColorStop(1.00, 'rgba(60, 55, 50, 0)');
+      ctx.fillStyle = grad;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(1, 0.85);
+      ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    });
+
+    // 4. Craters — 200 of them, varied sizes, with bright rim + dark interior
+    function drawCrater(x, y, r) {
+      // Dark depression
+      const dg = ctx.createRadialGradient(x, y, 0, x, y, r);
+      dg.addColorStop(0.00, 'rgba(35, 32, 26, 0.55)');
+      dg.addColorStop(0.55, 'rgba(35, 32, 26, 0.30)');
+      dg.addColorStop(1.00, 'rgba(35, 32, 26, 0)');
+      ctx.fillStyle = dg;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      // Bright sun-lit rim — slightly offset so the crater reads as 3D
+      const rimG = ctx.createRadialGradient(
+        x - r * 0.15, y - r * 0.15, r * 0.4,
+        x, y, r * 1.05);
+      rimG.addColorStop(0.55, 'rgba(255, 248, 230, 0)');
+      rimG.addColorStop(0.85, 'rgba(255, 248, 230, 0.45)');
+      rimG.addColorStop(1.00, 'rgba(255, 248, 230, 0)');
+      ctx.fillStyle = rimG;
+      ctx.beginPath(); ctx.arc(x, y, r * 1.05, 0, Math.PI * 2); ctx.fill();
+    }
+    // Big craters (Tycho, Copernicus, etc.) — fewer, larger, with ray systems
+    const BIG_CRATERS = 12;
+    for (let i = 0; i < BIG_CRATERS; i++) {
+      const x = Math.random() * W;
+      const y = Math.random() * H;
+      const r = 18 + Math.random() * 14;
+      drawCrater(x, y, r);
+      // Ray system — 6-10 thin bright lines radiating outward
+      const rays = 6 + Math.floor(Math.random() * 5);
+      for (let k = 0; k < rays; k++) {
+        const ang = (k / rays) * Math.PI * 2 + Math.random() * 0.3;
+        const len = r * (3 + Math.random() * 3);
+        const grad = ctx.createLinearGradient(x, y,
+          x + Math.cos(ang) * len, y + Math.sin(ang) * len);
+        grad.addColorStop(0.0, 'rgba(255, 250, 235, 0.35)');
+        grad.addColorStop(1.0, 'rgba(255, 250, 235, 0)');
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.5 + Math.random() * 2;
+        ctx.beginPath();
+        ctx.moveTo(x + Math.cos(ang) * r * 1.1,
+                   y + Math.sin(ang) * r * 1.1);
+        ctx.lineTo(x + Math.cos(ang) * len,
+                   y + Math.sin(ang) * len);
+        ctx.stroke();
+      }
+    }
+    // Medium + small craters
+    for (let i = 0; i < 200; i++) {
+      const x = Math.random() * W;
+      const y = Math.random() * H;
+      const r = 2 + Math.pow(Math.random(), 2.5) * 12;
+      drawCrater(x, y, r);
+    }
+
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    return tex;
+  }
+  const moonTex = makeMoonTexture();
+
+  // Moon shader — combines the crater texture with simple Lambert shading
+  // so one side is lit (like the real Moon catching the sun).
+  const moonGroup = new THREE.Group();
+  const moonMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(0.16, 48, 32),
+    new THREE.ShaderMaterial({
+      uniforms: {
+        uMap:   { value: moonTex },
+        uLight: { value: new THREE.Vector3(1, 0.4, 0.6).normalize() },
+      },
+      vertexShader: /* glsl */`
+        varying vec2 vUv;
+        varying vec3 vWorldNormal;
+        void main() {
+          vUv = uv;
+          // World-space normal so the sun light direction (also world-space)
+          // matches up correctly regardless of the moon group's rotation.
+          vWorldNormal = normalize(mat3(modelMatrix) * normal);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: /* glsl */`
+        uniform sampler2D uMap;
+        uniform vec3 uLight;
+        varying vec2 vUv;
+        varying vec3 vWorldNormal;
+        void main() {
+          vec3 base = texture2D(uMap, vUv).rgb;
+          float lambert = max(dot(normalize(vWorldNormal), normalize(uLight)), 0.0);
+          float light = 0.08 + lambert * 1.05;
+          light = smoothstep(0.0, 0.55, light) * 0.85 + light * 0.15;
+          gl_FragColor = vec4(base * light, 1.0);
+        }
+      `,
+    })
+  );
+  moonGroup.add(moonMesh);
+  // No halo on the Moon — the procedural surface texture reads better
+  // without an additive sprite muddying the silhouette.
+  const moon = moonGroup;
+  const moonOrbitRadius = RADIUS * 1.95;
+  const moonOrbit = makeOrbitRing(
+    moonOrbitRadius,
+    new THREE.Vector3(1, 0, 0.2).normalize(),
+    0.42,
+    0x9bcae8, 0.13
+  );
+  // Both moon + its orbit live in the globeGroup so they share rotation
+  globeGroup.add(moonOrbit);
+  globeGroup.add(moon);
+
+  // Body orbit state — angles update each frame
+  const bodies = [
+    { mesh: planet1, r: orbit1Radius, tiltX: orbit1Tilt, tiltZ: 0,    angle: Math.random() * Math.PI * 2, speed: 0.045 },
+    { mesh: planet2, r: orbit2Radius, tiltX: orbit2Tilt, tiltZ: 0.18, angle: Math.random() * Math.PI * 2, speed: 0.075 },
+  ];
+  const moonState = { r: moonOrbitRadius, tiltX: 0.42, tiltZ: 0, angle: 0, speed: 0.30 };
+
+  function updatePlanet(b, t) {
+    b.angle += b.speed * t;
+    const x = Math.cos(b.angle) * b.r;
+    const z = Math.sin(b.angle) * b.r;
+    let y = 0;
+    // Apply tilts (small rotation around X then Z)
+    const cosX = Math.cos(b.tiltX), sinX = Math.sin(b.tiltX);
+    const y1 = y * cosX - z * sinX;
+    const z1 = y * sinX + z * cosX;
+    const cosZ = Math.cos(b.tiltZ), sinZ = Math.sin(b.tiltZ);
+    const x2 = x * cosZ - y1 * sinZ;
+    const y2 = x * sinZ + y1 * cosZ;
+    b.mesh.position.set(x2, y2, z1);
+  }
+
+  // ====================================================================
+  //  C O M E T S
+  //  Pool of comets that streak across the camera frustum on great-arc
+  //  trajectories. Each comet has a Points particle TAIL fed from a
+  //  rolling buffer (Shane Brumback's recycle pattern, adapted).
+  // ====================================================================
+  const COMET_POOL = 3;
+  const TAIL_LEN   = 80;            // particles per tail
+
+  // Bright soft sprite for comet head (re-uses dotTex)
+  function makeCometHead() {
+    const m = new THREE.SpriteMaterial({
+      map: dotTex,
+      color: 0xffffff,
+      transparent: true,
+      opacity: 1.0,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const sp = new THREE.Sprite(m);
+    sp.scale.setScalar(0.45);
+    return sp;
+  }
+
+  function makeCometTail() {
+    const positions = new Float32Array(TAIL_LEN * 3);
+    const alphas    = new Float32Array(TAIL_LEN);
+    for (let i = 0; i < TAIL_LEN; i++) {
+      alphas[i] = 0;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    g.setAttribute('aAlpha',   new THREE.BufferAttribute(alphas, 1));
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { uPx: { value: Math.min(window.devicePixelRatio, 2) } },
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexShader: /* glsl */`
+        uniform float uPx;
+        attribute float aAlpha;
+        varying float vAlpha;
+        void main() {
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * mv;
+          vAlpha = aAlpha;
+          gl_PointSize = (4.5 + aAlpha * 6.0) * uPx * (50.0 / max(-mv.z, 1.0));
+        }
+      `,
+      fragmentShader: /* glsl */`
+        varying float vAlpha;
+        void main() {
+          vec2 p = gl_PointCoord - 0.5;
+          float d = length(p);
+          if (d > 0.5) discard;
+          float a = pow(1.0 - d * 2.0, 2.5) * vAlpha;
+          // Cool sky-blue tail tint that warms toward the head
+          vec3 cool = vec3(0.61, 0.79, 0.91);
+          vec3 hot  = vec3(1.00, 0.97, 0.92);
+          vec3 col  = mix(cool, hot, vAlpha);
+          gl_FragColor = vec4(col, a);
+        }
+      `,
+    });
+    return { geo: g, mat, points: new THREE.Points(g, mat),
+             positions, alphas };
+  }
+
+  function spawnComet(c) {
+    // Pick a random great-arc trajectory across the camera frustum
+    const side = Math.random() < 0.5 ? -1 : 1;
+    const startX = side * (18 + Math.random() * 10);
+    const startY = (Math.random() - 0.4) * 12;
+    const startZ = -10 - Math.random() * 18;
+    const speed  = 9 + Math.random() * 7;
+    const dirX = -side * (0.7 + Math.random() * 0.5);
+    const dirY = (Math.random() - 0.5) * 0.5;
+    const dirZ = (Math.random() - 0.5) * 0.4;
+    const dl = Math.hypot(dirX, dirY, dirZ);
+    c.x = startX; c.y = startY; c.z = startZ;
+    c.vx = (dirX / dl) * speed;
+    c.vy = (dirY / dl) * speed;
+    c.vz = (dirZ / dl) * speed;
+    c.life = 0;
+    c.maxLife = 4 + Math.random() * 3;
+    // Reset all tail positions to the spawn point so the trail starts empty
+    for (let i = 0; i < TAIL_LEN; i++) {
+      c.tail.positions[i*3+0] = startX;
+      c.tail.positions[i*3+1] = startY;
+      c.tail.positions[i*3+2] = startZ;
+      c.tail.alphas[i] = 0;
+    }
+    c.head.position.set(startX, startY, startZ);
+    c.head.material.opacity = 1.0;
+  }
+
+  const comets = [];
+  for (let i = 0; i < COMET_POOL; i++) {
+    const head = makeCometHead();
+    const tail = makeCometTail();
+    scene.add(head);
+    scene.add(tail.points);
+    const c = { head, tail };
+    spawnComet(c);
+    // Stagger initial life so they don't all show at once
+    c.life = Math.random() * c.maxLife;
+    comets.push(c);
+  }
+
+  function updateComets(dt) {
+    for (let i = 0; i < comets.length; i++) {
+      const c = comets[i];
+      c.life += dt;
+      // Move head
+      c.x += c.vx * dt;
+      c.y += c.vy * dt;
+      c.z += c.vz * dt;
+      c.head.position.set(c.x, c.y, c.z);
+
+      // Shift tail buffer back by one slot (oldest particle drops off)
+      const N = TAIL_LEN;
+      const pos = c.tail.positions;
+      const alp = c.tail.alphas;
+      for (let k = N - 1; k > 0; k--) {
+        pos[k*3+0] = pos[(k-1)*3+0];
+        pos[k*3+1] = pos[(k-1)*3+1];
+        pos[k*3+2] = pos[(k-1)*3+2];
+        alp[k] = alp[k-1];
+      }
+      pos[0] = c.x;
+      pos[1] = c.y;
+      pos[2] = c.z;
+      alp[0] = 1.0;
+      // Fade older particles along the tail
+      for (let k = 1; k < N; k++) {
+        alp[k] *= 0.965;
+      }
+      c.tail.geo.attributes.position.needsUpdate = true;
+      c.tail.geo.attributes.aAlpha.needsUpdate = true;
+
+      // Fade head opacity over the last 25% of life
+      const lifeT = c.life / c.maxLife;
+      c.head.material.opacity = 1.0 * (1 - Math.max(0, (lifeT - 0.75) / 0.25));
+
+      // Respawn when off-screen / expired
+      const dist = Math.hypot(c.x, c.y, c.z);
+      if (lifeT > 1 || dist > 50) {
+        spawnComet(c);
+      }
+    }
+  }
+
+  // ---- Subtle slow drift particles (replaces the cartoonish comets) ----
+  // A handful of tiny bright "voyagers" that drift very slowly through the
+  // mid-distance space, with a faint streak (motion blur).
+  const DRIFT_COUNT = 14;
+  const drifters = [];
+
+  function spawnDrifter() {
+    const side = Math.random() < 0.5 ? -1 : 1;
+    const ang  = Math.random() * Math.PI * 2;
+    const r    = 8 + Math.random() * 14;
+    const startX = Math.cos(ang) * r * side;
+    const startY = (Math.random() - 0.5) * 6;
+    const startZ = -10 - Math.random() * 18;
+    // Very slow tangential drift
+    const speed = 0.4 + Math.random() * 0.5;
+    const dirAng = ang + Math.PI * 0.5 + (Math.random() - 0.5) * 0.4;
+    return {
+      x: startX, y: startY, z: startZ,
+      vx: Math.cos(dirAng) * speed,
+      vy: (Math.random() - 0.5) * 0.1,
+      vz: Math.sin(dirAng) * speed,
+      life: Math.random() * 30,
+      maxLife: 25 + Math.random() * 25,
+      bright: 0.3 + Math.random() * 0.6,
+    };
+  }
+  for (let i = 0; i < DRIFT_COUNT; i++) drifters.push(spawnDrifter());
+
+  // Single shared geometry for all drifters (Points)
+  const driftGeo = new THREE.BufferGeometry();
+  const driftPos = new Float32Array(DRIFT_COUNT * 3);
+  const driftAlpha = new Float32Array(DRIFT_COUNT);
+  driftGeo.setAttribute('position', new THREE.BufferAttribute(driftPos, 3));
+  driftGeo.setAttribute('aAlpha',   new THREE.BufferAttribute(driftAlpha, 1));
+  const driftMat = new THREE.ShaderMaterial({
+    uniforms: { uPx: { value: Math.min(window.devicePixelRatio, 2) } },
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    vertexShader: /* glsl */`
+      uniform float uPx;
+      attribute float aAlpha;
+      varying float vAlpha;
+      void main() {
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * mv;
+        vAlpha = aAlpha;
+        gl_PointSize = 5.0 * uPx * (40.0 / max(-mv.z, 1.0));
+      }
+    `,
+    fragmentShader: /* glsl */`
+      varying float vAlpha;
+      void main() {
+        vec2 p = gl_PointCoord - 0.5;
+        float d = length(p);
+        if (d > 0.5) discard;
+        float a = pow(1.0 - d * 2.0, 2.5) * vAlpha;
+        gl_FragColor = vec4(0.93, 0.97, 1.0, a);
+      }
+    `,
+  });
+  scene.add(new THREE.Points(driftGeo, driftMat));
+
+  function updateDrifters(dt) {
+    for (let i = 0; i < drifters.length; i++) {
+      const d = drifters[i];
+      d.x += d.vx * dt;
+      d.y += d.vy * dt;
+      d.z += d.vz * dt;
+      d.life += dt;
+      const lifeT = d.life / d.maxLife;
+      // Fade in over the first 15%, fade out over the last 25%
+      const fadeIn  = Math.min(1, lifeT / 0.15);
+      const fadeOut = 1 - Math.max(0, (lifeT - 0.75) / 0.25);
+      const alpha = Math.max(0, Math.min(fadeIn, fadeOut)) * d.bright;
+      driftPos[i*3+0] = d.x;
+      driftPos[i*3+1] = d.y;
+      driftPos[i*3+2] = d.z;
+      driftAlpha[i] = alpha;
+      if (lifeT > 1) drifters[i] = spawnDrifter();
+    }
+    driftGeo.attributes.position.needsUpdate = true;
+    driftGeo.attributes.aAlpha.needsUpdate = true;
+  }
+
+  // ---------- Resize ----------
+  function resize() {
+    renderer.setSize(W(), H(), false);
+    camera.aspect = W() / H();
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+
+  // ---------- Drag-to-rotate (canvas-scoped) ----------
+  let isDragging = false;
+  let lastX = 0, lastY = 0;
+  let velX = 0, velY = 0;
+  canvas.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    lastX = e.clientX; lastY = e.clientY;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.style.cursor = 'grabbing';
+  });
+  canvas.addEventListener('pointerup', (e) => {
+    isDragging = false;
+    canvas.style.cursor = 'grab';
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    velX = dx * 0.005;
+    velY = dy * 0.005;
+    globeGroup.rotation.y += velX;
+    globeGroup.rotation.x += velY;
+    lastX = e.clientX; lastY = e.clientY;
+  });
+  canvas.style.cursor = 'grab';
+
+  // ---------- Zoom (mouse wheel + pinch) ----------
+  // Camera dolly along its forward axis. Clamped so users can't fly inside
+  // the globe or zoom out to nothing.
+  const ZOOM_MIN = 2.4;
+  const ZOOM_MAX = 9.0;
+  let targetZ = camera.position.z;
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const factor = Math.exp(e.deltaY * 0.0015);   // smooth multiplicative zoom
+    targetZ = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, targetZ * factor));
+  }, { passive: false });
+
+  // Pinch zoom for touch devices
+  let pinchDist0 = 0;
+  let pinchZ0 = 0;
+  canvas.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      pinchDist0 = Math.hypot(dx, dy);
+      pinchZ0 = targetZ;
+    }
+  }, { passive: true });
+  canvas.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2 && pinchDist0 > 0) {
+      e.preventDefault();
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const d = Math.hypot(dx, dy);
+      const f = pinchDist0 / d;
+      targetZ = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, pinchZ0 * f));
+    }
+  }, { passive: false });
+
+  // ---------- Animate ----------
+  const clock = new THREE.Clock();
+  function animate() {
+    const dt = Math.min(clock.getDelta(), 0.05);
+    const t  = clock.elapsedTime;
+    if (!isDragging) {
+      globeGroup.rotation.y += 0.10 * dt + velX * 0.92;
+      globeGroup.rotation.x += velY * 0.92;
+      velX *= 0.92;
+      velY *= 0.92;
+    }
+    // Smooth camera dolly toward the wheel/pinch target
+    camera.position.z += (targetZ - camera.position.z) * 0.12;
+
+    // Space background — twinkle each star layer + drift particles
+    starLayers.forEach(layer => {
+      layer.material.uniforms.uTime.value = t;
+    });
+    // Slowly counter-rotate each star sphere for parallax depth
+    starsAtmos.rotation.y += dt * 0.0008;
+    starsDust.rotation.y  += dt * 0.0015;
+    starsFar.rotation.y   += dt * 0.0035;
+    starsMid.rotation.y   += dt * 0.0070;
+    starsNear.rotation.y  += dt * 0.0140;
+    updateDrifters(dt);
+
+    // Sun — animate surface (UV scroll) + slow self-rotation
+    sunMesh.material.uniforms.uTime.value = t;
+    sunMesh.rotation.y += dt * 0.12;
+
+    // Planets orbit the camera centre (independent of the globe's rotation)
+    bodies.forEach(b => updatePlanet(b, dt));
+    // Slow planet self-rotation + sync sun light direction
+    [planet1, planet2].forEach(p => {
+      const m = p.userData.mesh;
+      if (m) {
+        m.rotation.y += dt * 0.08;
+        const sw = new THREE.Vector3();
+        sunGroup.getWorldPosition(sw);
+        const pw = new THREE.Vector3();
+        p.getWorldPosition(pw);
+        m.material.uniforms.uLight.value.copy(sw.sub(pw).normalize());
+      }
+    });
+    // Moon orbits the globe — stay in globeGroup local space
+    moonState.angle += moonState.speed * dt;
+    {
+      const x = Math.cos(moonState.angle) * moonState.r;
+      const z = Math.sin(moonState.angle) * moonState.r;
+      const cosX = Math.cos(moonState.tiltX), sinX = Math.sin(moonState.tiltX);
+      const y1 = -z * sinX;
+      const z1 =  z * cosX;
+      moon.position.set(x, y1, z1);
+    }
+    // Slow rotation around its own axis
+    moonMesh.rotation.y += dt * 0.05;
+    // Update moon's sun light direction so the lit side always faces the sun
+    {
+      const sunWorld = new THREE.Vector3();
+      sunGroup.getWorldPosition(sunWorld);
+      const moonWorld = new THREE.Vector3();
+      moon.getWorldPosition(moonWorld);
+      // Direction from moon toward sun in world space; convert to moonMesh local
+      const lightDir = sunWorld.clone().sub(moonWorld).normalize();
+      // Convert world-space light into moonMesh local space by inversing
+      // the moon's world rotation. Easier: pass world-space, transform in shader.
+      // Quick approximation: rotate by inverse of moonGroup rotation.
+      moonMesh.material.uniforms.uLight.value.copy(lightDir);
+    }
+
+    // Comets streak across
+    updateComets(dt);
+    // Flights hop between visited cities
+    updateFlights(dt);
+    // Twinkle dots — recent visits flash bright + fast, old ones slow + dim
+    dotMeshes.forEach(sp => {
+      const u = sp.userData;
+      const wave = Math.sin(t * u.twinkleSpeed + u.phase);
+      const norm = (wave + 1) * 0.5;
+      const biased = Math.pow(norm, 1.0 - u.recency * 0.4);
+      const sizePulse = 1.0 + biased * u.twinkleAmp;
+      const sz = u.base * sizePulse;
+      sp.scale.set(sz, sz, sz);
+      sp.material.opacity = u.baseOpacity * (0.7 + biased * 0.6);
+    });
+
+    // Halo bloom — breathes gently, driven mostly by visitor weight.
+    // High-weight cities glow brighter and pulse harder.
+    haloMeshes.forEach(h => {
+      const u = h.userData;
+      const wave = Math.sin(t * u.pulseSpeed + u.phase);
+      const pulse = 1.0 + wave * u.pulseAmp * 0.5;
+      const sz = u.base * pulse;
+      h.scale.set(sz, sz, sz);
+      h.material.opacity = u.baseOpacity * (0.75 + (wave + 1) * 0.5 * 0.5);
+    });
+
+    // Show every city label that is on the front hemisphere.
+    // Only the far-side ones fade out behind the globe.
+    const camLocal = new THREE.Vector3();
+    camera.getWorldPosition(camLocal);
+    globeGroup.worldToLocal(camLocal);
+    camLocal.normalize();
+
+    for (let i = 0; i < labelMeshes.length; i++) {
+      const lb  = labelMeshes[i];
+      const dot = lb.userData.ray.dot(camLocal);
+      const facing = Math.max(0, (dot - 0.10) / 0.40);
+      const f = Math.min(1, facing);
+      lb.visible = f > 0.02;
+      if (lb.visible) {
+        lb.material.opacity = lb.userData.baseOpacity * f;
+      }
+    }
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  resize();
+  animate();
+})();
+</script>
+
+
 </body>
 </html>

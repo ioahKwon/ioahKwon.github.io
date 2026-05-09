@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Fetches the current total pageview count from the mapmyvisitors widget
-// backend and rewrites the hardcoded number in home.html.
+// backend and rewrites the hardcoded number in index.html.
 //
 // The widget endpoint is not a public / documented API, so this script is
 // defensive: if anything goes wrong (network error, format change, parse
-// miss) it prints a warning and exits 0 without touching home.html, which
+// miss) it prints a warning and exits 0 without touching index.html, which
 // keeps the GitHub Actions workflow green and the old number in place.
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -13,7 +13,7 @@ import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, '..');
-const HOME_HTML = join(REPO_ROOT, 'home.html');
+const HOME_HTML = join(REPO_ROOT, 'index.html');
 
 const WIDGET_URL =
   'https://mapmyvisitors.com/widget_call_home.js' +
@@ -26,7 +26,7 @@ const WIDGET_URL =
 // Capture group 1 = the formatted number (digits + commas).
 const PAGEVIEW_RE = /['"]([\d,]+)\s+Total\s+Pageviews['"]/;
 
-// Matches the corresponding span in home.html:
+// Matches the corresponding span in index.html:
 //   <span class="meta-value">7,581</span> &nbsp;Pageviews
 const HOME_SPAN_RE =
   /(<span class="meta-value">)([\d,]+)(<\/span>\s*(?:&nbsp;|\s)*Pageviews)/;
@@ -83,15 +83,15 @@ async function main() {
   const html = readFileSync(HOME_HTML, 'utf8');
   const match = html.match(HOME_SPAN_RE);
   if (!match) {
-    warn('could not find <span class="meta-value">...</span> Pageviews in home.html');
+    warn('could not find <span class="meta-value">...</span> Pageviews in index.html');
     return;
   }
   const current = match[2];
   const currentNum = parseInt(current.replace(/,/g, ''), 10);
-  log(`current value in home.html: ${current} (${currentNum})`);
+  log(`current value in index.html: ${current} (${currentNum})`);
 
   if (current === parsed.raw || currentNum === parsed.n) {
-    log('no change — home.html already up to date');
+    log('no change — index.html already up to date');
     return;
   }
 
@@ -109,7 +109,7 @@ async function main() {
     (_, open, _old, close) => `${open}${formatted}${close}`
   );
   writeFileSync(HOME_HTML, nextHtml);
-  log(`updated home.html: ${current} -> ${formatted}`);
+  log(`updated index.html: ${current} -> ${formatted}`);
 }
 
 main().catch((err) => {

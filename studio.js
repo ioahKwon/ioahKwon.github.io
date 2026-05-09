@@ -797,11 +797,11 @@ import * as THREE from 'three';
       const t = (performance.now() - start) / dur;
       displayUniforms.uFade.value = Math.max(0.0, 1.0 - t * 1.25);
       if (t < 1.0) requestAnimationFrame(tick);
-      else window.location.href = 'home.html';
+      else window.location.href = 'index.html';
     }
     requestAnimationFrame(tick);
   }
-  enterBtn.addEventListener('click', stepIn);
+  if (enterBtn) enterBtn.addEventListener('click', stepIn);
 
   // ---------- Main loop ----------
   const clock = new THREE.Clock();

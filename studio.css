@@ -4,19 +4,21 @@
   box-sizing: border-box;
 }
 
-html, body {
+/* Fullscreen layout — only applied when body has .studio-fullscreen
+   (used by the standalone gallery landing page). studio.html embeds
+   the gallery as a section and must NOT be locked to viewport height. */
+body.studio-fullscreen,
+body.studio-fullscreen html {
   width: 100%;
   height: 100%;
   overflow: hidden;
   background: #000;
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", sans-serif;
   color: #eaf6ff;
   -webkit-font-smoothing: antialiased;
 }
-
-/* Fullscreen layout — work fills the viewport and text overlays on top */
-body {
+body.studio-fullscreen {
   position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", sans-serif;
 }
 
 .studio-home-link {
@@ -356,4 +358,76 @@ body.transitioning .studio-bottom {
   opacity: 0;
   transition: opacity 0.9s ease-out;
   pointer-events: none;
+}
+
+/* ============================================================
+   Embed mode — gallery rendered inside studio.html as a section
+   ============================================================
+   Overrides the fullscreen defaults above so the painting box
+   sits inside the page flow with a fixed aspect ratio.
+*/
+.studio-gallery-embed {
+  position: relative;
+  width: 100%;
+  background: #000;
+}
+.studio-gallery-embed .gallery-box {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #050608;
+}
+.studio-gallery-embed .gallery-box::after {
+  /* Soften the vignette for embed mode — the section already has
+     enough contrast against the surrounding dark page. */
+  background:
+    radial-gradient(ellipse at center,
+      transparent 50%,
+      rgba(0, 0, 0, 0.25) 85%,
+      rgba(0, 0, 0, 0.45) 100%);
+}
+.studio-gallery-embed #studio-canvas {
+  width: 100%;
+  height: 100%;
+}
+.studio-gallery-embed .gallery-arrow {
+  /* Always visible inside the embed, since hover discovery is
+     not obvious in a flat page section. */
+  opacity: 0.55;
+}
+.studio-gallery-embed .gallery-box:hover .gallery-arrow {
+  opacity: 1;
+}
+.studio-gallery-embed .gallery-nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+  pointer-events: auto;
+}
+.studio-gallery-embed .gallery-caption {
+  margin-top: 18px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 700px) {
+  .studio-gallery-embed .gallery-box {
+    aspect-ratio: 3 / 4;
+    border-radius: 4px;
+  }
+  .studio-gallery-embed .gallery-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+    opacity: 0.7;
+  }
 }
