@@ -282,8 +282,8 @@
     /* ---------- Footer ---------- */
     .site-footer {
       border-top: 1px solid var(--rule);
-      margin-top: 40px;
-      padding: 36px 0 48px;
+      margin-top: 24px;
+      padding: 18px 0 22px;
       font-size: 0.9375rem;
       color: var(--fg-faint);
     }
@@ -298,6 +298,18 @@
     }
     .site-footer ul.contact-list li {
       line-height: 1.6;
+    }
+    .site-footer .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    .site-footer .footer-mark {
+      width: 96px;
+      height: auto;
+      flex-shrink: 0;
+      display: block;
     }
 
     /* ---------- Mobile ---------- */
@@ -473,11 +485,12 @@
 </main>
 
 <footer class="site-footer">
-  <div class="wrapper">
+  <div class="wrapper footer-row">
     <ul class="contact-list">
       <li>Joonwoo Kwon</li>
       <li>PhD Student, Computer Science, Michigan State University</li>
     </ul>
+    <img class="footer-mark" src="image/fox-unscreen.gif" alt="">
   </div>
 </footer>
 

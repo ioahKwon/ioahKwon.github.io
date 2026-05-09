@@ -369,14 +369,16 @@ body.transitioning .studio-bottom {
 .studio-gallery-embed {
   position: relative;
   width: 100%;
-  background: #000;
+  max-width: 640px;
+  margin: 0 auto;
+  background: transparent;
 }
 .studio-gallery-embed .gallery-box {
   position: relative;
   inset: auto;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   border-radius: 6px;
   overflow: hidden;
   background: #050608;
