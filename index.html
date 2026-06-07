@@ -100,18 +100,27 @@
     .site-nav .page-link { color: #111; line-height: 1.7; }
     .site-nav .page-link:hover { text-decoration: wavy underline orange; }
     .site-nav .page-link:not(:first-child) { margin-left: 20px; }
-    @media screen and (max-width: 500px) {
-      .site-nav {
-        position: absolute;
-        top: 12px;
-        right: 24px;
-        border: 1px solid #e8e8e8;
-        border-radius: 5px;
-        text-align: right;
+    @media screen and (max-width: 600px) {
+      .site-header { padding: 14px 0 12px; min-height: 0; }
+      .site-header .wrapper { padding-top: 0 !important; }
+      .site-title {
+        float: none;
+        display: block;
+        line-height: 1.3;
+        font-size: 22px;
+        text-align: center;
+        margin-bottom: 8px;
       }
-      .site-nav .menu-icon { display: block; float: right; width: 36px; height: 26px; line-height: 0; padding-top: 4px; text-align: center; }
-      .site-nav .menu { clear: both; display: none; background-color: #fff; min-width: 10em; padding-bottom: 5px; }
-      .site-nav .page-link { font-size: 16px; display: block; padding: 6px 16px; }
+      .site-title > div b:last-child { margin-left: 6px; font-size: 60%; }
+      .site-nav {
+        float: none;
+        line-height: 1.4;
+        text-align: center;
+      }
+      .site-nav .menu-icon { display: none; }
+      .site-nav .menu { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+      .site-nav .page-link:not(:first-child) { margin-left: 0; }
+      .site-nav .page-link { font-size: 14px; }
     }
 
     .site-footer { border-top: 1px solid #e8e8e8; padding: 30px 0; }
@@ -134,7 +143,36 @@
     }
     .follow-links > .social-link { flex: 0 45% 0 40%; }
     .powered-by { font-size: 12px !important; color: #828282; }
-    @media screen and (max-width: 500px) { .footer-col { float: none; width: 100%; } }
+    @media screen and (max-width: 600px) {
+      /* Ultra-compact mobile footer */
+      .site-footer { padding: 10px 0 8px !important; }
+      .footer-col-wrapper {
+        display: flex !important; flex-wrap: wrap !important; justify-content: center !important;
+        margin-left: 0 !important; gap: 6px 14px !important; font-size: 12px !important;
+      }
+      .footer-col { float: none !important; width: auto !important; padding-left: 0 !important; margin: 0 !important; }
+      .footer-col h4 { display: none !important; }
+      .footer-col .social-links {
+        display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 4px 14px !important;
+      }
+      .footer-col .social-links .social-link {
+        width: auto !important; margin: 0 !important; line-height: 1.4 !important; align-items: center !important;
+      }
+      .footer-col .social-links .social-link svg { width: 13px !important; height: 13px !important; }
+      .footer-col .social-links .social-link a { margin-left: 4px !important; font-size: 12px !important; }
+      .footer-col.powered-by {
+        flex-basis: 100% !important;
+        display: flex !important;
+        gap: 8px !important; margin-top: 6px !important; padding-top: 6px !important;
+        border-top: 1px solid #e8e8e8 !important;
+        align-items: center !important; justify-content: center !important; text-align: center !important;
+      }
+      .powered-by .powered-by-text { flex: 0 0 auto !important; }
+      .powered-by .powered-by-text h4 { display: none !important; }
+      .powered-by .footer-mark { width: 28px !important; margin-top: 0 !important; }
+      .powered-by p { line-height: 1.3 !important; font-size: 11px !important; margin: 0 !important; }
+      .powered-by p br + br { display: none !important; }
+    }
 
     .page-content { padding: 30px 0; }
     .page-heading { font-size: 20px; }
@@ -153,8 +191,14 @@
       border: #ccc 1px solid;
       margin-left: 20px;
     }
-    @media screen and (max-width: 500px) {
-      .profile-pic { float: none; margin-bottom: 20px; margin-left: 0; }
+    @media screen and (max-width: 600px) {
+      .profile-pic {
+        float: none;
+        display: block;
+        margin: 0 auto 20px;
+        width: 160px;
+        height: 160px;
+      }
     }
 
     .footer-col { font-size: 12px; }
@@ -175,9 +219,6 @@
       fill: #828282;
     }
     .footer-col .social-links .social-link a { margin-left: 6px; word-break: break-all; }
-    @media screen and (max-width: 500px) {
-      .footer-col .social-links { font-size: 14px; line-height: 38px; }
-    }
 
     .powered-by {
       display: flex;

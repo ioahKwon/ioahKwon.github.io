@@ -150,7 +150,43 @@
       flex-shrink: 0;
       margin-top: 22px;
     }
-    @media screen and (max-width: 500px) { .footer-col { float: none; width: 100%; } }
+    @media screen and (max-width: 600px) {
+      .site-header { padding: 14px 0 12px; min-height: 0; }
+      .site-header .wrapper { padding-top: 0 !important; }
+      .site-title { float: none; display: block; line-height: 1.3; font-size: 22px; text-align: center; margin-bottom: 8px; }
+      .site-title > div b:last-child { margin-left: 6px; font-size: 60%; }
+      .site-nav { float: none; line-height: 1.4; text-align: center; }
+      .site-nav .menu { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; position: static; border: none; }
+      .site-nav .page-link:not(:first-child) { margin-left: 0; }
+      .site-nav .page-link { font-size: 14px; padding: 0; display: inline; }
+      .site-footer { padding: 10px 0 8px !important; }
+      .footer-col-wrapper {
+        display: flex !important; flex-wrap: wrap !important; justify-content: center !important;
+        margin-left: 0 !important; gap: 6px 14px !important; font-size: 12px !important;
+      }
+      .footer-col { float: none !important; width: auto !important; padding-left: 0 !important; margin: 0 !important; }
+      .footer-col h4 { display: none !important; }
+      .footer-col .social-links {
+        display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 4px 14px !important;
+      }
+      .footer-col .social-links .social-link {
+        width: auto !important; margin: 0 !important; line-height: 1.4 !important; align-items: center !important;
+      }
+      .footer-col .social-links .social-link svg { width: 13px !important; height: 13px !important; }
+      .footer-col .social-links .social-link a { margin-left: 4px !important; font-size: 12px !important; }
+      .footer-col.powered-by {
+        flex-basis: 100% !important;
+        display: flex !important;
+        gap: 8px !important; margin-top: 6px !important; padding-top: 6px !important;
+        border-top: 1px solid #e8e8e8 !important;
+        align-items: center !important; justify-content: center !important; text-align: center !important;
+      }
+      .powered-by .powered-by-text { flex: 0 0 auto !important; }
+      .powered-by .powered-by-text h4 { display: none !important; }
+      .powered-by .footer-mark { width: 28px !important; margin-top: 0 !important; }
+      .powered-by p { line-height: 1.3 !important; font-size: 11px !important; margin: 0 !important; }
+      .powered-by p br + br { display: none !important; }
+    }
   </style>
 </head>
 
