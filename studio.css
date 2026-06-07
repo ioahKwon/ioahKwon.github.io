@@ -369,7 +369,7 @@ body.transitioning .studio-bottom {
 .studio-gallery-embed {
   position: relative;
   width: 100%;
-  max-width: 640px;
+  max-width: 320px;
   margin: 0 auto;
   background: transparent;
 }
@@ -378,7 +378,7 @@ body.transitioning .studio-bottom {
   inset: auto;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 1 / 1;
   border-radius: 6px;
   overflow: hidden;
   background: #050608;
@@ -408,22 +408,23 @@ body.transitioning .studio-bottom {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: 10px;
   pointer-events: auto;
 }
 .studio-gallery-embed .gallery-caption {
-  margin-top: 18px;
+  margin-top: 8px;
+  margin-bottom: 0;
   text-align: center;
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  color: rgba(80, 80, 80, 0.7);
   letter-spacing: 0.02em;
 }
 
 @media (max-width: 700px) {
   .studio-gallery-embed .gallery-box {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     border-radius: 4px;
   }
   .studio-gallery-embed .gallery-arrow {

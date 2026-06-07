@@ -13,6 +13,22 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter">
 
+  <!-- Embed mode (loaded inside personal.html iframe): hide header & footer -->
+  <script>
+    (function () {
+      try {
+        if (new URLSearchParams(window.location.search).get('embed') === '1') {
+          document.documentElement.classList.add('embed');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    html.embed .site-header,
+    html.embed .site-footer { display: none !important; }
+    html.embed .page-header { padding-top: 20px; }
+  </style>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -51,6 +67,19 @@
     }
     a:hover { color: var(--link-hi); text-decoration: none; }
 
+    /* Unified wrapper (Jeongeon 690px) for header/body/footer */
+    .wrapper {
+      max-width: calc(750px - 30px * 2);
+      margin: 0 auto;
+      padding-right: 30px;
+      padding-left: 30px;
+      position: relative;
+    }
+    .wrapper:after { content: ""; display: table; clear: both; }
+    @media screen and (max-width: 800px) {
+      .wrapper { max-width: calc(800px - 30px); padding-right: 15px; padding-left: 15px; }
+    }
+
     /* ---------- Site header (Jeongeon Park style) ---------- */
     .site-header {
       border-bottom: 1px solid var(--rule);
@@ -61,17 +90,6 @@
     }
     @media screen and (max-width: 500px) {
       .site-header { padding-top: 0; padding-bottom: 0; }
-    }
-    .site-header .wrapper {
-      max-width: calc(750px - 30px * 2);
-      margin: 0 auto;
-      padding-right: 30px;
-      padding-left: 30px;
-      position: relative;
-    }
-    .site-header .wrapper:after { content: ""; display: table; clear: both; }
-    @media screen and (max-width: 800px) {
-      .site-header .wrapper { max-width: calc(800px - 30px); padding-right: 15px; padding-left: 15px; }
     }
     .site-title {
       font-size: 26px;
@@ -105,9 +123,9 @@
     .page-header {
       max-width: calc(750px - 60px);
       margin: 0 auto;
-      padding: 36px 30px 20px;
+      padding: 30px 30px 20px;
     }
-    @media screen and (max-width: 800px){.page-header{max-width:calc(800px - 30px);padding:36px 15px 20px}}
+    @media screen and (max-width: 800px){.page-header{max-width:calc(800px - 30px);padding:30px 15px 20px}}
     .page-header h1 {
       font-size: 26px;
       font-weight: 700;
@@ -268,19 +286,9 @@
     /* ---------- Site footer (Jeongeon Park style, matches home) ---------- */
     .site-footer {
       border-top: 1px solid var(--rule);
-      margin-top: 40px;
       padding: 30px 0;
     }
     @media screen and (max-width: 500px) { .site-footer { padding-top: 10px; } }
-    .site-footer .wrapper {
-      max-width: calc(750px - 30px * 2);
-      margin: 0 auto;
-      padding: 0 30px;
-      position: relative;
-    }
-    @media screen and (max-width: 800px) {
-      .site-footer .wrapper { max-width: calc(800px - 30px); padding: 0 15px; }
-    }
     .footer-col-wrapper { font-size: 15px; color: #828282; margin-left: -15px; }
     .footer-col-wrapper:after { content: ""; display: table; clear: both; }
     .footer-col { float: left; margin-bottom: 10px; padding-left: 10px; font-size: 12px; }
@@ -319,13 +327,6 @@
 
     /* ---------- Mobile ---------- */
     @media (max-width: 700px) {
-      html { font-size: 15px; }
-      .site-header { line-height: 1.4; min-height: 0; padding: 12px 0; }
-      .site-header-inner { gap: 8px; }
-      .site-title { font-size: 1.4rem; }
-      .site-nav { margin-top: 4px; }
-      .site-nav a { margin-left: 14px; font-size: 0.9375rem; }
-      .site-nav a:first-child { margin-left: 0; }
       .page-header { padding: 24px 16px 16px; }
       .page-header h1 { font-size: 1.5rem; }
       .filter-bar { padding: 0 16px 18px; gap: 14px; font-size: 0.8125rem; }
@@ -345,8 +346,8 @@
       <div class="menu">
         <a class="page-link" href="index.html">Home</a>
         <a class="page-link" href="publications.html">Publications</a>
-        <a class="page-link" href="studio.html">Studio</a>
-        <a class="page-link active" href="photography.html">Photography</a>
+        <a class="page-link active" href="personal.html">Personal</a>
+        <a class="page-link" href="cv.html">CV</a>
       </div>
     </nav>
   </div>
@@ -397,7 +398,7 @@
           </div>
           <div class="social-link">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-            <a href="files/CV_Joonwoo Kwon.pdf">CV</a>
+            <a href="files/CV_Joonwoo_Kwon.pdf">CV</a>
           </div>
         </div>
       </div>

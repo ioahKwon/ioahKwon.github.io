@@ -18,6 +18,23 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="studio.css?v=20260509b">
 
+  <!-- Embed mode (loaded inside personal.html iframe): hide header & footer -->
+  <script>
+    (function () {
+      try {
+        if (new URLSearchParams(window.location.search).get('embed') === '1') {
+          document.documentElement.classList.add('embed');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    html.embed .site-header,
+    html.embed .site-footer { display: none !important; }
+    html.embed .hero-outer { margin-top: 0 !important; }
+    html.embed .container { padding-top: 20px !important; }
+  </style>
+
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -101,7 +118,7 @@
       }
     }
 
-    .hero-outer{margin-top:24px}
+    .hero-outer{margin-top:30px}
     .hero-wrap{width:100%;height:42vh;min-height:280px;max-height:440px;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:#050505}
     .hero-wrap canvas{display:block;width:100%;height:100%}
     .hero-label{position:absolute;bottom:14px;right:18px;font-size:9px;letter-spacing:0.3em;color:rgba(255,255,255,0.45);text-transform:uppercase;pointer-events:none}
@@ -122,9 +139,11 @@
     .container{max-width:calc(750px - 60px);margin:0 auto;padding:40px 30px 0}
     @media screen and (max-width: 800px){.container{max-width:calc(800px - 30px);padding:40px 15px 0}}
     .section{margin-bottom:56px}
+    .section:last-child{margin-bottom:0}
+    .container{padding-bottom:0 !important}
     .section h2{font-size:1.5rem;font-weight:500;letter-spacing:0;text-transform:none;color:#111;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:20px}
-    .section p,.section li{font-size:16px;color:#222;line-height:1.7}
-    .section blockquote{border-left:3px solid var(--accent);padding:14px 20px;margin:22px 0;font-style:italic;color:var(--fg-muted);font-size:16px;line-height:1.8;background:var(--bg-alt)}
+    .section p,.section li{font-size:14px;color:#222;line-height:1.7}
+    .section blockquote{border-left:3px solid var(--accent);padding:14px 20px;margin:22px 0;font-style:italic;color:var(--fg-muted);font-size:14px;line-height:1.8;background:var(--bg-alt)}
     /* Pull quote — large serif italic, sky-blue accent, breathing room */
     .section .pull-quote {
       font-family: var(--font-serif);
@@ -247,20 +266,12 @@
       font-size: 13px;
     }
     @media (max-width: 700px) {
-      html { font-size: 15px; }
-      .site-header { line-height: 1.4; min-height: 0; padding: 12px 0; }
-      .site-header-inner { gap: 8px; }
-      .site-title { font-size: 1.4rem; }
-      .site-nav { margin-top: 4px; }
-      .site-nav a { margin-left: 14px; font-size: 0.9375rem; }
-      .site-nav a:first-child { margin-left: 0; }
-      .hero-wrap { height: 38vh; min-height: 240px; margin: 16px 16px 0; max-width: calc(100% - 32px); }
+      .hero-wrap { height: 38vh; min-height: 240px; }
       .hero-title { top: 16px; left: 18px; right: 18px; }
       .hero-title h2 { font-size: 16px; letter-spacing: 0.24em; margin-bottom: 4px; }
       .hero-title p { font-size: 9px; letter-spacing: 0.22em; }
       .hero-label { font-size: 8px; letter-spacing: 0.2em; bottom: 10px; right: 12px; }
       .hero-copyright { bottom: 10px; left: 12px; font-size: 8px; letter-spacing: 0.15em; }
-      .container { padding: 28px 16px 0; }
       .section h2 { font-size: 1.25rem; }
       .work-card { flex-direction: column; gap: 16px; }
       .work-card .work-thumb { flex: 0 0 auto; max-width: 240px; }
@@ -268,7 +279,6 @@
     /* ----- Site footer (Jeongeon Park style, matches home) ----- */
     .site-footer {
       border-top: 1px solid var(--line);
-      margin-top: 40px;
       padding: 30px 0;
     }
     .footer-col-wrapper { font-size: 15px; color: #828282; margin-left: -15px; }
@@ -406,61 +416,92 @@
       max-width: none;
       top: auto; right: auto; bottom: auto; left: auto;
       text-align: left;
-      background: #fff;
-      border: 1px solid var(--line);
+      background: #f4f7fb;
+      border: 1px solid #c8d4e3;
       border-radius: 6px;
-      padding: 16px 20px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #1a3a6a;
+      padding: 18px 22px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #0a1f3d;
       text-shadow: none;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 4px rgba(20,40,80,0.08);
     }
     #physics-overlay.po-detached .po-title {
       font-family: var(--font-serif);
       font-style: italic;
-      font-size: 15px;
-      font-weight: 500;
-      margin-bottom: 10px;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 12px;
       letter-spacing: 0.02em;
-      color: #0e2a55;
+      color: #07173a;
     }
     #physics-overlay.po-detached .po-row {
-      margin-top: 6px;
+      margin-top: 8px;
       flex-wrap: wrap;
     }
     #physics-overlay.po-detached .po-section {
-      font-size: 11px;
+      font-size: 12px;
       margin-top: 0;
       margin-bottom: 0;
-      color: #3a5e90;
-      font-weight: 500;
+      color: #1f4480;
+      font-weight: 700;
+      letter-spacing: 0.04em;
     }
     #physics-overlay.po-detached .po-eq {
-      font-size: 12px;
-      color: #1a3a6a;
+      font-size: 13.5px;
+      color: #0a1f3d;
+      font-weight: 500;
     }
     #physics-overlay.po-detached .po-eq-sub {
-      font-size: 11px;
-      color: #5a78a8;
+      font-size: 12px;
+      color: #3a5e90;
     }
     #physics-overlay.po-detached .po-live {
       justify-content: flex-start;
-      gap: 16px;
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid var(--line);
+      gap: 18px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #c8d4e3;
     }
-    #physics-overlay.po-detached .po-live span { font-size: 12px; }
+    #physics-overlay.po-detached .po-live span {
+      font-size: 13px;
+      font-weight: 600;
+      filter: brightness(0.55) saturate(1.4);
+    }
     #physics-overlay.po-detached .po-wind {
       justify-content: flex-start;
       gap: 12px;
+      align-items: center;
     }
     #physics-overlay.po-detached .po-wind .compass {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
+    }
+    /* Recolor the compass & arrow for the light background */
+    #physics-overlay.po-detached .po-wind .compass svg:first-child circle {
+      fill: #d9e6f7 !important;
+      stroke: #5a78a8 !important;
+      stroke-width: 1.4 !important;
+    }
+    #physics-overlay.po-detached .po-wind .compass svg:first-child text {
+      fill: #1f4480 !important;
+      font-weight: 700 !important;
+    }
+    #physics-overlay.po-detached .po-wind .compass #wind-arrow polygon {
+      fill: #1f6fd1 !important;
+      stroke: #07173a !important;
+      stroke-width: 1.2 !important;
+    }
+    #physics-overlay.po-detached .po-wind .compass #wind-arrow line {
+      stroke: #1f6fd1 !important;
+      stroke-width: 2.2 !important;
+    }
+    #physics-overlay.po-detached .po-wind #wind-speed {
+      color: #07173a;
+      font-weight: 600;
+      font-size: 13px;
     }
 
     @media (max-width: 700px) {
@@ -487,8 +528,8 @@
       <div class="menu">
         <a class="page-link" href="index.html">Home</a>
         <a class="page-link" href="publications.html">Publications</a>
-        <a class="page-link active" href="studio.html">Studio</a>
-        <a class="page-link" href="photography.html">Photography</a>
+        <a class="page-link active" href="personal.html">Personal</a>
+        <a class="page-link" href="cv.html">CV</a>
       </div>
     </nav>
   </div>
@@ -661,7 +702,7 @@
           </div>
           <div class="social-link">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-            <a href="files/CV_Joonwoo Kwon.pdf">CV</a>
+            <a href="files/CV_Joonwoo_Kwon.pdf">CV</a>
           </div>
         </div>
       </div>
@@ -1923,6 +1964,6 @@ if (document.readyState === 'loading') {
 </script>
 
 <!-- Gallery — interactive painting embed -->
-<script type="module" src="studio.js?v=20260509a"></script>
+<script type="module" src="studio.js?v=20260607a"></script>
 </body>
 </html>

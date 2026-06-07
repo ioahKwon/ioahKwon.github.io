@@ -387,19 +387,19 @@ import * as THREE from 'three';
     uniform float uDripTime;
     varying vec2 vUv;
 
-    // Contain fit — keep the image's native aspect, maximise its size
-    // inside the frame, and letterbox the remaining axis with black.
-    //   landscape frame (16:9) + 1:1 image → image fills the height,
-    //                                         black bars on the sides
-    //   portrait  frame (9:16) + 1:1 image → image fills the width,
-    //                                         black bars top/bottom
+    // Cover fit — keep the image's native aspect, scale up so the
+    // image fully covers the frame; crop the overflowing axis.
+    //   landscape frame + portrait image → image fills the width,
+    //                                       top/bottom cropped
+    //   portrait  frame + landscape image → image fills the height,
+    //                                       left/right cropped
     vec2 fitUV(vec2 uv) {
       float canvasAspect = uRes.x / uRes.y;
       vec2 centered = uv - 0.5;
       if (canvasAspect > uImgAspect) {
-        centered.x *= canvasAspect / uImgAspect;
-      } else {
         centered.y *= uImgAspect / canvasAspect;
+      } else {
+        centered.x *= canvasAspect / uImgAspect;
       }
       return centered + 0.5;
     }
@@ -697,14 +697,14 @@ import * as THREE from 'three';
     const cy = 1.0 - (clientY - r.top) / r.height;
     const canvasAspect = r.width / r.height;
     const imgAspect = displayUniforms.uImgAspect.value || 1.0;
-    // Inverse of the contain-fit in the display shader.
+    // Inverse of the cover-fit in the display shader.
     let u, v;
     if (canvasAspect > imgAspect) {
-      u = (cx - 0.5) * (canvasAspect / imgAspect) + 0.5;
-      v = cy;
-    } else {
       u = cx;
       v = (cy - 0.5) * (imgAspect / canvasAspect) + 0.5;
+    } else {
+      u = (cx - 0.5) * (canvasAspect / imgAspect) + 0.5;
+      v = cy;
     }
     return { u, v };
   }
