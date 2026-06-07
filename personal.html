@@ -9,10 +9,8 @@
   <meta name="description" content="Personal — Studio and Photography by Joonwoo Kwon"/>
 
   <link rel="shortcut icon" href="image/icon.png" type="image/x-icon"/>
-
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans">
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter&display=swap">
 
   <style>
     body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
@@ -92,79 +90,44 @@
 
     .page-content { padding: 30px 0; }
 
-    /* Personal layout: sidebar + content */
-    .personal-layout {
+    /* Personal cards (compact) */
+    .personal-cards {
       display: flex;
-      gap: 30px;
-      align-items: flex-start;
-      min-height: 70vh;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
     }
-    .personal-sidebar {
-      flex: 0 0 140px;
-      position: sticky;
-      top: 20px;
-    }
-    .personal-sidebar h4 {
-      font-size: 12px;
-      margin-bottom: 10px;
-      color: #828282;
-      line-height: 30px;
-    }
-    .personal-sidebar a {
+    .personal-card {
+      flex: 1 1 200px;
       display: block;
-      padding: 6px 0;
-      font-size: 14px;
-      color: rgb(66.25, 66.25, 66.25);
-      font-weight: 400;
-      border-left: 2px solid transparent;
-      padding-left: 12px;
-      margin-left: -12px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .personal-sidebar a:hover { color: #2a7ae7; }
-    .personal-sidebar a.active {
-      color: #2a7ae7;
-      font-weight: 600;
-      border-left-color: #2a7ae7;
-    }
-    .personal-content {
-      flex: 1;
-      min-width: 0;
-    }
-    .personal-content iframe {
-      width: 100%;
-      height: 80vh;
+      padding: 10px 14px;
       border: 1px solid #e8e8e8;
-      border-radius: 4px;
-      background: #fdfdfd;
+      border-radius: 5px;
+      background: #fff;
+      color: #111;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
     }
-    @media screen and (max-width: 700px) {
-      .personal-layout { flex-direction: column; gap: 12px; }
-      .personal-sidebar {
-        position: static;
-        flex: 0 0 auto;
-        width: 100%;
-        border-bottom: 1px solid #e8e8e8;
-        padding-bottom: 10px;
-      }
-      .personal-sidebar h4 { display: none; }
-      .personal-sidebar a {
-        display: inline-block;
-        margin: 0 6px 0 0;
-        padding: 5px 14px;
-        border-left: none;
-        border-radius: 4px;
-        font-size: 13px;
-        background: #f4f6f9;
-        color: #555;
-      }
-      .personal-sidebar a.active {
-        border-left: none;
-        background: #eef4fc;
-        color: #2a7ae7;
-        font-weight: 600;
-      }
-      .personal-content iframe { height: 70vh; }
+    .personal-card:hover {
+      border-color: #2a7ae7;
+      color: #111;
+    }
+    .personal-card-title {
+      font-family: Poppins, "DM Sans", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: #2a7ae7;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    .personal-card-desc {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.4;
+    }
+    @media screen and (max-width: 600px) {
+      .personal-cards { flex-direction: column; gap: 8px; align-items: stretch; }
+      .personal-card { flex: 0 0 auto; padding: 8px 12px; }
     }
 
     /* Footer */
@@ -253,16 +216,15 @@
 
   <div class="page-content">
     <div class="wrapper">
-      <div class="personal-layout">
-        <aside class="personal-sidebar">
-          <h4>SECTIONS</h4>
-          <a href="#studio" class="personal-tab" data-tab="studio">Studio</a>
-          <a href="#photography" class="personal-tab" data-tab="photography">Photography</a>
-        </aside>
-
-        <main class="personal-content">
-          <iframe id="personal-frame" src="studio.html?embed=1" title="Personal content"></iframe>
-        </main>
+      <div class="personal-cards">
+        <a class="personal-card" href="studio.html">
+          <div class="personal-card-title">Studio</div>
+          <div class="personal-card-desc">My journey to the Oscars</div>
+        </a>
+        <a class="personal-card" href="photography.html">
+          <div class="personal-card-title">Photography</div>
+          <div class="personal-card-desc">A slow archive of moments</div>
+        </a>
       </div>
     </div>
   </div>
@@ -313,34 +275,6 @@
     </div>
   </footer>
 
-  <script>
-    (function () {
-      var tabs = document.querySelectorAll('.personal-tab');
-      var frame = document.getElementById('personal-frame');
-
-      function activate(tabName) {
-        var src = (tabName === 'photography') ? 'photography.html?embed=1' : 'studio.html?embed=1';
-        frame.src = src;
-        tabs.forEach(function (t) {
-          if (t.dataset.tab === tabName) t.classList.add('active');
-          else t.classList.remove('active');
-        });
-      }
-
-      tabs.forEach(function (t) {
-        t.addEventListener('click', function (e) {
-          e.preventDefault();
-          var tabName = t.dataset.tab;
-          history.replaceState(null, '', '#' + tabName);
-          activate(tabName);
-        });
-      });
-
-      var initial = (location.hash || '#studio').replace('#', '');
-      if (initial !== 'studio' && initial !== 'photography') initial = 'studio';
-      activate(initial);
-    })();
-  </script>
 
 </body>
 </html>
