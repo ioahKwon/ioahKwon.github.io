@@ -90,15 +90,56 @@
 
     .page-content { padding: 30px 0; }
 
-    /* Personal cards (compact) */
-    .personal-cards {
+    /* Personal layout: sidebar + iframe (desktop) */
+    .personal-layout {
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 4px;
+      gap: 30px;
+      align-items: flex-start;
+      min-height: 70vh;
     }
+    .personal-sidebar {
+      flex: 0 0 140px;
+      position: sticky;
+      top: 20px;
+    }
+    .personal-sidebar h4 {
+      font-size: 12px;
+      margin-bottom: 10px;
+      color: #828282;
+      line-height: 30px;
+    }
+    .personal-sidebar a {
+      display: block;
+      padding: 6px 0;
+      font-size: 14px;
+      color: rgb(66.25, 66.25, 66.25);
+      font-weight: 400;
+      border-left: 2px solid transparent;
+      padding-left: 12px;
+      margin-left: -12px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .personal-sidebar a:hover { color: #2a7ae7; }
+    .personal-sidebar a.active {
+      color: #2a7ae7;
+      font-weight: 600;
+      border-left-color: #2a7ae7;
+    }
+    .personal-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .personal-content iframe {
+      width: 100%;
+      height: 80vh;
+      border: 1px solid #e8e8e8;
+      border-radius: 4px;
+      background: #fdfdfd;
+    }
+
+    /* Personal cards (mobile only) */
+    .personal-cards { display: none; }
     .personal-card {
-      flex: 1 1 200px;
       display: block;
       padding: 10px 14px;
       border: 1px solid #e8e8e8;
@@ -126,8 +167,9 @@
       line-height: 1.4;
     }
     @media screen and (max-width: 600px) {
-      .personal-cards { flex-direction: column; gap: 8px; align-items: stretch; }
-      .personal-card { flex: 0 0 auto; padding: 8px 12px; }
+      .personal-layout { display: none; }
+      .personal-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+      .personal-card { padding: 8px 12px; }
     }
 
     /* Footer */
@@ -216,6 +258,18 @@
 
   <div class="page-content">
     <div class="wrapper">
+      <div class="personal-layout">
+        <aside class="personal-sidebar">
+          <h4>SECTIONS</h4>
+          <a href="#studio" class="personal-tab" data-tab="studio">Studio</a>
+          <a href="#photography" class="personal-tab" data-tab="photography">Photography</a>
+        </aside>
+
+        <main class="personal-content">
+          <iframe id="personal-frame" src="studio.html?embed=1" title="Personal content"></iframe>
+        </main>
+      </div>
+
       <div class="personal-cards">
         <a class="personal-card" href="studio.html">
           <div class="personal-card-title">Studio</div>
@@ -275,6 +329,35 @@
     </div>
   </footer>
 
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll('.personal-tab');
+      var frame = document.getElementById('personal-frame');
+      if (!frame) return;
+
+      function activate(tabName) {
+        var src = (tabName === 'photography') ? 'photography.html?embed=1' : 'studio.html?embed=1';
+        frame.src = src;
+        tabs.forEach(function (t) {
+          if (t.dataset.tab === tabName) t.classList.add('active');
+          else t.classList.remove('active');
+        });
+      }
+
+      tabs.forEach(function (t) {
+        t.addEventListener('click', function (e) {
+          e.preventDefault();
+          var tabName = t.dataset.tab;
+          history.replaceState(null, '', '#' + tabName);
+          activate(tabName);
+        });
+      });
+
+      var initial = (location.hash || '#studio').replace('#', '');
+      if (initial !== 'studio' && initial !== 'photography') initial = 'studio';
+      activate(initial);
+    })();
+  </script>
 
 </body>
 </html>
