@@ -9,10 +9,12 @@
   <title>Studio · Joonwoo Kwon</title>
   <link rel="shortcut icon" href="image/icon.png">
 
-  <!-- Unified type system shared with Home -->
+  <!-- Unified type system shared with Home (Inter/Poppins) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="studio.css?v=20260509b">
 
@@ -21,65 +23,82 @@
     html{scroll-behavior:smooth}
 
     :root {
-      --font-sans:  'Fira Sans', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      --font-serif: 'Fira Sans', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --font-sans:  Inter, "Source Sans Pro", Arial, sans-serif;
+      --font-serif: Inter, "Source Sans Pro", Arial, sans-serif;
       --font-mono:  'JetBrains Mono', "SF Mono", Menlo, monospace;
+      --font-head:  Poppins, "DM Sans", Arial, sans-serif;
       --bg:         #fdfdfd;
       --bg-alt:     #f5f7fa;
       --fg:         #111;
-      --fg-muted:   #555;
+      --fg-muted:   rgb(66.25, 66.25, 66.25);
       --fg-faint:   #828282;
-      --accent:     #2a7ae2;
+      --accent:     #2a7ae7;
       --accent-hi:  #1f5fb8;
       --accent-warm:#b04a2a;
-      --link:       #2a7ae2;
+      --link:       #2a7ae7;
       --link-hi:    #111;
       --line:       #e8e8e8;
       --line-strong:#cfd5dc;
     }
 
-    body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-weight:400;-webkit-font-smoothing:antialiased;line-height:1.7}
-    a{color:var(--link);text-decoration:none;transition:color 0.25s}a:hover{color:var(--link-hi);text-decoration:underline}
+    body{background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-size:14px;line-height:1.7;font-weight:300;-webkit-font-smoothing:antialiased}
+    a{color:var(--link);text-decoration:none}a:hover{color:var(--link-hi);text-decoration:none}
+    h1,h2,h3,h4,h5,h6{font-family:var(--font-head);font-weight:700}
 
-    /* ----- Site header (matches index.html) ----- */
+    /* ----- Site header (Jeongeon Park style, matches home) ----- */
     .site-header {
-      border-top: 5px solid #424242;
       border-bottom: 1px solid var(--line);
       min-height: 56px;
-      line-height: 56px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      position: relative;
     }
-    .site-header-inner {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+    @media screen and (max-width: 500px) {
+      .site-header { padding-top: 0; padding-bottom: 0; }
     }
     .site-title {
-      font-size: 1.625rem;
-      font-weight: 300;
+      font-size: 26px;
+      line-height: 56px;
       letter-spacing: -1px;
-      color: #424242;
+      float: left;
+      font-weight: 700;
+      font-family: var(--font-head);
+      color: rgb(66.25, 66.25, 66.25);
       text-decoration: none;
     }
-    .site-title:hover { text-decoration: none; color: #424242; }
-    .site-nav a {
-      margin-left: 20px;
-      color: #111;
-      font-size: 1rem;
-      text-decoration: none;
+    .site-title:hover { color: rgb(66.25, 66.25, 66.25); }
+    .site-nav { z-index: 10; float: right; line-height: 56px; }
+    .site-nav .page-link { color: #111; line-height: 1.7; text-decoration: none; }
+    .site-nav .page-link:hover { text-decoration: wavy underline orange; }
+    .site-nav .page-link:not(:first-child) { margin-left: 20px; }
+    .site-nav .page-link.active { color: var(--link); }
+    @media screen and (max-width: 500px) {
+      .site-nav {
+        position: absolute;
+        top: 12px;
+        right: 24px;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        text-align: right;
+      }
+      .site-nav .page-link { font-size: 16px; display: block; padding: 6px 16px; }
     }
-    .site-nav a:first-child { margin-left: 0; }
-    .site-nav a:hover { color: var(--link); text-decoration: underline; }
-    .site-nav a.active { color: var(--link); }
 
-    /* Wrapper matches index.html */
+    /* Unified wrapper (Jeongeon 690px) for header/body/footer */
     .wrapper {
-      max-width: 880px;
+      max-width: calc(750px - 30px * 2);
       margin: 0 auto;
-      padding: 0 20px;
+      padding-right: 30px;
+      padding-left: 30px;
+      position: relative;
+    }
+    .wrapper:after { content: ""; display: table; clear: both; }
+    @media screen and (max-width: 800px) {
+      .wrapper {
+        max-width: calc(800px - 30px);
+        padding-right: 15px;
+        padding-left: 15px;
+      }
     }
 
     .hero-outer{margin-top:24px}
@@ -100,7 +119,8 @@
     .hero-title{position:absolute;top:18px;left:22px;pointer-events:none}
     .hero-title h2{font-size:clamp(13px,1.4vw,18px);font-weight:500;letter-spacing:0.08em;color:rgba(255,255,255,0.88);text-transform:uppercase;margin-bottom:3px}
     .hero-title p{font-size:clamp(9px,0.8vw,10px);letter-spacing:0.10em;color:rgba(255,255,255,0.55);text-transform:uppercase}
-    .container{max-width:880px;margin:0 auto;padding:40px 20px 0}
+    .container{max-width:calc(750px - 60px);margin:0 auto;padding:40px 30px 0}
+    @media screen and (max-width: 800px){.container{max-width:calc(800px - 30px);padding:40px 15px 0}}
     .section{margin-bottom:56px}
     .section h2{font-size:1.5rem;font-weight:500;letter-spacing:0;text-transform:none;color:#111;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:20px}
     .section p,.section li{font-size:16px;color:#222;line-height:1.7}
@@ -245,25 +265,49 @@
       .work-card { flex-direction: column; gap: 16px; }
       .work-card .work-thumb { flex: 0 0 auto; max-width: 240px; }
     }
-    /* ----- Site footer (matches index.html) ----- */
+    /* ----- Site footer (Jeongeon Park style, matches home) ----- */
     .site-footer {
       border-top: 1px solid var(--line);
       margin-top: 40px;
-      padding: 36px 0 48px;
-      font-size: 0.9375rem;
-      color: var(--fg-faint);
+      padding: 30px 0;
     }
-    .site-footer .wrapper {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 0 20px;
+    .footer-col-wrapper { font-size: 15px; color: #828282; margin-left: -15px; }
+    .footer-col-wrapper:after { content: ""; display: table; clear: both; }
+    .footer-col { float: left; margin-bottom: 10px; padding-left: 10px; font-size: 12px; }
+    .footer-col-1 { width: calc(28% - 10px); }
+    .footer-col-2 { width: calc(28% - 10px); }
+    .footer-col-3 { width: calc(44% - 10px); }
+    .footer-col h4 { margin: 0; line-height: 30px; font-family: var(--font-head); font-size: 12px; font-weight: 700; }
+    .footer-col .social-links { display: flex; flex-wrap: wrap; }
+    .footer-col .social-links .social-link {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      line-height: 16px;
+      margin-top: 6.5px;
+      margin-bottom: 10px;
     }
-    .site-footer ul.contact-list {
-      list-style: none;
-      padding: 0;
+    .footer-col .social-links .social-link svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      fill: #828282;
     }
-    .site-footer ul.contact-list li {
-      line-height: 1.6;
+    .footer-col .social-links .social-link a { margin-left: 6px; word-break: break-all; }
+    .powered-by { font-size: 12px !important; color: #828282; display: flex; align-items: flex-start; gap: 14px; }
+    .powered-by .powered-by-text { flex: 1; }
+    .powered-by .powered-by-text h4 { visibility: hidden; }
+    .powered-by p { line-height: 1.5; margin-bottom: 0; }
+    .powered-by .footer-mark {
+      width: 90px;
+      height: auto;
+      display: block;
+      flex-shrink: 0;
+      margin-top: 22px;
+    }
+    @media screen and (max-width: 500px) {
+      .footer-col { float: none; width: 100%; }
+      .site-footer { padding-top: 10px; }
     }
 
     /* ----- Active Physics Solvers — compact wide bar in hero top-right ----- */
@@ -351,10 +395,11 @@
        its own block section right below the simulation (Active Physics
        Solvers panel). Light-themed card on the white page. */
     #physics-overlay-section {
-      max-width: 880px;
+      max-width: calc(750px - 60px);
       margin: 16px auto 0;
-      padding: 0 20px;
+      padding: 0 30px;
     }
+    @media screen and (max-width: 800px){#physics-overlay-section{max-width:calc(800px - 30px);padding:0 15px}}
     #physics-overlay.po-detached {
       position: static;
       width: 100%;
@@ -434,12 +479,17 @@
 <body>
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <a class="site-title" href="index.html">Joonwoo Kwon</a>
+  <div class="wrapper" style="padding-top:5px">
+    <a class="site-title" href="index.html">
+      <div><b style="font-weight:600">Joonwoo Kwon</b> <b style="font-size: 70%;font-weight: 300;margin-left:10px"> CS @ MSU</b></div>
+    </a>
     <nav class="site-nav">
-      <a href="index.html">About</a>
-      <a href="studio.html" class="active">Studio</a>
-      <a href="photography.html">Photography</a>
+      <div class="menu">
+        <a class="page-link" href="index.html">Home</a>
+        <a class="page-link" href="publications.html">Publications</a>
+        <a class="page-link active" href="studio.html">Studio</a>
+        <a class="page-link" href="photography.html">Photography</a>
+      </div>
     </nav>
   </div>
 </header>
@@ -583,10 +633,51 @@
 </div>
 <footer class="site-footer">
   <div class="wrapper">
-    <ul class="contact-list">
-      <li>Joonwoo Kwon</li>
-      <li>PhD Student, Computer Science, Michigan State University</li>
-    </ul>
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <h4>CONTACT</h4>
+        <div class="social-links">
+          <div class="social-link">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
+            <a href="mailto:kwonjoon@msu.edu">kwonjoon@msu.edu</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <h4>FOLLOW</h4>
+        <div class="social-links">
+          <div class="social-link">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.242 13.769L.5 9.5 12 1l11.5 8.5-4.742 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 100 14 7 7 0 000-14z"/></svg>
+            <a href="https://scholar.google.com/citations?user=pdnfn3YAAAAJ&hl=en">Google Scholar</a>
+          </div>
+          <div class="social-link">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a href="https://github.com/ioahKwon">GitHub</a>
+          </div>
+          <div class="social-link">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <a href="https://www.linkedin.com/in/joonwookwon/">LinkedIn</a>
+          </div>
+          <div class="social-link">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            <a href="files/CV_Joonwoo Kwon.pdf">CV</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col footer-col-3 powered-by">
+        <div class="powered-by-text">
+          <h4>&nbsp;</h4>
+          <p>
+            &copy; Copyright 2026 Joonwoo Kwon <br/>
+            <br/>
+            Last updated: Jun 2026
+          </p>
+        </div>
+        <img class="footer-mark" src="image/fox-unscreen.gif" alt="">
+      </div>
+    </div>
   </div>
 </footer>
 

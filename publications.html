@@ -5,24 +5,16 @@
   <meta name="viewport" content="width=device-width initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-  <title>Joonwoo Kwon</title>
-  <meta name="title" content="Joonwoo Kwon"/>
-  <meta name="description" content="CS @ MSU"/>
-
-  <meta property="og:site_name" content="Joonwoo Kwon"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Joonwoo Kwon"/>
-  <meta property="og:description" content="CS @ MSU"/>
+  <title>Publications · Joonwoo Kwon</title>
+  <meta name="description" content="Publications by Joonwoo Kwon"/>
 
   <link rel="shortcut icon" href="image/icon.png" type="image/x-icon"/>
 
-  <!-- fonts (same as Jeongeon Park) -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=DM+Sans">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter">
 
   <style>
-    /* Inlined from jeongeonpark.com/assets/css/main.css with identical values */
     body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
       margin: 0;
       padding: 0;
@@ -48,30 +40,18 @@
     h4 { font-size: 12px; }
     a { color: #2a7ae7; text-decoration: none; }
     a:hover { color: #111; text-decoration: none; }
-    a#special { color: rgb(66.25, 66.25, 66.25); }
-    a#special:hover { color: #111; text-decoration: underline; }
     a#blue-bg { color: #2a7ae7; font-weight: 500; }
-    a#blue-bg:hover { color: #2a7ae7; background-color: #e8e8e8; font-weight: 500; }
-    a#plain-bg { color: rgb(66.25, 66.25, 66.25); }
-    a#plain-bg:hover { color: #2a7ae7; background-color: #e8e8e8; text-decoration: none; }
     strong { font-weight: bold; }
 
     .wrapper {
-      max-width: -webkit-calc(750px - (30px * 2));
       max-width: calc(750px - 30px * 2);
-      margin-right: auto;
-      margin-left: auto;
+      margin: 0 auto;
       padding-right: 30px;
       padding-left: 30px;
       position: relative;
     }
     @media screen and (max-width: 800px) {
-      .wrapper {
-        max-width: -webkit-calc(800px - (30px));
-        max-width: calc(800px - (30px));
-        padding-right: 15px;
-        padding-left: 15px;
-      }
+      .wrapper { max-width: calc(800px - 30px); padding-right: 15px; padding-left: 15px; }
     }
     .footer-col-wrapper:after, .wrapper:after { content: ""; display: table; clear: both; }
 
@@ -92,14 +72,13 @@
       float: left;
       font-weight: 700;
       font-family: Poppins, "DM Sans", Arial, sans-serif;
+      color: rgb(66.25, 66.25, 66.25);
     }
-    .site-title img { height: 28px; }
-    .site-title, .site-title:visited { color: rgb(66.25, 66.25, 66.25); }
     .site-nav { z-index: 10; float: right; line-height: 56px; }
-    .site-nav .menu-icon { display: none; }
     .site-nav .page-link { color: #111; line-height: 1.7; }
     .site-nav .page-link:hover { text-decoration: wavy underline orange; }
     .site-nav .page-link:not(:first-child) { margin-left: 20px; }
+    .site-nav .page-link.active { color: #2a7ae7; }
     @media screen and (max-width: 500px) {
       .site-nav {
         position: absolute;
@@ -109,56 +88,41 @@
         border-radius: 5px;
         text-align: right;
       }
-      .site-nav .menu-icon { display: block; float: right; width: 36px; height: 26px; line-height: 0; padding-top: 4px; text-align: center; }
-      .site-nav .menu { clear: both; display: none; background-color: #fff; min-width: 10em; padding-bottom: 5px; }
       .site-nav .page-link { font-size: 16px; display: block; padding: 6px 16px; }
     }
 
-    .site-footer { border-top: 1px solid #e8e8e8; padding: 30px 0; }
-    @media screen and (max-width: 500px) { .site-footer { padding-top: 10px; } }
-    .footer-heading { font-size: 18px; margin-bottom: 15px; }
-    .contact-list, .social-media-list { list-style: none; margin-left: 0; }
-    .footer-col-wrapper { font-size: 15px; color: #828282; margin-left: -15px; }
-    .footer-col { float: left; margin-bottom: 10px; padding-left: 10px; }
-    .footer-col-1 {
-      width: -webkit-calc(28% - 10px);
-      width: calc(28% - 10px);
-    }
-    .footer-col-2 {
-      width: -webkit-calc(28% - 10px);
-      width: calc(28% - 10px);
-    }
-    .footer-col-3 {
-      width: -webkit-calc(44% - 10px);
-      width: calc(44% - 10px);
-    }
-    .follow-links > .social-link { flex: 0 45% 0 40%; }
-    .powered-by { font-size: 12px !important; color: #828282; }
-    @media screen and (max-width: 500px) { .footer-col { float: none; width: 100%; } }
-
     .page-content { padding: 30px 0; }
-    .page-heading { font-size: 20px; }
     .highlights { color: #2a7ae7; font-weight: 600; padding: 0 5px 0 0; }
 
-    td:first-child { padding: 0px 0px 2px; text-align: left; font-weight: bold; min-width: 75px; vertical-align: top; }
-    td:last-child { padding: 0px 0px 2px; vertical-align: top; }
-
-    .profile-pic {
-      float: right;
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-      object-position: center top;
-      border-radius: 50%;
-      border: #ccc 1px solid;
-      margin-left: 20px;
+    /* Publications */
+    ul.pubs { list-style: none; margin-left: 0; padding: 0; }
+    ul.pubs li { margin-bottom: 18px; line-height: 1.6; }
+    .pub-title { color: #2a7ae7; font-weight: 500; font-size: 105%; }
+    .pub-title:hover { color: rgb(66.25, 66.25, 66.25); }
+    .pub-me { color: #111; font-weight: 600; }
+    .pub-authors { color: rgb(66.25, 66.25, 66.25); }
+    .pub-venue { color: rgb(66.25, 66.25, 66.25); font-weight: 500; font-size: 95%; }
+    .pub-badge {
+      display: inline-block;
+      background: #2c2c2c;
+      color: #fff;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 4px;
+      vertical-align: 1px;
     }
-    @media screen and (max-width: 500px) {
-      .profile-pic { float: none; margin-bottom: 20px; margin-left: 0; }
-    }
 
-    .footer-col { font-size: 12px; }
-    .footer-col h4 { margin-bottom: 0; margin-top: 0; line-height: 30px; font-family: Poppins, "DM Sans", Arial, sans-serif; font-size: 12px; }
+    /* Footer */
+    .site-footer { border-top: 1px solid #e8e8e8; padding: 30px 0; }
+    @media screen and (max-width: 500px) { .site-footer { padding-top: 10px; } }
+    .footer-col-wrapper { font-size: 15px; color: #828282; margin-left: -15px; }
+    .footer-col { float: left; margin-bottom: 10px; padding-left: 10px; font-size: 12px; }
+    .footer-col-1 { width: calc(28% - 10px); }
+    .footer-col-2 { width: calc(28% - 10px); }
+    .footer-col-3 { width: calc(44% - 10px); }
+    .footer-col h4 { margin: 0; line-height: 30px; font-family: Poppins, "DM Sans", Arial, sans-serif; font-size: 12px; }
     .footer-col .social-links { display: flex; flex-wrap: wrap; }
     .footer-col .social-links .social-link {
       display: flex;
@@ -175,21 +139,10 @@
       fill: #828282;
     }
     .footer-col .social-links .social-link a { margin-left: 6px; word-break: break-all; }
-    @media screen and (max-width: 500px) {
-      .footer-col .social-links { font-size: 14px; line-height: 38px; }
-    }
-
-    .powered-by {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
+    .powered-by { font-size: 12px !important; color: #828282; display: flex; align-items: flex-start; gap: 14px; }
     .powered-by .powered-by-text { flex: 1; }
     .powered-by .powered-by-text h4 { visibility: hidden; }
-    .powered-by p {
-      line-height: 1.5;
-      margin-bottom: 0;
-    }
+    .powered-by p { line-height: 1.5; margin-bottom: 0; }
     .powered-by .footer-mark {
       width: 90px;
       height: auto;
@@ -197,6 +150,7 @@
       flex-shrink: 0;
       margin-top: 22px;
     }
+    @media screen and (max-width: 500px) { .footer-col { float: none; width: 100%; } }
   </style>
 </head>
 
@@ -206,12 +160,10 @@
       <a class="site-title" href="index.html">
         <div><b style="font-weight:600">Joonwoo Kwon</b> <b style="font-size: 70%;font-weight: 300;margin-left:10px"> CS @ MSU</b></div>
       </a>
-
       <nav class="site-nav">
-        <a href="#" class="menu-icon"></a>
         <div class="menu">
           <a class="page-link" href="index.html">Home</a>
-          <a class="page-link" href="publications.html">Publications</a>
+          <a class="page-link active" href="publications.html">Publications</a>
           <a class="page-link" href="studio.html">Studio</a>
           <a class="page-link" href="photography.html">Photography</a>
         </div>
@@ -221,82 +173,49 @@
 
   <div class="page-content">
     <div class="wrapper">
-      <div class="home">
-        <img
-          src="image/download.jpeg"
-          alt="Profile picture of Joonwoo Kwon"
-          class="profile-pic"
-        />
 
-        <p>
-          Hello! I'm Joonwoo Kwon, a first-year Ph.D. student at
-          <a id="blue-bg" href="https://cse.msu.edu/">Michigan State University Computer Science and Engineering</a>,
-          working with Prof. <a id="blue-bg" href="https://zijunjkl.github.io/">Zijun Cui</a>
-          as a member of <a id="blue-bg" href="https://zijunjkl.github.io/lab.html">DominoAI Lab</a>.
-        </p>
+      <h2>Selected Publications</h2>
+      <ul class="pubs">
+        <li>
+          <a class="pub-title" href="https://aesfa-nst.github.io/AesFA/">AesFA: An Aesthetic Feature-Aware Arbitrary Neural Style Transfer.</a>
+          <span class="pub-badge">Acc. 23.75%</span><br>
+          <span class="pub-authors"><span class="pub-me">J. Kwon*</span>, S. Kim*, S. Yoo, Y. Lin, J. Cha.</span><br>
+          <span class="pub-venue">AAAI 2024</span>
+          &nbsp; [<a href="https://aesfa-nst.github.io/AesFA/">project</a>] [<a href="https://arxiv.org/abs/2312.05928">paper</a>]
+        </li>
+        <li>
+          <a class="pub-title" href="https://arxiv.org/abs/2412.05296">Revisiting Your Memory: Reconstruction of Affect-Contextualized Memory via EEG-guided Audiovisual Generation.</a>
+          <span class="pub-badge">Oral</span><br>
+          <span class="pub-authors"><span class="pub-me">J. Kwon*</span>, H. Wang*, J. Yi*, S. Kim*, S. Yoo, Y. Lin, J. Cha.</span><br>
+          <span class="pub-venue">ACM Multimedia 2025 CogMAEC Workshop</span>
+          &nbsp; [<a href="https://arxiv.org/abs/2412.05296">paper</a>]
+        </li>
+        <li>
+          <a class="pub-title" href="https://arxiv.org/abs/2411.15913">Repurposing Image Diffusion Models for Training-Free Music Style Transfer on Mel-Spectrograms.</a><br>
+          <span class="pub-authors">H. Wang*, <span class="pub-me">J. Kwon*</span>, S. Kim*, J. Seo, S. Yoo, Y. Lin, J. Cha.</span><br>
+          <span class="pub-venue">IEEE ICIP 2026</span>
+          &nbsp; [<a href="https://arxiv.org/abs/2411.15913">paper</a>]
+        </li>
+        <li>
+          <a class="pub-title" href="https://arxiv.org/abs/2412.05296">Macro2Micro: Cross-modal Magnetic Resonance Imaging Synthesis Leveraging Multi-scale Brain Structures.</a><br>
+          <span class="pub-authors">S. Kim*, <span class="pub-me">J. Kwon*</span>, J. Kwon*, J. Min, S. Bae, S. Yoo, Y. Lin, J. Cha.</span><br>
+          <span class="pub-venue">arXiv 2024</span>
+          &nbsp; [<a href="https://arxiv.org/abs/2412.05296">paper</a>]
+        </li>
+      </ul>
 
-        <p>
-          My research interests lie at the intersection of
-          <strong>computer vision</strong>, <strong>generative modeling</strong>, and
-          <strong>physics-informed deep learning</strong>.
-          I am interested in embedding physical laws into deep generative and vision
-          models for interpretable and physically coherent 3D human motion representations.
-        </p>
+      <h2>Manuscripts in Preparation</h2>
+      <ul class="pubs">
+        <li>
+          <span class="pub-title" style="color: #111;">Compositional Brain Decoding from Symbolic Representations in the Hierarchical Visual System.</span><br>
+          <span class="pub-authors">S. Kim*, <span class="pub-me">J. Kwon*</span>, H. Wang, J. Kwon, M. Park, S. Yoo, Y. Lin, V. Pavlovic, Z. Cui, J. Cha.</span>
+        </li>
+        <li>
+          <span class="pub-title" style="color: #111;">A Viscosity-guided Artistic Style Optimization via Brushstroke Parameterization.</span><br>
+          <span class="pub-authors"><span class="pub-me">J. Kwon*</span>, S. Kim*, S. Lee, S. Yoo, Y. Lin, J. Cha.</span>
+        </li>
+      </ul>
 
-        <p>
-          Previously, I received my M.S. in Applied Bioengineering from
-          <a id="blue-bg" href="https://en.snu.ac.kr/index.html">Seoul National University</a>,
-          working with
-          Prof. <a id="blue-bg" href="https://scholar.google.com/citations?user=fHSAoOoAAAAJ&hl">Jiook Cha</a>
-          at the <a id="blue-bg" href="https://www.connectomelab.com/home">Connectome Lab</a>,
-          and my B.S. in Electronic and Electrical Engineering from
-          <a id="blue-bg" href="https://www.skku.edu/eng/index.do">SungKyunKwan University</a>.
-          I have also collaborated with
-          Prof. <a id="blue-bg" href="https://scholar.google.com/citations?user=KFYsgnIAAAAJ&hl=en">Shinjae Yoo</a>
-          and Prof. <a id="blue-bg" href="https://ywlincq.github.io/">Yuewei Lin</a>
-          at Brookhaven National Laboratory.
-        </p>
-
-        <p>
-          Feel free to reach out to me if you want to chat about research or anything!
-        </p>
-
-        <hr />
-        <div style="height: 20px"></div>
-
-        <h2>News</h2>
-        <p>
-        <div style="overflow-y: scroll; max-height: 220px;">
-          <table style="padding-bottom:10px;">
-            <tr>
-              <td class="highlights">May 2026</td>
-              <td>Our paper, <a href="https://arxiv.org/abs/2411.15913" style="font-weight:500">Stylus</a>, is accepted at <a href="https://2026.ieeeicip.org/" style="font-weight:500">IEEE ICIP 2026</a> &#128196;</td>
-            </tr>
-            <tr>
-              <td class="highlights">Apr 2026</td>
-              <td>Invited as a reviewer for CVPR, ICIP, and NeurIPS &#129518;</td>
-            </tr>
-            <tr>
-              <td class="highlights">Aug 2025</td>
-              <td>Our paper, <a href="https://arxiv.org/abs/2412.05296" style="font-weight:500">Revisiting Your Memory</a>, is accepted as an <em>Oral Presentation</em> at <a href="https://cogmaec.github.io/MM2025/" style="font-weight:500">ACM Multimedia 2025 CogMAEC Workshop</a> &#128196;</td>
-            </tr>
-            <tr>
-              <td class="highlights">Aug 2025</td>
-              <td>Started my Ph.D. program at MSU CS &#128218;</td>
-            </tr>
-            <tr>
-              <td class="highlights">Dec 2023</td>
-              <td>Our paper, <a href="https://aesfa-nst.github.io/AesFA/" style="font-weight:500">AesFA</a>, is accepted at <a href="https://aaai.org/aaai-conference/" style="font-weight:500">AAAI 2024</a> (Acc. 23.75%) &#128196;</td>
-            </tr>
-            <tr>
-              <td class="highlights">Feb 2023</td>
-              <td>Defended my M.S. thesis at Seoul National University &#127891;</td>
-            </tr>
-          </table>
-        </div>
-        </p>
-
-      </div>
     </div>
   </div>
 
@@ -306,7 +225,7 @@
         <div class="footer-col footer-col-1">
           <h4>CONTACT</h4>
           <div class="social-links">
-            <div class="social-link contact-links">
+            <div class="social-link">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
               <a href="mailto:kwonjoon@msu.edu">kwonjoon@msu.edu</a>
             </div>
@@ -315,7 +234,7 @@
 
         <div class="footer-col footer-col-2">
           <h4>FOLLOW</h4>
-          <div class="social-links follow-links">
+          <div class="social-links">
             <div class="social-link">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.242 13.769L.5 9.5 12 1l11.5 8.5-4.742 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 100 14 7 7 0 000-14z"/></svg>
               <a href="https://scholar.google.com/citations?user=pdnfn3YAAAAJ&hl=en">Google Scholar</a>
